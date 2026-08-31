@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ההטבה שלך · המפתח · אִימפּרוּב</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+/* =========================================================
+   מסך 2 - מסך ההטבה. "זה הלברג'."
+
+   מקור-האמת: `החלטות-מסע-הלקוח-המפתח.md` סעיף 3 (מסך 2) + סעיף 2.
+   ⚠️ המסמך יושב ב-worktree `developer-program-customer-journey-d8dc3d`
+   ולא בענף הזה. לקרוא אותו לפני כל שינוי כאן.
+
+   מה שהוא קובע, מילה במילה:
+   > **"ההטבה שלך: 1,000 ₪ הנחה - נשמרת לך ל-24 שעות."**
+   > שם · מייל · טלפון · צ'קבוקס דיוור
+   > כפתור: **"קבלי את ההטבה והמשיכי לתשלום"**
+   > רגע הלחיצה = חותמת זמן: השעון מתחיל, ויש את מי לתזכר.
+   > **ממוסגר כקבלת מתנה, לא כטופס הרשמה** - היא לוקחת 1,000 ₪, לא
+   > "משאירה פרטים".
+
+   ⛔ **המסגור הוא הדבר שקל להרוס כאן.** כל שינוי שהופך את זה ל"טופס
+   הרשמה" (כותרת שמבקשת, כפתור "שליחה", שדות שנראים כמו טופס לידים)
+   שובר את ההחלטה גם אם הוא לא נוגע במילה אחת מהקופי.
+
+   ⛔ **ההטבה נתפסת אך ורק תמורת ארבעתם יחד** - שם + מייל + טלפון +
+   סימון הסכמת דיוור (הכרעת שלהבת 26/08). בלי זה אין קוד, אין שעון,
+   ואין תזכורות - ותזכורת בלי הסכמה גם אסורה בחוק.
+   ========================================================= */
+:root{
+  --navy:#14093B; --gold:#FFD747; --blue:#2473C8;
+  --body:#333333; --white:#FFFFFF; --sky:#EDF2F9;
+  --maxw:640px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Rubik',Arial,system-ui,Tahoma,sans-serif;
+  color:var(--navy); direction:rtl;
+  background:var(--navy);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;flex-direction:column;
+}
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+.top{padding:26px 0 0}
+.brand{display:flex;align-items:center;gap:10px;justify-content:center}
+.brand img{width:34px;height:34px;display:block}
+.brand span{font-weight:800;color:#fff;font-size:15px;letter-spacing:.2px}
+
+.main{flex:1;display:flex;align-items:center;padding:34px 0 46px}
+
+/* הכרטיס. זהב על נייבי - אותו יחס-ניגוד כמו סקשן הסיום בדף המפתח,
+   כדי שהמעבר מהכפתור לכאן ייראה כמו המשך ולא כמו אתר אחר. */
+.card{
+  width:100%;background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.16);border-radius:22px;
+  padding:34px 30px;
+}
+.gift{
+  display:inline-flex;align-items:center;gap:8px;margin:0 0 16px;
+  padding:7px 14px;border-radius:999px;
+  background:rgba(255,215,71,.14);border:1px solid rgba(255,215,71,.34);
+  font-weight:800;font-size:13px;color:var(--gold);letter-spacing:.2px;
+}
+h1{
+  margin:0 0 12px;font-weight:900;line-height:1.2;color:#fff;
+  font-size:clamp(26px,6.4vw,38px);
+}
+h1 b{color:var(--gold);font-weight:900;white-space:nowrap}
+.lead{
+  margin:0 0 4px;font-weight:400;line-height:1.6;
+  color:rgba(255,255,255,.82);font-size:clamp(15.5px,3.9vw,17px);
+}
+/* ⚠️ "אין ספירה לאחור לגולשת אנונימית" (סעיף 2). השעון מתחיל **בלחיצה**,
+   ולכן כאן מוצג הכלל בלבד - בדיוק כמו בדף עצמו. */
+.rule{
+  margin:14px 0 0;padding:12px 14px;border-radius:12px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+  font-weight:500;font-size:14px;line-height:1.6;color:rgba(255,255,255,.86);
+}
+.rule b{color:var(--gold);font-weight:800}
+
+/* שורת הממליצה - מוצגת רק כשהגיעו דרך לינק אישי (?r=slug).
+   סעיף 4: *"הלינק האישי נוחת ישר על מסך ההטבה שלה ('ההטבה של מורן -
+   1,000 ₪') עם שיוך עמלה + שעון מלא מחדש + היא משובצת כמנטורית."* */
+.ref{display:none;margin:16px 0 0;font-weight:600;font-size:14.5px;color:var(--gold)}
+.ref.is-on{display:block}
+
+form{margin:24px 0 0}
+.field{margin:0 0 14px}
+label{display:block;margin:0 0 6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)}
+input[type=text],input[type=email],input[type=tel]{
+  width:100%;padding:13px 14px;border-radius:12px;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);
+  color:#fff;font:inherit;font-size:16px;  /* 16px - מתחת לזה iOS מזייף זום */
+}
+input::placeholder{color:rgba(255,255,255,.38)}
+input:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:transparent}
+input[aria-invalid="true"]{border-color:#ff8a8a;background:rgba(255,120,120,.09)}
+.err{display:none;margin:6px 0 0;font-weight:500;font-size:13px;color:#ffb0b0}
+.field.is-bad .err{display:block}
+
+/* ⛔ **לא מסומן כברירת מחדל, ולא להפוך את זה ל-opt-out.** ההטבה מותנית
+   בסימון פעיל, וזו גם דרישת חוק הספאם: היעדר סימון אינו הסכמה. */
+.consent{display:flex;gap:11px;align-items:flex-start;margin:18px 0 0}
+.consent input{margin:3px 0 0;width:19px;height:19px;flex:0 0 auto;accent-color:var(--gold)}
+.consent label{margin:0;font-weight:400;font-size:14px;line-height:1.55;color:rgba(255,255,255,.8)}
+.consent.is-bad label{color:#ffb0b0}
+
+.submit{
+  width:100%;margin:22px 0 0;padding:17px 20px;border:0;border-radius:999px;
+  background:var(--gold);color:var(--navy);
+  font:inherit;font-weight:900;font-size:clamp(16px,4vw,18px);cursor:pointer;
+  transition:transform .12s ease,box-shadow .12s ease;
+}
+.submit:hover{transform:translateY(-1px);box-shadow:0 12px 30px -12px rgba(255,215,71,.6)}
+.submit:focus-visible{outline:3px solid #fff;outline-offset:2px}
+
+.fine{margin:16px 0 0;font-weight:400;font-size:12.5px;line-height:1.6;color:rgba(255,255,255,.55)}
+.back{display:block;margin:22px 0 0;text-align:center;font-weight:600;font-size:14px;color:rgba(255,255,255,.6);text-decoration:none}
+.back:hover{color:#fff}
+
+/* שגיאה בתגובת השרת - לא alert() דפדפן, כדי לא לשבור את המסגור.
+   .is-saved = גוון זהב/ניטרלי, לא אדום - לתרחיש "503 נשמר בכל זאת". */
+.form-err{display:none;margin:16px 0 0;padding:12px 14px;border-radius:12px;
+  background:rgba(255,120,120,.12);border:1px solid rgba(255,120,120,.3);
+  font-weight:500;font-size:14px;line-height:1.55;color:#ffd0d0}
+.form-err.is-on{display:block}
+.form-err.is-saved{background:rgba(255,215,71,.12);border-color:rgba(255,215,71,.32);color:rgba(255,255,255,.9)}
+
+/* מצב הצלחה - מחליף את הטופס באותו כרטיס, בלי ניווט. */
+.done{display:none}
+body.is-done form,body.is-done .rule,body.is-done .lead{display:none}
+body.is-done .done{display:block}
+.done h2{margin:0 0 10px;font-weight:900;color:var(--gold);font-size:clamp(21px,5vw,27px);line-height:1.3}
+.done p{margin:0 0 14px;font-weight:400;color:rgba(255,255,255,.85);font-size:15.5px;line-height:1.65}
+.done .deadline{font-weight:800;color:#fff}
+/* הקוד עצמו - חוזר מהשרת מיד עם התגובה, לא צריך לחכות למייל שמגיע
+   בנפרד (עד 5 דק', צינור פייתון שקורא מאיירטייבל - לא ה-endpoint). */
+.done .code-line{font-size:17px}
+.done .code-line b{color:var(--gold);font-weight:900;letter-spacing:.5px;font-family:ui-monospace,monospace}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <div class="brand">
+      <img src="assets/aimprove-logo-white.png" alt="" />
+      <span>אִימפּרוּב</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="wrap">
+    <div class="card">
+
+      <span class="gift">🎁 ההטבה שלך</span>
+
+      <!-- ⚠️ הכותרת היא מסירת מתנה, לא בקשת פרטים. ר' ההערה ב-CSS. -->
+      <h1>ההטבה שלך: <b>1,000 ₪</b> הנחה - נשמרת לך ל-24 שעות.</h1>
+
+      <p class="lead">משאירים שלושה פרטים, וההטבה נתפסת על השם שלך. משם אפשר להמשיך לתשלום מיד, או לחזור בתוך 24 שעות - ההנחה תחכה.</p>
+
+      <p class="ref" id="ref-line"></p>
+
+      <p class="rule">אין כאן ספירה לאחור. <b>השעון מתחיל רק ברגע שלוקחים את ההטבה</b> - ומאותו רגע יש 24 שעות.</p>
+
+      <!-- ⛔⛔ יעד השליחה טרם הוכרע - ר' ההערה בראש הסקריפט למטה.
+           הטופס מאמת, שומר מקומית ומראה את מצב ההצלחה, אבל **שום דבר
+           לא נשלח לשום מקום**. אסור להעלות את המסך הזה לאוויר לפני
+           שהיעד קיים: מסך שאומר "ההטבה נשמרה" ולא שומר כלום הוא
+           הבטחה שקרית ללקוחה. -->
+      <form id="claim" novalidate>
+        <div class="field" id="f-name">
+          <label for="name">איך קוראים לך?</label>
+          <input type="text" id="name" name="name" autocomplete="name" placeholder="שם מלא" />
+          <p class="err">צריך שם - ההטבה נרשמת עליו.</p>
+        </div>
+
+        <div class="field" id="f-email">
+          <label for="email">אימייל</label>
+          <input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="you@example.com" />
+          <p class="err">כתובת אימייל תקינה, בבקשה - לשם נשלח הקוד.</p>
+        </div>
+
+        <div class="field" id="f-phone">
+          <label for="phone">טלפון</label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="050-0000000" />
+          <p class="err">מספר טלפון ישראלי תקין, בבקשה.</p>
+        </div>
+
+        <div class="consent" id="f-consent">
+          <input type="checkbox" id="consent" name="consent" />
+          <label for="consent">אני מאשר/ת שתשלחו לי את ההטבה ותזכורת לפני שהיא פגה, וגם עדכונים על התוכנית. אפשר להסיר בכל רגע.</label>
+        </div>
+        <p class="err" id="consent-err" style="margin-inline-start:30px">בלי האישור הזה אי-אפשר לשלוח את הקוד ואת התזכורת.</p>
+
+        <button class="submit" type="submit">קבלי את ההטבה והמשיכי לתשלום</button>
+
+        <p class="form-err" id="form-err" role="alert"></p>
+
+        <p class="fine">הפרטים משמשים לשליחת ההטבה ולתזכורת לפני שהיא פגה. לא מועברים לאף אחד.</p>
+      </form>
+
+      <div class="done">
+        <h2>ההטבה נתפסה. היא רשומה על השם שלך.</h2>
+        <p class="code-line">הקוד שלך: <b id="coupon-code">-</b></p>
+        <p>שלחנו לך את הקוד לאימייל. ההטבה בתוקף עד <span class="deadline" id="deadline">-</span>.</p>
+        <p>אפשר להמשיך לתשלום עכשיו, או לחזור בתוך החלון הזה - ההנחה תחכה.</p>
+        <button class="submit" type="button" id="to-pay">להמשיך לתשלום</button>
+      </div>
+
+      <a class="back" href="index.html">חזרה לעמוד התוכנית</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ⛔ **מחווט, אבל טרם פרוס - אל תבדקו את זה מול השרת החי ואל תדווחו
+   שזה "עובד".** שלוש ההכרעות שהיו חסרות ב-31/08 נענו ואומתו מול הקוד
+   האמיתי (aimprove-redirector, ענף claude/maftecha-claim-endpoint):
+
+     1. **לאן** - POST https://r.aimprove.co.il/api/claim (לא workers.dev).
+     2. **מי שולח את הקוד** - התשובה מהשרת מכילה `couponCode` ו-`checkoutUrl`
+        מוכנים, מיד. מייל אישור נשלח בנפרד (Pipeline S, sales-automation,
+        `modules/maftecha_benefit_confirm.py` - עדיין לא ממוזג), ואחריו
+        תזכורת-לפני-פקיעה ומייל win-back (Pipeline W, `maftecha_winback.py`)
+        - זו בדיוק ה"מנגנון אחד שבונה קוד ואז אחרי 24 שעות שולח תזכורות"
+        ששלהבת תיארה; שלושתם קיימים ככתובת קוד, אף אחד עדיין לא בייצור.
+     3. **מי מחזיק את השעון** - השרת. התשובה מחזירה `expiresAt` מוכן
+        (ISO), ו-`claimedAt` חוזר גם הוא מהשרת - אסור לחשב אף אחד מהם
+        בדפדפן.
+
+   ⛔⛔ **בדיקה חיה תיכשל, ולא בגלל הקוד כאן:** אומת ב-31/08 שהנקודה
+   מחזירה 404 (הראוט לא נפרס), בעוד /__health באותו שרת מחזיר 200 - כלומר
+   השרת חי, רק המסלול הזה טרם עלה. שלהבת החליטה במפורש לא לפרוס עדיין
+   ("למה שנעלה את זה עכשיו? אנחנו עדיין לא התחלנו למכור") - זו החלטה
+   שלה בלבד (מיזוג לענף הזה פורס אוטומטית לייצור), לא הכרעה טכנית.
+
+   ⚠️ ובחיווט עצמו - **הצד המקבל חייב לדחות בקשה בלי הסכמת דיוור**,
+   ולא להסתמך על הבדיקה כאן. ולידציה בדפדפן היא נוחות למשתמש, לא
+   שער - כל אחד יכול לעקוף אותה, והתוצאה תהיה רשומה שנראית מסכימה
+   בלי שאיש הסכים. */
+(function () {
+  'use strict';
+
+  var form = document.getElementById('claim');
+  var WINDOW_HOURS = 24;
+  var CLAIM_URL = 'https://r.aimprove.co.il/api/claim';
+  var checkoutUrl = '';
+
+  /* שיוך מלינק אישי של מנטורית (?r=slug). סעיף 4: הלינק נוחת **ישר
+     כאן**, מאפס את השעון להטבה מלאה, ומשבץ אותה כמנטורית. */
+  var ref = '';
+  try {
+    ref = (new URLSearchParams(location.search).get('r') || '')
+      .replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
+  } catch (e) {}
+  if (ref) {
+    var line = document.getElementById('ref-line');
+    /* ⚠️ השם המלא של הממליצה אינו כאן - הוא יושב באיירטייבל ונשלף
+       לפי ה-slug (F_NAME ב-`aimprove-redirector`). עד שיש שליפה,
+       מוצג נוסח שלא מתיימר לדעת את השם. */
+    line.textContent = 'הגעת דרך אחת הבוגרות - ההטבה שלך שמורה.';
+    line.classList.add('is-on');
+  }
+
+  function bad(id, on) {
+    var el = document.getElementById(id);
+    el.classList.toggle('is-bad', !!on);
+    var input = el.querySelector('input');
+    if (input) input.setAttribute('aria-invalid', on ? 'true' : 'false');
+  }
+
+  /* מספר ישראלי: 9-10 ספרות אחרי הסרת מפרידים, או +972. מכוון להיות
+     סלחני - חסימת מספר תקין היא נזק גדול יותר מקליטת מספר שגוי. */
+  function phoneOk(v) {
+    var d = String(v).replace(/[\s\-().]/g, '');
+    if (/^\+?972\d{8,9}$/.test(d)) return true;
+    return /^0\d{8,9}$/.test(d);
+  }
+  function emailOk(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim()); }
+
+  function submitClaim(payload) {
+    return fetch(CLAIM_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (!res.ok || !data.ok) {
+          var err = new Error((data && data.error) || ('http-' + res.status));
+          err.status = res.status;
+          err.code = data && data.error;
+          throw err;
+        }
+        return data;
+      });
+    });
+  }
+
+  /* שדה שגוי → מודגש כמו ולידציה מקומית (400, ולא נשמר כלום). */
+  var FIELD_ERROR = { 'bad-name': 'f-name', 'bad-email': 'f-email', 'bad-phone': 'f-phone' };
+
+  function showFormError(text, opts) {
+    var el = document.getElementById('form-err');
+    el.textContent = text;
+    el.classList.add('is-on');
+    el.classList.toggle('is-saved', !!(opts && opts.saved));
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var errEl = document.getElementById('form-err');
+    errEl.classList.remove('is-on', 'is-saved');
+
+    var name = document.getElementById('name').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var phone = document.getElementById('phone').value.trim();
+    var consent = document.getElementById('consent').checked;
+
+    var okName = name.length >= 2;
+    var okMail = emailOk(email);
+    var okPhone = phoneOk(phone);
+
+    bad('f-name', !okName);
+    bad('f-email', !okMail);
+    bad('f-phone', !okPhone);
+    document.getElementById('f-consent').classList.toggle('is-bad', !consent);
+    document.getElementById('consent-err').style.display = consent ? 'none' : 'block';
+
+    if (!okName || !okMail || !okPhone || !consent) {
+      var first = document.querySelector('.field.is-bad input') ||
+                  (!consent ? document.getElementById('consent') : null);
+      if (first) first.focus();
+      return;
+    }
+
+    var payload = {
+      name: name, email: email, phone: phone,
+      consent: true, ref: ref || '', claimedAt: Date.now()
+    };
+
+    submitClaim(payload).then(function (data) {
+      /* claimedAt/expiresAt חוזרים מהשרת - הוא מחזיק את השעון, לא הדפדפן. */
+      try {
+        localStorage.setItem('maftecha_claim', JSON.stringify({
+          code: data.couponCode, expiresAt: data.expiresAt,
+          checkoutUrl: data.checkoutUrl, ref: ref
+        }));
+      } catch (e) {}
+      checkoutUrl = data.checkoutUrl || '';
+      document.getElementById('coupon-code').textContent = data.couponCode || '-';
+      var end = new Date(data.expiresAt);
+      document.getElementById('deadline').textContent =
+        end.toLocaleString('he-IL', { weekday: 'long', hour: '2-digit', minute: '2-digit' });
+      document.body.classList.add('is-done');
+      window.scrollTo(0, 0);
+    }).catch(function (err) {
+      var code = err && err.code;
+      if (FIELD_ERROR[code]) {
+        bad(FIELD_ERROR[code], true);
+        showFormError('נראה שמשהו בפרטים לא עבר - אפשר לבדוק ולנסות שוב?');
+      } else if (code === 'consent-required') {
+        document.getElementById('f-consent').classList.add('is-bad');
+        document.getElementById('consent-err').style.display = 'block';
+      } else if (code === 'product-not-live') {
+        /* ⚠️ הפרטים כן נשמרו בשלב הזה בשרת - זו לא נקודת "נכשל", ולכן
+           לא לומר "לא הצלחנו". ר' ההערה על productIsLive ב-Worker. */
+        showFormError('הפרטים שלך נקלטו ושמורים. המסלול לתשלום עוד לא פתוח כרגע - נעדכן אותך ברגע שהוא זמין.', { saved: true });
+      } else {
+        showFormError('לא הצלחנו להשלים את זה כרגע - אפשר לנסות שוב בעוד רגע?');
+      }
+    });
+  });
+
+  document.getElementById('to-pay').addEventListener('click', function () {
+    /* checkoutUrl חוזר מוכן מהשרת (כולל הקופון) - אין כאן בניית כתובת
+       עצמאית. ⛔ לא ניתן לבדוק חי: המוצר בווקומרס עדיין בטיוטה
+       (productIsLive ב-Worker יחזיר 503 לפני שמגיעים לכפתור הזה בכלל). */
+    if (checkoutUrl) location.href = checkoutUrl;
+  });
+})();
+</script>
+
+</body>
+</html>

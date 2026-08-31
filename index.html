@@ -519,9 +519,10 @@ body{
 }
 .office-full-bar__close:hover{transform:translateY(-2px)}
 .office-full-bar__close:focus-visible{outline:3px solid #fff;outline-offset:3px}
+/* ⛔ ללא רקע/מסגרת (31/08, בקשת שלהבת) - הבדג' הכהה נראה כמו "מיני
+   אלמנט שחור" מוזר על הזהב. עכשיו "Esc" הוא טקסט פשוט, לא תג. */
 .office-full-bar__kbd{
-  font-size:12px;font-weight:700;padding:2px 7px;border-radius:5px;
-  background:rgba(20,9,59,.16);border:1px solid rgba(20,9,59,.28);
+  font-size:12px;font-weight:700;
 }
 /* המקרא במצב מלא - נכנס לכאן ב-JS מהפאנל, ולכן אין כפילות בקוד. */
 .office-full-legend{
@@ -1557,7 +1558,7 @@ body{
 
     <p class="office-sec__more">בכל מחלקה יושבים הסוכנים שעוסקים בתחום שלה, וכל סוכן מרכיבים משלושת הדברים שלמעלה - לא בונים אותו מאפס בכל פעם. ולמטה בדף תראו בדיוק מה בוגרים כבר בנו כך - לא הדגמות, משרדים אמיתיים שרצים היום.</p>
 
-    <button type="button" class="office__hint">להיכנס למשרד ולשחק בו ←</button>
+    <button type="button" class="office__hint">להיכנס למשרד ולשחק בו</button>
     </div>
   </div>
 </section>

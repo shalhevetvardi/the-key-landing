@@ -736,11 +736,6 @@ body{
 .proof-card__before .proof-card__list li::before{background:#8a8799;width:5px;height:5px}
 .proof-card__before-quote{margin:0;font-size:15px;font-style:italic;font-weight:500;color:#6b6880;line-height:1.55}
 .proof-card__before-quote::before{content:'\201C';margin-inline-end:3px;font-style:normal;font-weight:800;color:#8a8799}
-/* פלייסהולדר מפורש - רק איפה שאין עדיין ציטוט/פסקה מאושרים לכך.
-   שלהבת: "אם חסרים שם דברים, אז תשים placeholderים... מה שלא
-   placeholderים, אני אוסיף אחרי זה." הצבע האדום *לא* מהפלטה של הדף
-   בכוונה - זה סימון-עריכה, לא חלק מהעיצוב. */
-.proof-card__before-flag{margin:-4px 0 0;font-size:10.5px;color:#a8433f;font-style:normal}
 
 /* פאנל "היום" - צבע *מסביב*, לא רק טקסט צבעוני (שלהבת ביקשה את שניהם
    בנפרד: קודם רק כותרת בצבע, ואז תיקנה ל"כל הסקשן"). גוון בהיר של --pc
@@ -1614,7 +1609,7 @@ body{
                 <li>מיד אחר כך: "אז אעשה שוב"</li>
               </ul>
               <blockquote class="proof-card__before-quote">אחרי שעות.. התוצר באוויר</blockquote>
-              <p class="proof-card__before-flag">(פלייסהולדר - שלהבת מחליפה בציטוט משלה)</p>
+              <!-- פלייסהולדר - שלהבת מחליפה בציטוט משלה (31/08: הוסתר מהתצוגה - נראה לכל מבקר) -->
             </div>
             <div class="proof-card__divider"></div>
             <div class="proof-card__today">
@@ -1701,11 +1696,9 @@ body{
                 <p class="proof-card__role">מטפלת בחרדות, בעלת עסק</p>
               </div>
             </div>
-            <div class="proof-card__before">
-              <p class="proof-card__before-head">לפני</p>
-              <blockquote class="proof-card__before-quote">[עוד אין בחומר ציטוט שלה על המצב לפני]</blockquote>
-              <p class="proof-card__before-flag">(פלייסהולדר - אין כרגע מקור מאושר לזה)</p>
-            </div>
+            <!-- אין עדיין ציטוט/פסקה מאושרים על המצב לפני של אילנה - כל בלוק
+                 ה"לפני" מוסתר עד שיהיה. הוסר מהתצוגה 31/08 (לפני כן הוצג
+                 כטקסט-פלייסהולדר עם סוגריים מרובעים, גלוי לכל מבקר). -->
             <div class="proof-card__divider"></div>
             <div class="proof-card__today">
               <p class="proof-card__today-head">והיום יש לה משרד</p>
@@ -1791,11 +1784,9 @@ body{
                 <p class="proof-card__role">בעל סוכנות פרסום וקריאייטיב</p>
               </div>
             </div>
-            <div class="proof-card__before">
-              <p class="proof-card__before-head">לפני</p>
-              <blockquote class="proof-card__before-quote">[עוד אין בחומר ציטוט שלו על המצב לפני]</blockquote>
-              <p class="proof-card__before-flag">(פלייסהולדר - אין כרגע מקור מאושר לזה)</p>
-            </div>
+            <!-- אין עדיין ציטוט/פסקה מאושרים על המצב לפני של דולב - כל בלוק
+                 ה"לפני" מוסתר עד שיהיה. הוסר מהתצוגה 31/08 (לפני כן הוצג
+                 כטקסט-פלייסהולדר עם סוגריים מרובעים, גלוי לכל מבקר). -->
             <div class="proof-card__divider"></div>
             <div class="proof-card__today">
               <p class="proof-card__today-head">והיום יש לו משרד</p>

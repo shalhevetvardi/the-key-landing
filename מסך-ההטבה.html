@@ -49,9 +49,9 @@ body{
 .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 22px}
 
 .top{padding:26px 0 0}
-.brand{display:flex;align-items:center;gap:10px;justify-content:center}
-.brand img{width:34px;height:34px;display:block}
-.brand span{font-weight:800;color:#fff;font-size:15px;letter-spacing:.2px}
+.brand{display:flex;align-items:center;justify-content:center}
+/* לוקאפ רחב (סמל + כיתוב), לא סמל ריבועי - הרוחב קובע והיחס ננעל. */
+.brand img{width:clamp(140px,34vw,168px);height:auto;display:block}
 
 .main{flex:1;display:flex;align-items:center;padding:34px 0 46px}
 
@@ -152,8 +152,7 @@ body.is-done .done{display:block}
 <div class="top">
   <div class="wrap">
     <div class="brand">
-      <img src="assets/aimprove-logo-white.png" alt="" />
-      <span>אִימפּרוּב</span>
+      <img src="assets/aimprove-lockup-white.png" alt="אִימפּרוּב" />
     </div>
   </div>
 </div>

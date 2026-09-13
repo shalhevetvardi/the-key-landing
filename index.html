@@ -35,9 +35,9 @@ body{
   color:#fff; overflow:hidden; padding:34px 0 26px;
 }
 
-.brand{display:flex;align-items:center;gap:10px;margin-bottom:22px}
-.brand img{width:34px;height:34px;display:block}
-.brand span{font-weight:700;font-size:16px;color:#fff}
+.brand{display:flex;align-items:center;margin-bottom:26px}
+/* נעילה לפי רוחב ולא לפי גובה: זה לוקאפ רחב (סמל + כיתוב), לא סמל ריבועי. */
+.brand img{width:clamp(150px,26vw,190px);height:auto;display:block}
 
 .hero h1{
   margin:0 0 18px;font-weight:800;line-height:1.14;
@@ -88,11 +88,11 @@ body{
 .trustnote{
   position:absolute;left:3%;z-index:2;
   text-align:right;line-height:normal;
-  text-shadow:0 1px 2px rgba(8,38,70,.55), 0 2px 12px rgba(8,38,70,.42);
+  text-shadow:0 1px 3px rgba(8,38,70,.78), 0 2px 14px rgba(8,38,70,.6);
 }
 .trustnote{
-  bottom:1.5%;width:20%;margin:0;color:#fff;
-  font-size:13px;font-weight:400;line-height:1.65;letter-spacing:.1px;
+  bottom:1.5%;width:25%;margin:0;color:#fff;
+  font-size:15px;font-weight:500;line-height:1.6;letter-spacing:.1px;
   text-wrap:pretty;
 }
 
@@ -234,10 +234,12 @@ body{
    הריווח האנכי 100px - לעומת מה שהיה כאן: לבן שטוח, 600/32px, 64px.
    שני "לבן" ברצף (הכאב + הסקשן הזה) בדיוק מה שקראה "לא מעוצב". */
 .what{background:var(--navy);padding:88px 0}
-.what .wrap{max-width:780px}
+.what .wrap{max-width:980px}
 .what h2{margin:0 0 26px;font-weight:800;color:#fff;line-height:1.25;font-size:clamp(26px,5.6vw,42px)}
 .what__def{margin:0 0 18px;font-weight:700;color:var(--gold);font-size:clamp(19px,4.6vw,25px);line-height:1.5}
-.what__body{margin:0;font-weight:400;color:rgba(255,255,255,.82);font-size:clamp(16.5px,4vw,19px);line-height:1.7}
+.what__body{margin:0 0 14px;font-weight:400;color:rgba(255,255,255,.82);font-size:clamp(16.5px,4vw,19px);line-height:1.7}
+.what__body:last-of-type{margin-bottom:0}
+.what__def + .what__body{margin-bottom:16px}
 .what__body b{color:#fff;font-weight:700}
 
 /* ---------- 4. מפת המסע ---------- */
@@ -353,12 +355,15 @@ body{
   .road-grid{grid-template-columns:1fr 1fr}
 }
 @media (min-width:1100px){
-  .road-grid{grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:stretch;gap:0}
-  .road-arrow{
-    display:flex;align-items:center;justify-content:center;
-    padding:0 10px;font-size:26px;font-weight:800;color:var(--gold);
-    line-height:1;
+  .road-grid{grid-template-columns:1fr;gap:16px}
+  /* שורה רחבה במקום עמודה צרה: מספר+כותרת בעמודה קבועה, התוכן ברוחב קריא.
+     השלבים קיבלו פסקאות שלמות, ועמודה של 25 תווים הפכה אותם לבלתי-קריאים. */
+  .road-step{
+    display:grid;grid-template-columns:236px 1fr;gap:30px;align-items:start;
+    padding:30px 32px;
   }
+  .road-step__head{position:sticky;top:24px}
+  .road-arrow{display:none}
 }
 
 /* ---------- 4א. סקשן המשרד ----------
@@ -1107,6 +1112,108 @@ body{
 .price__benefit{margin:14px 0 0;padding-top:14px;border-top:1px solid rgba(255,255,255,.14);font-weight:500;color:rgba(255,255,255,.88);font-size:14px;line-height:1.6}
 .price__benefit b{color:var(--gold);font-weight:800}
 .price__note{margin:16px 0 0;font-weight:400;color:rgba(255,255,255,.72);font-size:13.5px;line-height:1.6}
+.price__anchor{margin:12px 0 0;font-weight:400;color:rgba(255,255,255,.68);font-size:13px;line-height:1.55}
+.office-sec__cta,.proof__cta{
+  display:inline-block;margin-top:18px;font-weight:700;text-decoration:none;
+  font-size:clamp(16px,4vw,18px);color:var(--blue);
+  border-bottom:2px solid rgba(36,115,200,.35);padding-bottom:2px;
+}
+.office-sec__cta:hover,.proof__cta:hover{border-bottom-color:var(--blue)}
+.proof__cta{margin-top:22px}
+.safety__who{margin:10px 0 0;font-size:14.5px;color:rgba(20,9,59,.62);font-weight:500}
+.proof-card__cf{margin:18px 0 0}
+.proof-card__cf figcaption{margin-top:9px;font-size:13.5px;color:rgba(20,9,59,.6);text-align:center}
+.pain__cost{margin:14px 0 0;font-size:clamp(15.5px,3.9vw,17px);color:rgba(20,9,59,.72);font-weight:500}
+.what__key{
+  margin:26px 0;padding:22px 0;
+  border-top:1px solid rgba(255,255,255,.14);
+  border-bottom:1px solid rgba(255,255,255,.14);
+  font-size:clamp(19px,4.8vw,23px);font-weight:600;line-height:1.5;
+  letter-spacing:-.2px;color:#fff;text-wrap:balance;
+}
+.what__key b{color:var(--gold);font-weight:800}
+.what__two{display:grid;gap:16px;margin-top:26px}
+@media (min-width:760px){ .what__two{grid-template-columns:1fr 1fr;gap:26px} }
+.what__col{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);
+  border-radius:14px;padding:18px 20px;
+}
+.what__col h3{
+  margin:0 0 12px;font-size:clamp(16.5px,4.2vw,18px);font-weight:800;color:var(--gold);
+  padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.12);
+}
+.what__col p{margin:0 0 11px;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.76)}
+.what__col p:last-child{margin-bottom:0}
+/* המשפט הראשון הוא העוגן - הוא נושא את מה שהכרטיס אומר,
+   והשאר מפרט. בלי זה חמש פסקאות זהות נקראות כגוש אחד. */
+.what__col p:first-of-type{
+  font-size:clamp(16px,4vw,17.5px);font-weight:600;color:#fff;margin-bottom:14px;
+}
+.opens-card__scope{
+  margin:0 0 12px;padding-bottom:12px;border-bottom:1px solid rgba(20,9,59,.1);
+  font-size:15px;line-height:1.55;color:rgba(20,9,59,.8);
+}
+.opens-card__scope b{color:var(--navy);font-weight:700}
+/* פאנל הדוגמאות. 13/09: הפס הצהוב בצד הוסר לבקשת שלהבת, והתוכן
+   קיבל היררכיה - תווית במקום "לדוגמא:" בתוך המשפט, ורשימה במקום
+   משפט רץ עם פסיקים. */
+.road-ex{
+  margin:16px 0 0;padding:14px 16px 15px;border-radius:11px;
+  background:rgba(20,9,59,.045);
+}
+.road-ex + .road-ex{margin-top:10px}
+.road-ex__label{
+  margin:0 0 9px;font-size:11.5px;font-weight:800;letter-spacing:.09em;
+  color:rgba(20,9,59,.5);text-transform:none;
+}
+.road-ex__label b{font-weight:800;color:var(--navy)}
+.road-ex ul{margin:0;padding:0;list-style:none;display:grid;gap:7px}
+.road-ex li{
+  position:relative;padding-inline-start:17px;
+  font-size:15px;line-height:1.55;color:rgba(20,9,59,.74);
+}
+.road-ex li::before{
+  content:"";position:absolute;inset-inline-start:0;top:.62em;
+  width:6px;height:6px;border-radius:50%;background:var(--gold);
+}
+.road-ex p{margin:9px 0 0;font-size:15px;line-height:1.6;color:rgba(20,9,59,.72)}
+.road-ex p:first-child{margin-top:0}
+/* הסלקטור חייב להיות `ul.road-ex__flow` - `.road-ex ul` שמעל יותר
+   ספציפי מ-`.road-ex__flow` לבדו, והיה מחזיר את ה-grid ומערים את
+   השרשרת אחת מתחת לשנייה. */
+.road-ex ul.road-ex__flow{
+  margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;
+  align-items:center;gap:7px 9px;
+}
+.road-ex ul.road-ex__flow li{
+  padding:6px 11px;border-radius:8px;background:var(--white);
+  font-size:14.5px;line-height:1.4;color:var(--navy);
+  box-shadow:0 1px 2px rgba(20,9,59,.07);
+}
+.road-ex ul.road-ex__flow li::before{display:none}
+.road-ex ul.road-ex__flow .road-ex__sep{
+  background:none;box-shadow:none;padding:0;color:rgba(20,9,59,.4);font-size:17px;line-height:1;
+}
+.road-ex__out{
+  margin:10px 0 0;font-size:15px;line-height:1.55;
+  font-weight:600;color:var(--navy);
+}
+/* הטיפול הזה הוא ״דוגמה״ בכל הדף - לא רק במפה. איטליק על פסקה שלמה
+   הוא בלתי-קריא, ולכן הוא הוחלף בפאנל מוטבע. */
+.road-step__head h3{margin:0}
+.road-step__num{margin-bottom:12px}
+.road-step > p:first-of-type,
+.road-step__body > p:first-child{
+  font-size:clamp(16.5px,4.1vw,18px);font-weight:600;color:var(--navy);
+}
+.road-step__body > p{margin:0 0 12px}
+.road-step__body > p:last-child{margin-bottom:0}
+.door__compare{margin:14px 0 0;font-size:15px;line-height:1.7;color:rgba(20,9,59,.72)}
+.faq__todo{background:#FFF6E0;border:1px dashed #A06A00;border-radius:8px;padding:9px 13px;color:#A06A00;font-weight:600;font-size:14.5px}
+.price__cta{margin:18px 0 0;width:100%;justify-content:center;font-size:clamp(16px,4vw,18px);padding:14px 22px}
+.price__calm{margin:10px 0 0;font-weight:400;color:rgba(255,255,255,.62);font-size:12.5px}
+.final__price{margin:6px 0 0;font-weight:700;color:var(--navy);font-size:clamp(16px,4vw,18px)}
+.final__calm{margin:12px 0 0;font-weight:500;color:rgba(20,9,59,.66);font-size:13.5px}
 @media (min-width:820px){ .price-grid{grid-template-columns:1.25fr .75fr;gap:44px;align-items:start} }
 
 /* ---------- 8א. ההתנגדויות ----------
@@ -1320,7 +1427,7 @@ body{
     align-items:center;gap:34px;width:100%;
     max-width:1290px;
   }
-  .brand img{width:38px;height:38px}
+  .brand img{width:210px;height:auto}
   .bullets{gap:12px;margin-bottom:30px}
   .bullets li{font-size:16.5px}
   .bullets li::before{margin-top:9px}
@@ -1353,6 +1460,251 @@ body{
 @media (min-width:1512px){
   .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,2.6fr);max-width:1560px}
 }
+
+    /* ---------- נגן ההמלצות - הועתק מדף הבוגרים, אותו נגן מאושר ---------- */
+    .obj-cf{margin:18px 0 0}
+    .obj-cf__label{font-size:12.5px;font-weight:700;color:#6b6880;margin:0 0 8px}
+/* ---------- COVERFLOW VIDEO GALLERY (card back) ---------- */
+    .gallery-label { font-size: 13px; font-weight: 700; color: var(--navy); margin: 2px auto 8px auto; }
+    .gallery-label .vids-ico { color: var(--c, var(--gold)); }
+    .coverflow { position: relative; width: 100%; height: 300px; margin: 0 auto 6px auto; perspective: 900px; }
+    /* pan-y = גלילה אנכית של הדף נשארת של הדפדפן, החלקה אופקית שלנו */
+    .cf-stage { position: absolute; inset: 0; transform-style: preserve-3d; touch-action: pan-y; }
+    .cf-item { position: absolute; top: 50%; left: 50%; width: 150px; height: 267px; margin: -133px 0 0 -75px;
+      border-radius: 12px; overflow: hidden; cursor: pointer; background: #000;
+      -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+      box-shadow: 0 10px 26px rgba(20,9,59,.28); transition: transform .45s cubic-bezier(.2,.7,.2,1), opacity .45s, filter .45s; }
+    .cf-item img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+    .cf-item iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .cf-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+    .cf-play span { width: 46px; height: 46px; border-radius: 50%; background: rgba(20,9,59,.62); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,.3); }
+    .cf-play span::before { content: ""; border-style: solid; border-width: 9px 0 9px 15px; border-color: transparent transparent transparent #fff; margin-right: -3px; }
+    .cf-cap { position: absolute; bottom: 0; left: 0; right: 0; padding: 18px 8px 7px 8px; font-size: 11px; font-weight: 700; color: #fff; text-align: center; background: linear-gradient(to top, rgba(0,0,0,.72), transparent); pointer-events: none; }
+    .cf-nav { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 0 auto 10px auto; }
+    .cf-arrow { width: 34px; height: 34px; border-radius: 50%; border: none; background: #fff; color: var(--navy); font-size: 18px; font-weight: 800; cursor: pointer; box-shadow: 0 3px 10px rgba(20,9,59,.16); display: flex; align-items: center; justify-content: center; transition: transform .15s; }
+    .cf-arrow:hover { transform: scale(1.1); }
+    .cf-dots { display: flex; gap: 22px; align-items: center; }
+    .cf-dot { position: relative; width: 8px; height: 8px; border-radius: 50%; background: #D5DCE8; border: none; cursor: pointer; padding: 0; transition: background .2s, transform .2s; }
+    .cf-dot.on { background: var(--c, var(--gold)); transform: scale(1.25); }
+    /* מטרת מגע 30x44 סביב נקודה של 8px - הנקודה נשארת קטנה למראה, האצבע
+       מקבלת שטח אמיתי. 30 ולא 44 ברוחב כדי שהמטרות לא יחפפו זו לזו. */
+    .cf-dot::after { content: ""; position: absolute; top: 50%; left: 50%; width: 30px; height: 44px; transform: translate(-50%, -50%); }
+    /* ---------- גלריה: תצוגה לפי מספר הסרטונים ---------- */
+    /* סרטון בודד - בלי קרוסלה. הפוסטר תופס את כל רוחב הכרטיס.
+       (היה 150px צף בתוך קופסה של 299 - רוחב שהוקטן בשביל שכנים שלא קיימים.) */
+    .coverflow.is-single { height: auto; perspective: none; }
+    .coverflow.is-single .cf-stage { position: static; transform-style: flat; }
+    .coverflow.is-single .cf-item {
+      position: relative; top: auto; left: auto; margin: 0;
+      width: 100%; height: auto; aspect-ratio: 4 / 5;
+      transform: none; opacity: 1; filter: none;
+    }
+    /* כמה סרטונים - רצועה שטוחה שנשפכת לרוחב הכרטיס המלא, במקום תלת-ממד.
+       השכן מציץ בקצה ומרמז "יש עוד", בלי לגזול חצי מהרוחב. */
+    /* הרחבה מעבר לפדינג של הכרטיס דרך שוליים שליליים ו-stretch, ולא דרך
+       calc על הרוחב - פריט flex שרחב מהמכל אינו ממורכז אמין (יצא מוסט 22px) */
+    /* מניפה ולא רצועה שטוחה: ברצועה נראה מהשכן רק סליל דק בצד אחד
+       ואפס בשני. --cf-card ו---cf-spread הם מקור-האמת, וה-JS קורא
+       אותם מכאן - ערך פיקסלים פשוט, כדי ש-parseFloat יצליח. */
+    .coverflow.is-strip {
+      --cf-card: 210px; --cf-spread: .60;
+      height: auto; perspective: 900px; overflow: hidden;
+      align-self: stretch; width: auto; margin: 0 -22px 6px -22px;
+      aspect-ratio: 20 / 19;
+    }
+    .coverflow.is-strip .cf-stage { transform-style: preserve-3d; }
+    .coverflow.is-strip .cf-item {
+      width: var(--cf-card); height: auto; aspect-ratio: 4 / 5; margin: 0;
+    }
+    @media (min-width: 360px) { .coverflow.is-strip { --cf-card: 240px; } }
+    /* הפוסטר הוא פריים 9:16 והאריח רחב יותר, כלומר יש חיתוך. חותכים מלמטה
+       ולא מהאמצע - למעלה יושב כרטיס-השם של הסרטון, ובתחתית ממילא יושב
+       הכיתוב שלנו. */
+    .coverflow.is-single .cf-item img, .coverflow.is-strip .cf-item img { object-position: center top; }
+    /* בסרטון בודד הכיתוב מיותר - אין בין מה לבין מה להבחין, כרטיס-השם
+       שבפוסטר כבר אומר מי זו, והוא התנגש עם הכתובית הצרובה בסרטון */
+    .coverflow.is-single .cf-cap { display: none; }
+    /* ברצועה הכיתוב כן מבחין בין הסרטונים - וגדל יחד עם האריח */
+    .coverflow.is-strip .cf-cap { font-size: 13px; padding: 22px 10px 9px 10px; }
+    .coverflow.is-single .cf-play span { width: 58px; height: 58px; }
+    .coverflow.is-single .cf-play span::before { border-width: 11px 0 11px 18px; }
+
+    /* דסקטופ: תקרה לאריח + מניפה. המכל כאן 521px (בדף השאלות 1138),
+       ולכן הפריסה צרה יותר - אחרת השכנים יוצאים מהמסגרת.
+       9:16 = היחס שבו הסרטונים באמת צולמו, בלי חיתוך. */
+    @media (min-width: 700px) {
+      .coverflow.is-single .cf-item { width: min(100%, 300px); margin: 0 auto; aspect-ratio: 9 / 16; }
+      .coverflow.is-strip {
+        --cf-card: 270px; --cf-spread: .62;
+        width: 100%; align-self: auto; margin: 0 0 6px 0;
+        height: 520px; aspect-ratio: auto; overflow: hidden;
+        perspective: 1400px;
+      }
+      .coverflow.is-strip .cf-item { width: var(--cf-card); height: 480px; aspect-ratio: auto; }
+      .coverflow.is-strip .cf-cap { font-size: 12px; padding: 18px 9px 8px 9px; }
+      .coverflow.is-strip + .cf-nav { display: none; }
+    }
+    /* ---------- INLINE PLAYER (מתנגן בתוך האריח על הכרטיס) ----------
+       זו ברירת המחדל בלחיצה על סרטון - אותו גודל שהאריח כבר מוצג בו,
+       לא מסך מלא. הגדלה היא פעולה נפרדת ומפורשת (כפתור ⤢ למטה). */
+    .cf-item-player { position: absolute; inset: 0; }
+    .cf-item-holder { position: absolute; inset: 0; }
+    .cf-item-holder iframe { width: 100%; height: 100%; border: 0; display: block; }
+    /* הסרטון עצמו לוקח כ-2 שניות אמיתיות להתחיל (בדיקה חיה) - בלי משוב
+       חזותי בזמן הזה זה מרגיש תקוע. משאירים את הפוסטר + ספינר עד לרגע
+       שהניגון באמת מתחיל (לא ready() - זה מוקדם מדי, עדיין מסך שחור). */
+    .cf-item-loading { position: absolute; inset: 0; z-index: 1; transition: opacity .25s ease; }
+    .cf-item-loading.hide { opacity: 0; pointer-events: none; }
+    .cf-item-loading img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .cf-item-spinner {
+      position: absolute; top: 50%; left: 50%; width: 32px; height: 32px; margin: -16px 0 0 -16px;
+      border: 3px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%;
+      animation: cf-spin .8s linear infinite;
+    }
+    @keyframes cf-spin { to { transform: rotate(360deg); } }
+    .cf-item-tap { position: absolute; inset: 0; z-index: 2; padding: 0; border: 0; background: transparent; cursor: pointer; }
+    .cf-item-icon {
+      position: absolute; top: 50%; left: 50%; width: 52px; height: 52px; margin: -26px 0 0 -26px;
+      border-radius: 50%; background: rgba(20,9,59,.58);
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none; opacity: 0; transition: opacity .3s ease; z-index: 2;
+    }
+    .cf-item-icon.show { opacity: 1; }
+    .cf-item-icon svg { width: 24px; height: 24px; fill: #fff; }
+    .cf-item-expand {
+      position: absolute; z-index: 3; top: 8px; left: 8px; width: 32px; height: 32px;
+      border-radius: 50%; border: none; background: rgba(0,0,0,.5); color: #fff;
+      display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;
+    }
+    .cf-item-expand svg { width: 16px; height: 16px; fill: currentColor; }
+    /* בר התקדמות - מופיע רק בזמן ניגון ונגרר להזזה קדימה/אחורה. */
+    .cf-item-bar { position: absolute; z-index: 4; left: 12px; right: 12px; bottom: 10px;
+      height: 20px; display: flex; align-items: center; cursor: pointer; touch-action: none; }
+    .cf-item-bar span { position: relative; flex: 1; height: 4px; border-radius: 99px;
+      background: rgba(255,255,255,.34); overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.35); }
+    .cf-item-bar i { position: absolute; top: 0; bottom: 0; left: 0; width: 0;
+      background: #FFD747; border-radius: 99px; }
+    /* עבר מתחתית-מרכז לפינה: שם ישב בדיוק על בר ההתקדמות. */
+    .cf-item-sound {
+      position: absolute; z-index: 4; top: 8px; right: 8px;
+      display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
+      background: var(--gold); color: var(--navy); border: none; border-radius: 50px;
+      padding: 6px 12px; font-size: 11px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,.4);
+    }
+    .cf-item-sound[hidden] { display: none; }
+    .cf-item-sound .ic-off, .cf-item-sound b { display: none; }
+    .cf-item-sound.muted .ic-on { display: none; }
+    .cf-item-sound.muted .ic-off, .cf-item-sound.muted b { display: inline; }
+    .cf-lb-sound .ic-off, .cf-lb-sound b { display: none; }
+    .cf-lb-sound.muted .ic-on { display: none; }
+    .cf-lb-sound.muted .ic-off, .cf-lb-sound.muted b { display: inline; }
+    .cf-item-sound svg { width: 12px; height: 12px; fill: currentColor; }
+    /* ---------- VIDEO LIGHTBOX - פעולת "הגדלה" מפורשת בלבד, לא ברירת מחדל ---------- */
+    .cf-lb {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(12,6,32,.94);
+      display: flex; align-items: center; justify-content: center;
+      padding: 0; opacity: 0; transition: opacity .2s ease;
+    }
+    .cf-lb[hidden] { display: none; }
+    .cf-lb.is-open { opacity: 1; }
+    /* --lb-ar = יחס רוחב/גובה של הסרטון; נקבע מהנגן עצמו, 9:16 עד שידוע.
+       הסרטון לוקח את כל מה שהמסך נותן - ברוחב או בגובה, לפי מה שנגמר קודם. */
+    .cf-lb-frame {
+      position: relative; background: #000; border-radius: 14px; overflow: hidden;
+      width: min(100%, calc(94vh * var(--lb-ar, .5625)));
+      aspect-ratio: var(--lb-ar, .5625);
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+    }
+    .cf-lb-holder { position: absolute; inset: 0; }
+    .cf-lb-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+    /* אותה סיבה כמו .cf-item-loading - הסרטון נטען מחדש (גם אם כבר התנגן
+       באריח לפני ההגדלה) ולוקח כ-2 שניות; פוסטר+ספינר במקום מסך שחור */
+    .cf-lb-loading { position: absolute; inset: 0; z-index: 1; transition: opacity .25s ease; }
+    .cf-lb-loading.hide { opacity: 0; pointer-events: none; }
+    .cf-lb-loading img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .cf-lb-spinner {
+      position: absolute; top: 50%; left: 50%; width: 44px; height: 44px; margin: -22px 0 0 -22px;
+      border: 4px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%;
+      animation: cf-spin .8s linear infinite;
+    }
+    /* שכבה שקופה מעל ה-iframe - מבטיחה שהקשה = עצירה/המשך ותו לא */
+    .cf-lb-tap { position: absolute; inset: 0; z-index: 2; padding: 0; border: 0; background: transparent; cursor: pointer; }
+    .cf-lb-icon {
+      position: absolute; top: 50%; left: 50%; width: 74px; height: 74px; margin: -37px 0 0 -37px;
+      border-radius: 50%; background: rgba(20,9,59,.58);
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none; opacity: 0; transition: opacity .3s ease; z-index: 2;
+    }
+    .cf-lb-icon.show { opacity: 1; }
+    .cf-lb-icon svg { width: 32px; height: 32px; fill: #fff; }
+    /* יושב מעל הסרטון (שתופס עכשיו את כל הרוחב), ולכן צריך רקע כהה משלו
+       ומרווח מהמצלמה/הכפתורים של הטלפון */
+    .cf-lb-close {
+      position: absolute; z-index: 2;
+      top: calc(12px + env(safe-area-inset-top, 0px));
+      left: calc(12px + env(safe-area-inset-left, 0px));
+      width: 44px; height: 44px;
+      border-radius: 50%; border: none; background: rgba(0,0,0,.5); color: #fff;
+      font-size: 27px; line-height: 1; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cf-lb-close:hover { background: rgba(0,0,0,.72); }
+    .cf-lb-sound {
+      position: absolute; z-index: 2; bottom: 76px; left: 50%; transform: translateX(-50%);
+      display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
+      background: var(--gold); color: var(--navy); border: none; border-radius: 50px;
+      padding: 10px 18px; font-size: 14px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0,0,0,.4);
+    }
+    .cf-lb-sound[hidden] { display: none; }
+    .cf-lb-sound svg { width: 16px; height: 16px; fill: currentColor; }
+    /* הכיתוב יושב על הסרטון ולא מתחתיו, כדי לא לגזול ממנו גובה */
+    .cf-lb-cap {
+      position: absolute; left: 0; right: 0; bottom: 0; margin: 0;
+      padding: 32px 14px 12px 14px; color: #fff; font-size: 15px; font-weight: 700;
+      text-align: center; pointer-events: none;
+      background: linear-gradient(to top, rgba(0,0,0,.78), transparent);
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 28px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  
+/* ===== חשיפה בגלילה =====
+   נוסף 13/09 - בדף לא הייתה שום אנימציה חוץ מספינר הנגן.
+   המחלקות מתווספות ע"י JS בלבד, ולכן בלי JS שום דבר אינו מוסתר -
+   זה הכלל היחיד שחשוב כאן: אסור שתוכן ימתין ל-observer כדי להיראות. */
+html.rv-on .rv{
+  opacity:0;transform:translateY(16px);
+  transition:opacity .55s cubic-bezier(.22,.7,.3,1), transform .55s cubic-bezier(.22,.7,.3,1);
+  transition-delay:var(--rv-d,0ms);
+  will-change:opacity,transform;
+}
+html.rv-on .rv.rv-in{opacity:1;transform:none}
+/* כרטיסי ההוכחה נושאים perspective להיפוך התלת-ממד, ולכן אסור לתת להם
+   transform משלהם - הוא היה שובר את ההיפוך. אצלם שקיפות בלבד. */
+html.rv-on .rv-fade{opacity:0;transition:opacity .55s ease;transition-delay:var(--rv-d,0ms)}
+html.rv-on .rv-fade.rv-in{opacity:1}
+@media (prefers-reduced-motion: reduce){
+  html.rv-on .rv,html.rv-on .rv-fade{
+    opacity:1;transform:none;transition:none;
+  }
+}
+
+/* "מאיפה באו ולאן הגיעו" - רצועת סריקה בראש הכרטיס. נוספה 13/09
+   לבקשת שלהבת: החזית הייתה דלה מול גב שנושא סרטון, והיא ביקשה
+   שהקורא יראה את המעבר בלי להפוך את הכרטיס. */
+.proof-card__arc{
+  display:flex;align-items:center;gap:7px 10px;flex-wrap:wrap;
+  margin:0;padding:11px 13px;border-radius:10px;
+  background:rgba(20,9,59,.042);
+}
+.proof-card__arc span{font-size:14px;line-height:1.42}
+.proof-card__arc .arc-from{color:rgba(20,9,59,.62)}
+.proof-card__arc .arc-sep{color:rgba(20,9,59,.34);font-size:16px;line-height:1}
+.proof-card__arc .arc-to{color:var(--navy);font-weight:700}
 </style>
 </head>
 <body>
@@ -1361,21 +1713,20 @@ body{
   <div class="wrap hero-grid">
     <div class="txt">
       <div class="brand">
-        <img src="assets/aimprove-logo-white.png" alt="אִימפּרוּב" />
-        <span>אִימפּרוּב</span>
+        <img src="assets/aimprove-lockup-white.png" alt="אִימפּרוּב" />
       </div>
 
-      <h1>משרד AI שעובד בשבילכם.<br /><span class="accent">אתם בונים אותו</span>, בקצב שלכם.</h1>
-
-      <p class="sub">כולל שעתיים פרטיות עם מנטור אישי, שיודע בדיוק איפה תתקעו, כי הוא כבר היה שם.</p>
+      <h1>משרד AI שעובד בשבילכם.<br /><span class="accent">ואתם בונים אותו</span>, בקצב שלכם.</h1>
 
       <ul class="bullets">
         <li>חומרי למידה ותרגולים מובנים</li>
-        <li>שנה שלמה במשרד הווירטואלי</li>
+        <li>מנוי לשנה במשרד הווירטואלי</li>
         <li>מתחילים מהשיעור הראשון - מיד</li>
       </ul>
 
-      <a class="btn" href="#what">להתחיל לבנות היום</a>
+      <p class="sub">כולל שעתיים פרטיות עם מנטור אישי, שיודע בדיוק איפה תתקעו, כי הוא כבר היה שם.</p>
+
+      <a class="btn" href="#price">להתחיל לבנות היום</a>
     </div>
 
     <div class="art">
@@ -1406,8 +1757,9 @@ body{
   <div class="wrap">
     <h2>המשפט שאני שומעת הכי הרבה: <b>&quot;זה לא רץ בלעדיי.&quot;</b></h2>
     <p class="pain__body">אתם כבר עובדים הרבה עם AI. אתם פשוט לא ממצים אותו.<br />
-    אולי בניתם כמה סקילים. אולי אפילו סוכן אחד. ואולי אתם פשוט עובדים עם קלוד כל יום ומרגישים שיש שם עוד הרבה.</p>
+ אולי בניתם כמה סקילים. <br />אולי אפילו סוכן אחד. <br />ואולי אתם פשוט עובדים עם קלוד כל יום ומרגישים שיש שם עוד הרבה.</p>
     <p class="pain__punch">בכל מקרה - זה עדיין לא מערכת. זה עדיין תלוי בכם.</p>
+    <p class="pain__cost">ובכל יום שעובר, אתם עושים ידנית דברים שכבר יכלו לרוץ לבד.</p>
   </div>
 </section>
 
@@ -1417,9 +1769,31 @@ body{
 <section class="what">
   <div class="wrap">
     <h2>מה בדיוק קונים כאן?</h2>
-    <p class="what__def">זו תוכנית הכשרה פרקטית, שלוקחת אתכם יד ביד עם חומרי למידה ותרגולים מובנים - מהצעד הראשון ועד שיש לכם משרד AI שעובד בשבילכם.</p>
-    <p class="what__body">זה לא עוד קורס דיגיטלי שתקנו ובחיים לא תפתחו. ומשרד AI הוא לא עוד סוכן בודד ולא עוד סקיל - הוא <b>מבנה</b>: מחלקות, כל סוכן עם תפקיד מוגדר, וכולם יודעים למי מעבירים הלאה. בדיוק כמו ארגון אמיתי, רק שהעובדים בו הם סוכני AI.<br />
-    את המשרד אתם בונים אצלכם, וכל מה שאתם בונים נשאר אצלכם. המשרד הווירטואלי הוא המערכת שמציידת אתכם לבנות אותו: לראות אותו מולכם, ולתחזק אותו לאורך זמן. גישה אליו לשנה שלמה כלולה כאן.</p>
+    <p class="what__def">תוכנית הכשרה לבניית צוות של סוכני AI.</p>
+    <p class="what__body">התוכנית לוקחת אתכם יד ביד עם חומרי למידה ותרגולים מובנים - מהצעד הראשון ועד שיש לכם משרד AI - מלא בסוכנים שעובדים בשבילכם.</p>
+    <p class="what__body">זה לא עוד קורס דיגיטלי שתקנו ובחיים לא תפתחו. זו תוכנית מובנית עם שלבים ברורים ליישום.</p>
+
+    <p class="what__key">משרד AI הוא לא עוד סוכן בודד ולא עוד סקיל. הוא <b>מבנה</b>: ארכיטקטורה ברורה של מחלקות, ובתוכן סוכנים. כל סוכן עם תפקיד מוגדר, וכולם מדברים ביניהם.</p>
+    <p class="what__body">בדיוק כמו ארגון אמיתי - רק שהעובדים בו הם סוכני AI.</p>
+
+    <div class="what__two">
+      <div class="what__col">
+        <h3>המשרד שלכם</h3>
+        <p>בתוכנית אתם תבנו משרד AI, שבתוכו מחלקות עם מלאאא סוכנים לצרכים שלכם.</p>
+        <p>אצלנו לומדים לבנות סוכנים עם קלוד קוד, אבל הם לא נשארים בתוך קלוד.</p>
+        <p>ההרצה בפועל של מה שאתם בונים נעשית מהמחשב שלכם/מהענן. <br />ולכן הסוכנים שתבנו לא תלויים בכלי מסוים.</p>
+        <p>לדוגמא: אם תחליטו בעתיד לעבור לקודקס של OpenAI, תוכלו לעשות את זה בלי בעיה, כיוון שאנחנו משתמשים בכלים רק בשלב הבניה.</p>
+        <p>וכן, השיטה שתלמדו כאן חסינה מפני שינויים ב-AI, ותישאר רלוונטית לכל כלי גם בעתיד.</p>
+      </div>
+      <div class="what__col">
+        <h3>המשרד הווירטואלי</h3>
+        <p>זו הסביבה לתיעוד הסוכנים שתבנו. הגישה אליו כלולה כאן לשנה שלמה ללא עלות.</p>
+        <p>גם אתם וגם קלוד יכולים לנווט במשרד הוירטואלי ולהיות בשליטה על מה שבניתם לאורך זמן.</p>
+        <p>אתם מקבלים גישה ל-MCP מיוחד שיושב בתוך קלוד ומנהל לכם הבניה והתיעוד.</p>
+        <p>כחלק מהתוכנית תקבלו גישה לסוכנים שיעזרו לכם לבנות כל סוכן שרק תחלמו.<br />וגם סוכנת HR בשם ׳דבורה׳ שתעזור לכם לסדר ולארגן את ה״עובדים״ והמחלקות של המשרד שלכם.</p>
+        <p>כל מה שתבנו - עצמאי ולא תלוי במשרד הוירטואלי. אפשר להפסיק להשתמש בו בכל שלב ללא השלכות על מה שבניתם או תבנו בעתיד.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1429,13 +1803,14 @@ body{
 <section class="opens">
   <div class="wrap">
     <h2>אז מה נפתח לכם, ומתי</h2>
-    <p class="opens__lead">משלמים פעם אחת, ונכנסים <b>באותו רגע</b>. אין תור, אין תאריך פתיחה, ואין מחזור לחכות לו - מתחילים מהשיעור הראשון היום.</p>
+    <p class="opens__lead">נרשמים, נכנסים ומתחילים לבנות סוכני AI מדהימים <b>באותו רגע</b> - השיעור והסוכן הראשון שלכם, כבר היום.</p>
 
     <div class="opens-grid">
       <div class="opens-card">
-        <div class="opens-card__top"><h3>אתר חומרי הלמידה</h3></div>
+        <div class="opens-card__top"><h3>אתר חומרי הלמידה</h3><span class="opens-card__val">15 שעות</span></div>
+        <p class="opens-card__scope"><b>כ-15 שעות של למידה מובנית. </b>חמישה שיעורים קלים מאוד לצריכה עצמאית - ובנוסף יש את שעות התרגול ושיעורי הבית, שאינן נספרות כאן</p>
         <ul>
-          <li>כל השיטה מוקלטת ומסודרת שם לפי הסדר - מהצעד הראשון ועד משרד שעובד</li>
+          <li>כל השיטה מוקלטת ומסודרת - מהצעד הראשון ועד משרד שעובד</li>
           <li>צופים מתי שנוח, עוצרים באמצע, חוזרים כמה פעמים שצריך</li>
           <li>ההקלטות והחומרים נשארים אצלכם - גם אחרי שסיימתם</li>
         </ul>
@@ -1444,18 +1819,18 @@ body{
       <div class="opens-card">
         <div class="opens-card__top"><h3>המשרד הווירטואלי</h3><span class="opens-card__val">שנה · שווי 1,800 ₪</span></div>
         <ul>
-          <li>הסביבה שבה בונים בפועל - ורואים את המשרד מולכם, בדיוק כמו התמונה למטה</li>
-          <li>סוכני עזר שעוזרים לכם לבנות, לארגן ולתעד את מה שבניתם</li>
-          <li>ספריית סקילים מוכנים - לא מתחילים מדף ריק</li>
+          <li>הסביבה שבה אתם מתעדים את המחלקות והסוכנים שבניתם - כדי לשלוט במה שבניתם, גם כשזה גדל</li>
+          <li>סוכני עזר שעוזרים לכם לבנות סוכנים, לארגן ולתעד את מה שבניתם</li>
+          <li>גישה לספריית הסקילים הסודית של שלהבת -הסקילים של הסוכנים שמנהלים את אִימפּרוּב. (שיווק, אסטרטגיה, תוכן, סושיאל, קופירייטינג ועוד ועוד). כדי שלא תתחילו מ-0</li>
         </ul>
       </div>
 
       <div class="opens-card">
         <div class="opens-card__top"><h3>שעתיים אישיות</h3><span class="opens-card__val">שווי 800 ₪</span></div>
         <ul>
-          <li>שני שוברים לשעה עם מנטור/ית - נפתחים לכם מיד</li>
-          <li>אתם בוחרים עם מי ומתי, כשבאמת צריך</li>
-          <li>תקפים לכל השנה - לא פגים אחרי חודש</li>
+          <li>שני שוברים של שעה עם מנטור/ית - נפתחים לכם מיד</li>
+          <li>תקפים לכל השנה - מתי שתצטרכו את המנטור, תוכלו לקבוע שיעור</li>
+          <li>התוכנית בנויה כך שתחוו הצלחה מהירה ואמיתית גם ללא מנטור, אבל דאגנו לכם לרשת ביטחון בכל זאת</li>
         </ul>
       </div>
     </div>
@@ -1473,33 +1848,78 @@ body{
 
     <div class="road-grid">
       <div class="road-step">
-        <span class="road-step__num" aria-hidden="true">1</span>
-        <h3>הדבר הראשון שרץ בלעדיכם</h3>
-        <p>הדבר הראשון שמפסיק לדרוש אתכם. משהו שקורה מעצמו, כל יום, בלי שנגעתם בו.</p>
+        <div class="road-step__head"><span class="road-step__num" aria-hidden="true">1</span>
+        <h3>הדבר הראשון שרץ בלעדיכם</h3></div>
+        <div class="road-step__body"><p>נתחיל מלבנות סוכן אוטומטי שעושה את העבודה הכי שחורה שלכם במקומכם. משהו שקורה מעצמו, כל יום, בלי שנגעתם בו.</p>
+        <p>לאחר שתראו כמה קל לבנות סוכן כזה, תמשיכו לבנות עוד עשרות כאלה - עד שנוריד מכם את כל העבודה המשעממת והרוטינית.</p>
+          <div class="road-ex">
+            <p class="road-ex__label">לדוגמה</p>
+            <ul>
+              <li>איסוף חשבוניות ושליחה לרואה חשבון</li>
+              <li>מעבר על המיילים ומענה עליהם</li>
+              <li>מענה ללקוחות בוואטסאפ</li>
+            </ul>
+          </div></div>
       </div>
 
       <div class="road-arrow" aria-hidden="true">&#8592;</div>
 
       <div class="road-step">
-        <span class="road-step__num" aria-hidden="true">2</span>
-        <h3>הסוכן הראשון שחושב כמוכם</h3>
-        <p>לא בוט שעונה תשובות מוכנות. סוכן שמכיר את הידע שלכם ופועל לפי הלוגיקה שלכם.</p>
+        <div class="road-step__head"><span class="road-step__num" aria-hidden="true">2</span>
+        <h3>סוכן מורכב שחושב כמוכם</h3></div>
+        <div class="road-step__body"><p>לא בוט שעונה תשובות מוכנות. <br />סוכן עם שם, אופי ומוח. שמכיר את הידע שלכם ופועל לפי הלוגיקה שלכם.</p>
+        <p>בקיצור, יודע לעשות דברים שעד היום דרשו את המוח שלכם.</p>
+          <div class="road-ex">
+            <p class="road-ex__label">לדוגמה</p>
+            <ul>
+              <li>כתיבת הצעות מחיר מורכבות</li>
+              <li>יצירת תוכן והעלאה לרשתות</li>
+              <li>אסטרטגיה ויישום לקמפיינים ממומנים</li>
+              <li>מענה למכרזים</li>
+            </ul>
+            <p class="road-ex__out">כל דבר שאתם יודעים להסביר מה ואיך אתם עושים - תוכלו לבנות סוכן עם מוח שיעשה את זה במקומכם.</p>
+          </div></div>
       </div>
 
       <div class="road-arrow" aria-hidden="true">&#8592;</div>
 
       <div class="road-step">
-        <span class="road-step__num" aria-hidden="true">3</span>
-        <h3>הסוכנים מתחילים לעבוד יחד</h3>
-        <p>במקום כמה סוכנים נפרדים - שרשרת שעובדת מקצה לקצה.</p>
+        <div class="road-step__head"><span class="road-step__num" aria-hidden="true">3</span>
+        <h3>הסוכנים מתחילים לעבוד יחד</h3></div>
+        <div class="road-step__body"><p>במקום כמה סוכנים נפרדים - שרשרת שעובדת מקצה לקצה.<br /><br />נתחיל לחבר את הסוכנים אחד לשני, ולבנות שרשראות של עבודה מורכבות ויעילות יותר.</p>
+          <div class="road-ex">
+            <p class="road-ex__label">לדוגמה</p>
+            <ul class="road-ex__flow">
+              <li>מסכם שיחת מכירה</li>
+              <li class="road-ex__sep" aria-hidden="true">&#8592;</li>
+              <li>מוציא מהסיכום הצעת מחיר</li>
+              <li class="road-ex__sep" aria-hidden="true">&#8592;</li>
+              <li>שולח ללקוח את המייל</li>
+            </ul>
+          </div>
+          <div class="road-ex">
+            <p class="road-ex__label">ועוד דוגמה - <b>דולב, בעל סוכנות פרסום, בנה את זה</b></p>
+            <ul class="road-ex__flow">
+              <li>מחפש משפיענים בתחום</li>
+              <li class="road-ex__sep" aria-hidden="true">&#8592;</li>
+              <li>מחפש עסקים שמתאימים להם</li>
+              <li class="road-ex__sep" aria-hidden="true">&#8592;</li>
+              <li>מקשר ביניהם</li>
+            </ul>
+            <p class="road-ex__out">ודולב גוזר את הקופון על השידוך.</p>
+          </div></div>
       </div>
 
       <div class="road-arrow" aria-hidden="true">&#8592;</div>
 
       <div class="road-step">
-        <span class="road-step__num" aria-hidden="true">4</span>
-        <h3>משרד שלם שעובד</h3>
-        <p>מחלקות, תפקידים וידע משותף. אתם מנהלים מלמעלה במקום לעשות בעצמכם.</p>
+        <div class="road-step__head"><span class="road-step__num" aria-hidden="true">4</span>
+        <h3>משרד שלם שעובד</h3></div>
+        <div class="road-step__body"><p>מחלקות, תפקידים וידע משותף. אתם מנהלים מלמעלה במקום לעשות בעצמכם.</p>
+          <div class="road-ex">
+            <p class="road-ex__label">כמו אצל שלהבת</p>
+            <p>משרד AI עם <b>6 מחלקות</b>, שמייצר לאִימפּרוּב <b>רבע מיליון ₪ בחודש</b> - בלי שהיא צריכה להעסיק עובדים כלל.</p>
+          </div></div>
       </div>
     </div>
 
@@ -1537,12 +1957,12 @@ body{
        המשרד, כמו כרטיס ההתחברות ב-/login - לא סקשן נפרד עם ריבוע בתוכו. -->
     <div class="office-sec__panel">
     <h2>זה מה שאתם הולכים לבנות</h2>
-    <p class="office-sec__lead">מחלקות, ובכל אחת סוכנים עם תפקיד מוגדר, ידע משלהם, ומי שהם מעבירים אליו הלאה.</p>
+    <p class="office-sec__lead">מחלקות, ובכל אחת סוכנים עם תפקיד מוגדר, עם ידע וסקילים משלהם.</p>
     <p class="office-sec__cap"><b>זה לא איור וזו לא הדגמה - זה משרד ה-AI האמיתי של שלהבת, צילום מסך מתוכו.</b> זה מה שמנהל את כל האופרציה של אִימפּרוּב: אופרציה שדורשת עשרות עובדים, בלי עובד אנושי אחד. כל קובייה פה היא סוכן שרץ היום - ובמשרד עצמו לוחצים על כל אחד מהם ורואים לאיזה ידע ויכולות הוא מחובר.</p>
 
     <div class="office-legend">
       <h3>מה כל צורה אומרת</h3>
-      <p class="office-legend__note">הדוגמאות כאן הן טעימה בלבד - בונים כל דבר שהעסק שלכם צריך</p>
+      <p class="office-legend__note">הדוגמאות שבתמונה הן טעימה בלבד - בונים כל דבר שהעסק שלכם צריך</p>
       <div class="office-legend__grid">
         <div class="office-legend__item"><span class="office-legend__shape office-legend__shape--cube" aria-hidden="true"></span><span class="office-legend__text"><b>קובייה</b> - סוכן. עובד עם תפקיד מוגדר, יושב במחלקה שלו</span></div>
         <div class="office-legend__item"><span class="office-legend__shape office-legend__shape--capsule" aria-hidden="true"></span><span class="office-legend__text"><b>גלולה</b> - מסמך ידע. מה שהסוכן יודע <i>על</i> העסק, הקהל, איך עובדים אצלכם</span></div>
@@ -1551,9 +1971,10 @@ body{
       </div>
     </div>
 
-    <p class="office-sec__more">בכל מחלקה יושבים הסוכנים שעוסקים בתחום שלה, וכל סוכן מרכיבים משלושת הדברים שלמעלה - לא בונים אותו מאפס בכל פעם. ולמטה בדף תראו בדיוק מה בוגרים כבר בנו כך - לא הדגמות, משרדים אמיתיים שרצים היום.</p>
+    <p class="office-sec__more">בכל מחלקה יושבים הסוכנים שעוסקים בתחום שלה, וכל סוכן מרכיבים משלושת הדברים שלמעלה - לא בונים אותו מאפס בכל פעם. ולמטה בדף תראו בדיוק מה בוגרים כבר בנו כך - משרדים אמיתיים שרצים היום.</p>
 
     <button type="button" class="office__hint">להיכנס למשרד ולשחק בו</button>
+    <a class="office-sec__cta" href="#price">רוצים משרד כזה משלכם? ←</a>
     </div>
   </div>
 </section>
@@ -1569,16 +1990,16 @@ body{
 <section class="bridge">
   <div class="wrap">
     <p class="bridge__kicker">ראיתם את המשרד הזה?</p>
-    <h2>זה לא הדגמה.<br /><span class="accent">זה מה שאתם הולכים לבנות.</span></h2>
-    <p class="bridge__lead">לעסק שלכם. עם המחלקות שלכם, עם הסוכנים שאתם צריכים, ועם הידע שרק אתם מכירים. <b>ואתם לא מגיעים לשם בקפיצה אחת - ולא באלתור.</b></p>
-    <p class="bridge__how">יש סדר, והוא נבנה בדיוק בשביל זה: <b>מתחילים מדבר אחד קטן שרץ בלי שנגעתם בו</b>, ומשם מרכיבים. כל שלב נשען על מה שכבר עובד, כל תרגול מוודא שהיסוד יציב לפני שממשיכים, ובכל רגע ברור מה הצעד הבא. <b>אף פעם לא צריך לנחש מה עכשיו</b> - וזה מה שהופך את זה מ"עוד ניסיון" למשרד שבאמת קם.</p>
+    <h2>זו לא הדגמה.<br /><span class="accent">זה מה שאתם הולכים לבנות.</span></h2>
+    <p class="bridge__lead">לעסק שלכם. עם המחלקות שלכם, עם הסוכנים שאתם צריכים, ועם הידע שרק אתם מכירים. <b>ואתם מגיעים לשם בצורה שיטתית - ולא באלתור אינטואיטיבי.</b></p>
+    <p class="bridge__how">יש סדר: <b>מתחילים מדבר אחד קטן שרץ בלי שנגעתם בו</b>, ומשם מרכיבים. כל שלב נשען על מה שכבר עובד, ו<b>אף פעם לא צריך לנחש מה עכשיו</b> - וזה מה שהופך את זה מ"עוד ניסיון בקלוד" למשרד AI שעובד.</p>
   </div>
 </section>
 
 <section class="proof">
   <div class="wrap">
-    <h2>עורכת דין, מטפלת, בעל סוכנות - וזה מה שכל אחד מהם בנה</h2>
-    <p class="proof__lead">ששת האנשים שלמטה הגיעו מעולמות רחוקים זה מזה - עריכת דין, טיפול, פרסום, מסחר, פיתוח. כל אחד מהם בנה לעצמו משרד שעובד בשבילו, וזה בדיוק מה שיש בו.</p>
+    <h2>דוגמאות של תלמידים - וזה מה שכל אחד מהם בנה</h2>
+    <p class="proof__lead">ששת האנשים שלמטה הגיעו מעולמות רחוקים זה מזה - עריכת דין, טיפול, פרסום, מסחר, פיתוח. כל אחד מהם בנה לעצמו משרד שעובד בשבילו, בקלות ובמינימום זמן ומאמץ.</p>
 
     <!-- מקרא מקוצר. שלהבת: *"נעשה להם מקראה, שיהיה כתוב הקובייה זה סוכן,
          החרוט זה סקיל וכן הלאה."* ⛔ **בלי הגלולה** (מסמך ידע) - בבקשה
@@ -1602,24 +2023,21 @@ body{
                 <p class="proof-card__role">עורכת דין לענייני משפחה, 20 שנה</p>
               </div>
             </div>
+              <div class="proof-card__arc"><span class="arc-from">20 שנה של כתבי טענות סיזיפיים</span><span class="arc-sep" aria-hidden="true">&#8592;</span><span class="arc-to">משרד משפטי של שישה סוכנים</span></div>
             <div class="proof-card__before">
               <p class="proof-card__before-head">לפני</p>
-              <ul class="proof-card__list">
-                <li>הסתכלה על מה שאחרים בכיתה כבר בנו וכתבה: "אצל רון יש כבר ממש מערכת.."</li>
-                <li>מיד אחר כך: "אז אעשה שוב"</li>
-              </ul>
-              <blockquote class="proof-card__before-quote">אחרי שעות.. התוצר באוויר</blockquote>
-              <!-- פלייסהולדר - שלהבת מחליפה בציטוט משלה (31/08: הוסתר מהתצוגה - נראה לכל מבקר) -->
+              <blockquote class="proof-card__before-quote">אחרי 20 פלוס שנה כעורכת דין, כתיבת כתבי טענות הייתה מייגעת ומעייפת. לאסוף את החומר, לכתוב, לסדר, ופרקים, ותוסיפי נספחים - זה היה סיזיפי. העדפתי להוציא החוצה, רק שזה לא יהיה אצלי.</blockquote>
             </div>
             <div class="proof-card__divider"></div>
             <div class="proof-card__today">
               <p class="proof-card__today-head">והיום יש לה משרד</p>
               <ul class="proof-card__list">
-                <li class="is-cube"><b>"יוסף"</b> - כתבי טענות, ייפוי כוח, הסכמי גירושין וצוואות.</li>
-                <li class="is-cube"><b>טיולון</b> - סוכן שמתכנן טיולים. היא בנתה אותו לעצמה, והמורה שלה ביקשה ממנה עותק.</li>
+                <li class="is-cube"><b>"המשרד המשפטי"</b> - צוות של שישה סוכנים: כתבי טענות, ייפוי כוח, הסכמי גירושין, בדיקת הסכמים, אפוטרופוס לדין וניסוח צוואות.</li>
+                <li class="is-cube"><b>ועשרות סוכנים נוספים</b> - לעבודה המשפטית שלה, ומחוצה לה.</li>
               </ul>
-              <blockquote class="proof-card__quote">התחלתי ממה שהכי כאב... יש לי בעצם משרד.</blockquote>
+              <blockquote class="proof-card__quote">אחרי התנסות לא מוצלחת בקורס אחר ללימוד קלוד - מהרגע הראשון היה ברור שזה משהו אחר.</blockquote>
             </div>
+            <p class="proof-card__outcome">במילים שלה: <b>"ממי שלא נגעה כמעט בקלוד, יצרתי כל כך הרבה סוכנים. התגברתי על כל כך הרבה חסמים שהיו לי כמי שלא עסקה מעולם בתכנות."</b> ותלמידה אחרת כתבה בקבוצה: <b>"אין על הסוכן של ליטל, בזכותו סגרתי את כל טיול הבת מצווה של הבת שלי ביום אחד.. אליפות!"</b></p>
             <button class="proof-card__flip" type="button">עוד מהמשרד של ליטל</button>
           </div>
           <div class="proof-card__face proof-card__face--back" inert>
@@ -1629,7 +2047,11 @@ body{
                 <li class="is-cube"><b>מערכת ההפעלה שלי</b> - כל הסוכנים והידע שלה מתועדים במקום אחד ומגובים, כך שכלום לא הולך לאיבוד.</li>
                 <li class="is-ring"><b>סוכן שבונה סוכנים</b> - ביקשה סוכן שיודע לבנות סוכנים אחרים, כדי שהיכולת הזו תישאר אצלה תמיד.</li>
               </ul>
-            <p class="proof-card__outcome">תלמידה אחרת כתבה בקבוצה: <b>"אין על הסוכן של ליטל, בזכותו סגרתי את כל טיול הבת מצווה של הבת שלי ביום אחד.. אליפות!"</b></p>
+            <figure class="proof-card__cf">
+              <div class="coverflow" data-active="0" data-videos='[{"id": "1223811580", "h": "289eab6c72", "poster": "assets/cf-1223811580.jpg", "cap": "ליטל · מהכאב עד משרד שלם"}, {"id": "1223812129", "h": "032ec1f84f", "poster": "assets/cf-1223812129.jpg", "cap": "ליטל · \"אני לא טכנולוגית\""}, {"id": "1223812302", "h": "deea145510", "poster": "assets/cf-1223812302.jpg", "cap": "ליטל · מתאים לרמה שלי?"}]'><div class="cf-stage"></div></div>
+              <div class="cf-nav"><div class="cf-dots"></div></div>
+              <figcaption>ליטל מספרת מה בנתה</figcaption>
+            </figure>
               <figure class="proof-card__wa">
                 <button class="proof-card__wa-btn" type="button" data-full="assets/wa-lital.jpg" aria-label="הגדלת ההודעה של ליטל יעקובוביץ דראי">
                   <img src="assets/wa-lital.jpg" alt="הודעה של ליטל יעקובוביץ דראי על בניית המשרד המשפטי שלה" loading="lazy">
@@ -1651,30 +2073,38 @@ body{
                 <p class="proof-card__role">סמנכ"לית פיתוח עסקי ברשת בינלאומית</p>
               </div>
             </div>
+              <div class="proof-card__arc"><span class="arc-from">הרגישה נורא מאחור</span><span class="arc-sep" aria-hidden="true">&#8592;</span><span class="arc-to">מוערך ב-2.4 מיליון ₪ בשנה</span></div>
             <div class="proof-card__before">
               <p class="proof-card__before-head">לפני</p>
               <ul class="proof-card__list">
-                <li>כל הודעה על AI בפיד הלחיצה אותה, כי חשבה שכולם יודעים משהו שהיא לא</li>
+                <li>כל פוסט וכל סטורי על AI הלחיצו אותה. היא הרגישה נורא מאחור, ושכולם יודעים משהו שהיא לא</li>
               </ul>
+              <blockquote class="proof-card__before-quote">אני לא טכנולוגית. פחדתי מזה.</blockquote>
             </div>
             <div class="proof-card__divider"></div>
             <div class="proof-card__today">
               <p class="proof-card__today-head">והיום יש לה משרד</p>
               <ul class="proof-card__list">
-                <li class="is-cube"><b>צייד הפערים</b> - מוצא אי-התאמות בחישובים בין מחלקות. במילים שלה: "זה תקינה של אנליסט בכיר".</li>
-                <li class="is-cone"><b>שני סוכנים שמתווכחים</b> - בנתה שניים עם היגיון שונה, הריצה אותם יחד וביקשה שכל אחד ישכנע את השני. ככה היא מקבלת ניתוח בלי אינטרסים.</li>
+                <li class="is-ring"><b>פגי התוקף</b> - שני סוכנים שהורידו את הפסדי פגי-התוקף בחברה. מוערך ב<b>-2.4 מיליון ₪ בשנה</b>.</li>
+                <li class="is-cube"><b>בקרת התוויות</b> - בודק תוויות של מזון מיובא מול הרגולציה. אחרי שטכנולוגית מזון וגרפיקאית כבר אישרו לדפוס, הוא מצא טעויות "שהיו עולות לחברה בתביעה ייצוגית".</li>
               </ul>
-              <blockquote class="proof-card__quote">בהתחלה השתמשתי בסוכנים שלך, אבל שהבנתי את הרעיון - הצלחתי גם בלעדיהם.</blockquote>
+              <blockquote class="proof-card__quote">כל הארגון צריך אותי.</blockquote>
             </div>
+            <p class="proof-card__outcome">עובד אחד עובר על נתוני הארגון ומוצא פערי חישוב שאף אדם לא היה עולה עליהם - שווי מוערך של <b>30,000 ₪ בחודש</b>. הכל נבנה בשלושה חודשים וחצי. את לוח הנתונים הראשון שבנתה בחיים היא שלחה להנהלה אחרי שעתיים וחצי עבודה. <b>"נראה מיליון דולר."</b></p>
             <button class="proof-card__flip" type="button">עוד מהמשרד של בת חן</button>
           </div>
           <div class="proof-card__face proof-card__face--back" inert>
             <p class="proof-card__backhead">מה עוד עובד אצל בת חן</p>
             <ul class="proof-card__list">
-                <li class="is-cube"><b>סינון קורות חיים</b> - מוציא מאות קורות חיים ממייל אחד ומדפיס ישירות למנהל, בלי שאף אחד בדרך רואה אותם.</li>
+                <li class="is-cube"><b>צייד הפערים</b> - מוצא אי-התאמות בחישובים בין מחלקות, במקום משרה שלמה של אנליסט בכיר.</li>
                 <li class="is-cone"><b>מכונת 400 הספקים</b> - עבודה שלמה של מנהלת חשבונות: קובץ אחד נכנס, 400 קבצים מחושבים יוצאים, כל אחד לספק שלו.</li>
+                <li class="is-cube"><b>סינון קורות חיים</b> - מוציא מאות קורות חיים ממייל אחד ומדפיס ישירות למנהל, בלי שאף אחד בדרך רואה אותם.</li>
               </ul>
-            <p class="proof-card__outcome">עובד אחד עובר על נתוני הארגון ומוצא פערי חישוב שאף אדם לא היה עולה עליהם - שווי מוערך של <b>30,000 ₪ בחודש</b>. הכל נבנה בשלושה חודשים וחצי. את לוח הנתונים הראשון שבנתה בחיים היא שלחה להנהלה אחרי שעתיים וחצי עבודה. <b>"נראה מיליון דולר."</b></p>
+            <figure class="proof-card__cf">
+              <div class="coverflow" data-active="0" data-videos='[{"id": "1217933800", "h": "765aad977a", "poster": "assets/cf-1217933800.jpg", "cap": "בת חן · \"אני לא טכנולוגית\""}, {"id": "1223171023", "h": "a68dff366d", "poster": "assets/cf-1223171023.jpg", "cap": "בת חן · לא צריכה קורס נוסף"}]'><div class="cf-stage"></div></div>
+              <div class="cf-nav"><div class="cf-dots"></div></div>
+              <figcaption>בת חן על הפחד שהתברר כלא מוצדק</figcaption>
+            </figure>
               <figure class="proof-card__wa">
                 <button class="proof-card__wa-btn" type="button" data-full="assets/wa-batchen.jpg" aria-label="הגדלת ההודעה של בת חן לוי">
                   <img src="assets/wa-batchen.jpg" alt="הודעה של בת חן לוי: יש לי סוכן שמנתח לי דוחות רווחיות - מוצא בעצמו טעויות וחוסך לי משרה שלמה של אנליסט בכיר." loading="lazy">
@@ -1696,27 +2126,32 @@ body{
                 <p class="proof-card__role">מטפלת בחרדות, בעלת עסק</p>
               </div>
             </div>
-            <!-- אין עדיין ציטוט/פסקה מאושרים על המצב לפני של אילנה - כל בלוק
-                 ה"לפני" מוסתר עד שיהיה. הוסר מהתצוגה 31/08 (לפני כן הוצג
-                 כטקסט-פלייסהולדר עם סוגריים מרובעים, גלוי לכל מבקר). -->
+              <div class="proof-card__arc"><span class="arc-from">100 אלף ₪ משכורות בחודש</span><span class="arc-sep" aria-hidden="true">&#8592;</span><span class="arc-to">מחלקת המזכירות נסגרה</span></div>
+            <div class="proof-card__before">
+              <p class="proof-card__before-head">לפני</p>
+              <ul class="proof-card__list">
+                <li>מחלקה שלמה של מזכירות - ארבע עובדות</li>
+              </ul>
+              <blockquote class="proof-card__before-quote">רק המשכורות היו 100 אלף. אני מתחילה את החודש מ-100 אלף.</blockquote>
+            </div>
             <div class="proof-card__divider"></div>
             <div class="proof-card__today">
               <p class="proof-card__today-head">והיום יש לה משרד</p>
               <ul class="proof-card__list">
-                <li class="is-cube"><b>אוסף החשבוניות</b> - עובר על המיילים, שולף מהם את החשבוניות ומסדר אותן במקום אחד.</li>
-                <li class="is-cone"><b>מהקלטה להצעת מחיר</b> - מקליטים שיחת מכירה, ובסופה יוצאת הצעת מחיר מוכנה ללקוח.</li>
+                <li class="is-cube"><b>המזכירה הבכירה</b> - הקובץ הפיננסי החודשי, זה שלקח שמונה שעות עבודה, מוכן לבד.</li>
+                <li class="is-cone"><b>אוסף החשבוניות</b> - עובר על המיילים, שולף מהם את החשבוניות ומסדר אותן במקום אחד.</li>
               </ul>
-              <blockquote class="proof-card__quote">הוצאתי אלפי שקלים... שיצליחו לחלץ ממני את המידע מהראש שלי ולבנות משהו טוב מזה... ואת בטח יכולה לנחש - זה לא הצליח.</blockquote>
+              <blockquote class="proof-card__quote">אמרתי לעצמי כבעלת עסק: איך היא יכולה להבטיח שאדע לבנות כל דבר? וכשסיימתי - היא מבטיחה, והיא באמת עושה את זה.</blockquote>
             </div>
+            <p class="proof-card__outcome"><b>מחלקת המזכירות שלה - ארבע עובדות - נסגרה.</b> על אחד הדברים שבנתה ביקשו ממנה מאה אלף שקל וחצי שנה עבודה - היא עשתה אותו בפחות משבועיים. ואחרי שסיימה היא המשיכה ללכת לוובינרים של קורסים אחרים, רק כדי לראות מה נמכר שם: <b>"אני יודעת לעשות כל מה שהוא אמר, ואת כל הדברים שעוד לא בניתי."</b></p>
             <button class="proof-card__flip" type="button">עוד מהמשרד של אילנה</button>
           </div>
           <div class="proof-card__face proof-card__face--back" inert>
             <p class="proof-card__backhead">מה עוד עובד אצל אילנה</p>
             <ul class="proof-card__list">
-                <li class="is-cube"><b>המזכירה הבכירה</b> - הקובץ הפיננסי החודשי, זה שלקח שמונה שעות עבודה, מוכן לבד.</li>
                 <li class="is-cone"><b>מחלץ השיטה</b> - לוקח טיפולים מתומללים ומוציא מהם את השיטה הטיפולית שלה, כתובה.</li>
+                <li class="is-cube"><b>מהקלטה להצעת מחיר</b> - מקליטים שיחת מכירה, ובסופה יוצאת הצעת מחיר מוכנה ללקוח.</li>
               </ul>
-            <p class="proof-card__outcome"><b>מחלקת המזכירות שלה - ארבע עובדות - נסגרה.</b> על אחד הדברים שבנתה ביקשו ממנה מאה אלף שקל וחצי שנה עבודה - היא עשתה אותו בפחות משבועיים. והמורה שלה ביקשה ללמוד ממנה: <b>"אני ממש הייתי רוצה לעשות על זה סרטון, אבל אני לא יודעת איך את בנית את זה."</b></p>
               <figure class="proof-card__wa">
                 <button class="proof-card__wa-btn" type="button" data-full="assets/wa-ilana.jpg" aria-label="הגדלת ההודעה של אילנה וייס">
                   <img src="assets/wa-ilana.jpg" alt="הודעה של אילנה וייס: הייתה לי מחלקה שלמה של מזכירות - 4. אני לא אצטרך את זה יותר. זה חיסכון כלכלי מטורף." loading="lazy">
@@ -1738,28 +2173,30 @@ body{
                 <p class="proof-card__role">דוקטור לחקר המוח, יזמת</p>
               </div>
             </div>
+              <div class="proof-card__arc"><span class="arc-from">ארבעה ניסיונות כושלים</span><span class="arc-sep" aria-hidden="true">&#8592;</span><span class="arc-to">שש מחלקות שרצות כמעט לבד</span></div>
             <div class="proof-card__before">
               <p class="proof-card__before-head">לפני</p>
-              <blockquote class="proof-card__before-quote">לדעתי הייתי חוסכת שנה שלמה</blockquote>
+              <blockquote class="proof-card__before-quote">ניסיתי לבנות לי עוזר אישי ארבע פעמים, גם ב-ChatGPT וגם ב-Gemini. כל פעם דייקתי אותו ושכללתי אותו - והוא לא הצליח להביא לי את התוצאה שרציתי.</blockquote>
             </div>
             <div class="proof-card__divider"></div>
             <div class="proof-card__today">
               <p class="proof-card__today-head">והיום יש לה משרד</p>
               <ul class="proof-card__list">
-                <li class="is-cube"><b>צוות הבנייה</b> - שלושה סוכנים שכל תפקידם לבנות, לשפר ולתחזק את שאר המשרד.</li>
-                <li class="is-cube"><b>מחקר ואסטרטגיה</b> - מנתח מתחרים ובידול, בודק את הביצועים של החנות ושל כל מוצר בנפרד, ומחזיר תובנות.</li>
+                <li class="is-cube"><b>מערכת שמריצה את העסק כמעט לבד</b> - שש מחלקות, מבנייה ותחזוקה ועד שיווק וניהול, עם תתי-סוכנים שעובדים בכל מחלקה.</li>
+                <li class="is-ring"><b>דף מוצר מקצה לקצה</b> - נכנסת תמונה, ויוצא דף גמור: כותרת, תיאור וכל השאר.</li>
               </ul>
               <blockquote class="proof-card__quote">למדתי פה לא את הכלי - למדתי את שיטות העבודה. אם מחר יצא כלי חדש, אני לא צריכה ללמוד מחדש.</blockquote>
             </div>
+            <p class="proof-card__outcome">שש מחלקות, ובכל אחת תתי-סוכנים. ביניהם צוות של שלושה שכל תפקידם לבנות ולשפר את האחרים - <b>מערכת שמתחזקת את עצמה</b>. ואת הדבר שעבדה עליו שנה שלמה, היא עושה היום מקצה לקצה. ביוני היא שאלה בקבוצה: "אנחנו אמורים לדעת לעשות ישיבת צוות של סוכנים? מה פספסתי?". <b>באוגוסט היא בנתה מנהלת משרד שמכנסת אותן בעצמה.</b></p>
             <button class="proof-card__flip" type="button">עוד מהמשרד של ירדן</button>
           </div>
           <div class="proof-card__face proof-card__face--back" inert>
             <p class="proof-card__backhead">מה עוד עובד אצל ירדן</p>
             <ul class="proof-card__list">
-                <li class="is-cone"><b>סוכן האמנות</b> - שומר על הקו העיצובי של החנות, מייצר את תמונות ההדמיה של המוצרים ואחראי על הכיתוב עליהן.</li>
-                <li class="is-ring"><b>בנוי לשכפול</b> - כל סוכן נבנה בשתי שכבות: כללים כלליים, והתאמה לחנות הקיימת. כדי שהחנות הבאה תקבל את אותו משרד ביום אחד.</li>
+                <li class="is-cube"><b>מנהלת המשרד</b> - סוכנת שמפעילה את שאר הסוכנים, מכנסת אותם לישיבות צוות ומסנכרנת ביניהם.</li>
+                <li class="is-cone"><b>סוכן האמנות</b> - שומר על הקו העיצובי של החנות האינטרנטית, מייצר את תמונות ההדמיה של המוצרים ואחראי על הכיתוב עליהן.</li>
+                <li class="is-ring"><b>בנוי לשכפול</b> - כל סוכן נבנה בשתי שכבות: כללים כלליים, ומעליהם ההתאמה לחנות האינטרנטית הקיימת. ככה אפשר להעביר אותו לעסק אחר.</li>
               </ul>
-            <p class="proof-card__outcome">יש לה מנהלת משרד שמפעילה את שאר הסוכנים ומסנכרנת ביניהם. לידה צוות של שלושה שכל תפקידם לבנות ולשפר את האחרים - <b>מערכת שמתחזקת את עצמה</b>. ואת הדבר שעבדה עליו שנה שלמה, עושה היום סוכן אחד. ביוני היא שאלה בקבוצה: "אנחנו אמורים לדעת לעשות ישיבת צוות של סוכנים? מה פספסתי?". <b>באוגוסט היא בנתה מנהלת משרד שמכנסת אותן בעצמה.</b></p>
             <button class="proof-card__flip proof-card__flip--back" type="button">חזרה</button>
           </div>
         </div>
@@ -1771,6 +2208,7 @@ body{
          שזה יהפוך להיות סקשן ארוך מדי."* הכרטיסים שבפנים בנויים באותה
          מבנה בדיוק, רק בלי צילום-הודעה (ר' ההערה על שער-השפה למטה). -->
     <button class="proof-more__btn" type="button" aria-expanded="false" aria-controls="proof-more">רוצים לראות עוד משרדים?</button>
+    <a class="proof__cta" href="#price">אני רוצה משרד כזה ←</a>
     <div class="proof-more" id="proof-more" hidden>
       <div class="proof-grid">
         <article class="proof-card" style="--pc:#f17f52">
@@ -1784,31 +2222,33 @@ body{
                 <p class="proof-card__role">בעל סוכנות פרסום וקריאייטיב</p>
               </div>
             </div>
-            <!-- אין עדיין ציטוט/פסקה מאושרים על המצב לפני של דולב - כל בלוק
-                 ה"לפני" מוסתר עד שיהיה. הוסר מהתצוגה 31/08 (לפני כן הוצג
-                 כטקסט-פלייסהולדר עם סוגריים מרובעים, גלוי לכל מבקר). -->
+              <div class="proof-card__arc"><span class="arc-from">בוקר שמתחיל בכאוס</span><span class="arc-sep" aria-hidden="true">&#8592;</span><span class="arc-to">56 סוכנים בשלושה חודשים</span></div>
+            <div class="proof-card__before">
+              <p class="proof-card__before-head">לפני</p>
+              <blockquote class="proof-card__before-quote">בוקר רגיל שלי לפני הקורס זה לקום, לפתוח את המחשב - ואז כאוס. מאיפה מתחילים? הוואטסאפים, המיילים, בלאגן.</blockquote>
+            </div>
             <div class="proof-card__divider"></div>
             <div class="proof-card__today">
               <p class="proof-card__today-head">והיום יש לו משרד</p>
               <ul class="proof-card__list">
-                <li class="is-cube"><b>שון</b> - יושב בכל קבוצות הוואטסאפ עם הלקוחות, מבין מה דחוף, ושולח תקציר אחד בבוקר. החיבור עלה 20 דולר בחודש ולקח עשר דקות להתקין.</li>
-                <li class="is-ring"><b>דילן</b> - כותב אנגלית בדיוק כמו שדולב כותב, ומחזיר תשובות ללקוחות מעבר לים. קיבל את השם הזה כי הוא סוגר דילים.</li>
+                <li class="is-ring"><b>מערכת השידוך</b> - שמונה סוכנים בשרשרת, שמחברת בין משפיענים לעסקים שמחפשים פרסום: אחד מאתר יוצרי תוכן לפי קריטריונים, אחר מאתר עסקים, משדך מחבר ביניהם, ואחר מייצר את כל התוכן.</li>
+                <li class="is-cube"><b>שון</b> - יושב בכל קבוצות הוואטסאפ עם הלקוחות, מתרגם כל בקשה למשימה, ומודד: כמה בקשות הגיעו, באיזו מהירות ביצענו, והאם נתנו ללקוח יותר ממה שסגרנו בריטיינר.</li>
               </ul>
-              <blockquote class="proof-card__quote">תשאלי אותי עכשיו מה ההבדל בין סוכן תהליך לשותף - אין לי מושג.</blockquote>
+              <blockquote class="proof-card__quote">הדבר היחיד שלא פתרתי זה בעצם לעלות לשיחה עם הלקוח ולהגיד לו לאן להעביר את הכסף.</blockquote>
             </div>
+            <p class="proof-card__outcome">לקוח החליף מנכ"ל, והחדש שלח הודעה זועמת על שלוש שעות בלי מענה. דולב ביקש מהסוכנים לחזור <b>חודשיים אחורה ולמדוד ברמת הדקה</b>, והגיע לפגישה עם ציטוטי בקשות, זמני תגובה ובנצ'מרק ענפי. <b>"שתק. הוא ראה שבעצם אין - זה מוצר דאטה. אין לו מה לומר. יש לי נתונים."</b> המערכת עולה לו כ-1,500 דולר בחודש, והחיסכון, במילים שלו, <b>35 עד 40 אלף ₪ עלות מעביד</b>. בשלושה חודשים הוא בנה <b>56 סוכנים</b>.</p>
             <button class="proof-card__flip" type="button">עוד מהמשרד של דולב</button>
           </div>
           <div class="proof-card__face proof-card__face--back" inert>
             <p class="proof-card__backhead">מה עוד עובד אצל דולב</p>
             <ul class="proof-card__list">
+                <li class="is-cube"><b>דילן</b> - מחובר לוואטסאפ ול-CRM של כל הלקוחות, שומע גם הקלטות קוליות, ומחזיר תשובה מנוסחת באנגלית שלו. נבנה אחרי שמצא את עצמו מנהל משא ומתן באחת בלילה, מהספה, מהטלפון.</li>
                 <li class="is-cone"><b>שיר</b> - עוזרת אישית עם אופי משלה. אנשים דיברו איתה בלי לדעת שהיא לא בן אדם.</li>
-                <li class="is-cube"><b>מהדק התוכן</b> - נושא אחד נכנס, ויוצאת חבילה שלמה: ניתוח, שרשור, סקריפט לסרטון ומבנה לקרוסלה. לשלושה לקוחות במקביל.</li>
+                <li class="is-ring"><b>הבריף היומי</b> - סורק ידיעות, מייצר קופי לשלוש רשתות, מייצר תמונה ומוסיף גרפיקה עם הלוגו. רץ שלוש פעמים ביום.</li>
               </ul>
-            <p class="proof-card__outcome">כל בוקר מחכה לו תקציר אחד: מה בוער אצל שבעה לקוחות, מה פתוח, מה מחכה לתשובה ומה כבר טופל. סוכן אחר קורא את ההודעות שהלקוחות שולחים באנגלית, כולל הקלטות קוליות, ומחזיר תשובה מוכנה. בשלושה חודשים הוא בנה <b>56 סוכנים</b>. כששלהבת ראתה את שון היא כתבה שלוש מילים: <b>"אני ב ה ל ם"</b>. ואחר כך: "אין על שון".</p>
-              <figure class="proof-card__video">
-                <video controls preload="none" playsinline poster="assets/vid-dolev-dreams.jpg" aria-label="המלצה של דולב דרי">
-                  <source src="assets/vid-dolev-dreams.mp4" type="video/mp4">
-                </video>
+              <figure class="proof-card__cf">
+                <div class="coverflow" data-active="0" data-videos='[{"id": "1202912111", "h": "967ec473e0", "poster": "assets/cf-1202912111.jpg", "cap": "דולב · חלומות שהפכו למציאות"}]'><div class="cf-stage"></div></div>
+              <div class="cf-nav"><div class="cf-dots"></div></div>
                 <figcaption>דולב מספר איך זה נראה לפני</figcaption>
               </figure>
             <button class="proof-card__flip proof-card__flip--back" type="button">חזרה</button>
@@ -1824,33 +2264,41 @@ body{
               <img class="proof-card__photo" src="assets/alumni-ron.jpg" alt="רון אלון">
               <div>
                 <p class="proof-card__name">רון אלון</p>
-                <p class="proof-card__role">יזם, מפתח אפליקציה עם 20 אלף משתמשים</p>
+                <p class="proof-card__role">יזם, מפתח אפליקציה עם 2,000 משתמשים משלמים</p>
               </div>
             </div>
+              <div class="proof-card__arc"><span class="arc-from">על הספה, בין עבודות</span><span class="arc-sep" aria-hidden="true">&#8592;</span><span class="arc-to">אפליקציה בחנות של אפל</span></div>
             <div class="proof-card__before">
               <p class="proof-card__before-head">לפני</p>
               <ul class="proof-card__list">
-                <li>כל העבודה שפעם הייתה נתקעת על השולחן שלו</li>
+                <li>בין עבודות, עם לא מעט סימני שאלה</li>
               </ul>
+              <blockquote class="proof-card__before-quote">לפני שנתיים ישבתי על הספה. לא ידעתי מה זה ChatGPT, לא הבנתי לאן העולם הולך.</blockquote>
             </div>
             <div class="proof-card__divider"></div>
             <div class="proof-card__today">
               <p class="proof-card__today-head">והיום יש לו משרד</p>
               <ul class="proof-card__list">
-                <li class="is-cube"><b>שוטר אזולאי</b> - סוכן שכל תפקידו לבדוק את העבודה של האחרים. הוא לא שואל אותם מה הם עשו - הוא הולך ובודק בעצמו.</li>
-                <li class="is-ring"><b>חדר הבקרה</b> - מסך אחד שמראה בדיוק מה כל סוכן עשה, מה הסתיים ומה עוד רץ.</li>
+                <li class="is-cube"><b>משרד של 11 מחלקות ויותר מ-20 סוכנים</b> - ראש משרד, וכל מחלקה עושה משהו אחר. במילים שלו: "היום שהכל עובד - הוא עובד בשבילי."</li>
+                <li class="is-ring"><b>עוזר אישי בטלפון</b> - הוא שולח לו הודעה, או פשוט מקליט הודעה קולית, והעוזר קובע לו פגישות ביומן, קורא את המיילים שהצטברו, מסכם אותם ומציע לו מה לענות.</li>
               </ul>
-              <blockquote class="proof-card__quote">שורה תחתונה, זו ההוצאה הכי משתלמת בעסק שלי.</blockquote>
+              <blockquote class="proof-card__quote">ואם מישהו יגיד לכם שזה לא שווה את ההשקעה או שזה יקר - תשלחו אותו אליי. אני כבר אספר לו מה אפשר לבנות כשפוגשים את ההזדמנות הנכונה.</blockquote>
             </div>
+            <p class="proof-card__outcome">כל רעיון יוצא אצלו בחמש גרסאות במקום באחת, וכל בוקר מחכה לו סיכום של מה נעשה ומה עוד פתוח. כל זה עולה לו <b>200 דולר בחודש</b>. הוא קרא את הקוד של אחד הכלים שהמורה שלו כתבה, גילה בו תקלה והחזיר לה <b>תיקון מסודר</b>. <b>והאפליקציה שבנה עלתה החודש רשמית לחנות של אפל.</b></p>
             <button class="proof-card__flip" type="button">עוד מהמשרד של רון</button>
           </div>
           <div class="proof-card__face proof-card__face--back" inert>
             <p class="proof-card__backhead">מה עוד עובד אצל רון</p>
             <ul class="proof-card__list">
-                <li class="is-cone"><b>מחקר מתחרים</b> - יוצא לרשת, בודק מה עושים המתחרים, ומחזיר רעיונות לשדרוגים ולקמפיינים בחוברת מסודרת.</li>
-                <li class="is-cube"><b>מתמונה לסרטון</b> - הלקוח שולח תמונה של מנה, ויוצא ממנה סרטון.</li>
+                <li class="is-cube"><b>שוטר אזולאי</b> - סוכן שכל תפקידו לבדוק את העבודה של האחרים. הוא לא שואל אותם מה עשו - הוא הולך ובודק בעצמו. במילים שלו: "'אמרתי שתיעדתי' זו לא הוכחה."</li>
+                <li class="is-ring"><b>מערכת שני המוחות</b> - משרד שני ב-OpenAI לצד המשרד בקלוד, מופרדים באבטחה. קפטן אדי שולח שאלה לשניהם ומגיש תשובה אחת מאוחדת.</li>
+                <li class="is-cone"><b>חדר הבקרה</b> - מסך אחד שמראה בדיוק מה כל סוכן עשה, מה הסתיים ומה עוד רץ.</li>
               </ul>
-            <p class="proof-card__outcome">אחת עשרה מחלקות ויותר מעשרים סוכנים. כל רעיון יוצא אצלו בחמש גרסאות במקום באחת, וכל בוקר מחכה לו סיכום של מה נעשה ומה עוד פתוח. כל זה עולה לו <b>200 דולר בחודש</b>. ואז הוא קרא את הקוד של אחד הכלים שהמורה שלו כתבה, גילה בו תקלה, והחזיר לה <b>תיקון מסודר</b>.</p>
+            <figure class="proof-card__cf">
+              <div class="coverflow" data-active="0" data-videos='[{"id": "1223811997", "h": "7d2d530267", "poster": "assets/cf-1223811997.jpg", "cap": "רון · \"שווה ב-200 אחוז\""}, {"id": "1223812258", "h": "e473ea415d", "poster": "assets/cf-1223812258.jpg", "cap": "רון · ניסיתי לבד ולא הצלחתי"}]'><div class="cf-stage"></div></div>
+              <div class="cf-nav"><div class="cf-dots"></div></div>
+              <figcaption>רון, בשתי דקות</figcaption>
+            </figure>
               <figure class="proof-card__wa">
                 <button class="proof-card__wa-btn" type="button" data-full="assets/wa-ron.jpg" aria-label="הגדלת ההודעה של רון אלון">
                   <img src="assets/wa-ron.jpg" alt="הודעה של רון אלון: בניתי משרד וירטואלי של סוכני AI, 11 מחלקות. זו ההוצאה הכי משתלמת בעסק שלי." loading="lazy">
@@ -1871,14 +2319,14 @@ body{
      אחת בכוונה. -->
 <section class="succeed">
   <div class="wrap">
-    <h2>ואיך דואגים שתגיעו למשרד שלכם</h2>
-    <p class="succeed__lead">שישה אנשים, ושש נקודות פתיחה שונות לגמרי - אחת כמעט לא נגעה ב-AI, אחר כבר בנה המון ורק לא ידע לסדר את זה. מה שהביא את כולם לאותו מקום הוא לא כישרון. זה המבנה.</p>
+    <h2>ואיך אנחנו דואגים שתגיעו למשרד משלכם</h2>
+    <p class="succeed__lead">מה שמביא את התלמידים שלנו להצלחה, הוא לא כישרון. זה המבנה, השיטה והמעטפת שבנינו.</p>
     <div class="opens__succeed">
       <ul>
-        <li><b>סדר שלא נשבר</b> - כל שלב ממשיך את הקודם, ואף פעם לא צריך לנחש מה עכשיו</li>
-        <li><b>תרגול אחרי כל שלב</b> - כי הלמידה קורית בבנייה עצמה, לא בצפייה</li>
-        <li><b>כולם נתקעים בדרך</b> - זה לא באג, זה חלק מהלמידה. לרגעים האלה יש את סוכני העזר בפנים, ואת שתי השעות עם מנטור/ית</li>
-        <li><b>ובסוף - כרטיס בגלריית הבוגרים</b>, שמתעדכן ממה שבניתם. נקודת סיום שרואים</li>
+        <li><b>סדר שלא נשבר</b> - כל שלב ממשיך את הקודם, ואף פעם לא צריך לנחש מה עכשיו.</li>
+        <li><b>תרגול אחרי כל שיעור</b> - הכנו לכם סדרה של תרגילים קטנים ומובנים. כי הלמידה האמיתית קורית בבנייה עצמה, לא רק בצפייה בשיעור.</li>
+        <li><b>כולם נתקעים בדרך</b> - זה חלק מהלמידה. לרגעים האלה יש את סוכני העזר שתקבלו לתוך הקלוד שלכם, ואת שתי השעות עם המנטור/ית</li>
+        <li><b>ובסוף - כרטיס בגלריית הבוגרים</b>, שמתעדכן ממה שבניתם. נקודת סיום שרואים - <a href="https://agent-course.aimprove.co.il/bogrim/" target="_blank" rel="noopener">אפשר לראות את הגלריה כאן</a></li>
       </ul>
     </div>
   </div>
@@ -1891,11 +2339,13 @@ body{
     <div class="stay-grid">
       <div class="stay-item">
         <h3>מה מחזיק אותך במקום הקבוצה</h3>
-        <p>אין תאריך שצריך להגיע אליו ואין מפגש שמחכה לך. מה שמחזיק זה המבנה: השיטה מובילה אתכם בצורה מובנית והדרגתית, והתרגולים שאחרי כל שלב הם שמוודאים שאתם בונים ולא רק צוברים - כי רק מתוך הבנייה בפועל מגיעה גם הלמידה וההבנה. עוברים שלב כשאתם מוכנים, לא כשלוח זמנים אומר. ומה שבניתם עולה לגלריית הבוגרים - נקודת סיום שרואים.</p>
+        <p>כשאין מפגש שמחכה לכם, מה שמחזיק זה המבנה: השיטה מובילה אתכם בצורה מובנית והדרגתית, והתרגולים שאחרי כל שלב הם מה שמוודא שאתם בונים סוכנים בפועל, ולא רק צוברים ידע תיאורטי - כי רק מתוך הבנייה מגיעה גם הלמידה וההבנה. <br />עוברים שלב כשאתם מוכנים. רק אחרי שסיימתם לתרגל ולבנות.</p>
+        <p>ויש גם שתי נקודת מגע שיעזרו לכם בכל שלב: <b>שעתיים עם מנטור/ית</b>, שתקפות לכל השנה ונועדו לעזור לכם אם תתקעו.</p>
+        <p>והסוכן ״יוסף״ שיושב בווסטאפ, מכיר את כל החומר הנלמד ויודע לענות ולכוון בכל שאלה/התייעצות.</p>
       </div>
       <div class="stay-item">
         <h3>מה שלומדים כאן לא מתיישן</h3>
-        <p>זה בדיוק מה שהשיטה באה למנוע. באימפרוב אנחנו לא רודפים אחרי כלים, כי כלים זה דבר שמתחלף. מה שלא מתחלף זו הדרך לפרק בעיה ולבנות לה פתרון - וזה מה שתלמדו כאן. אנחנו מתמקדים ב-Claude Code, אבל מה שתלמדו יעבוד על כל כלי אחר בדיוק אותו דבר.</p>
+        <p>זה בדיוק מה שהשיטה באה למנוע. באִימפּרוּב אנחנו לא רודפים אחרי כלים, כי כלים זה דבר שמתחלף. מה שלא מתחלף זו הדרך לפרק בעיה ולבנות לה פתרון - וזה מה שתלמדו כאן. אנחנו מתמקדים ב-Claude Code, אבל מה שתלמדו יעבוד על כל כלי אחר בדיוק אותו דבר. היום ובעתיד.</p>
       </div>
     </div>
   </div>
@@ -1932,8 +2382,9 @@ body{
      ✅ שלוש המנטוריות מאושרות (ר' ההערה ב-CSS) - לא פלייסהולדר. -->
 <section class="safety">
   <div class="wrap">
-    <h2>וכשתיתקעי</h2>
-    <p class="safety__line">התוכנית בנויה כך שתסתדרי לבד. השעתיים עם מנטור/ית הן הגיבוי שלך - לא תנאי. רוב הסיכויים שתצטרכי אותן פחות ממה שנדמה לך, וטוב לדעת שהן שם.</p>
+    <h2>וכשתיתקעו</h2>
+    <p class="safety__line">התוכנית בנויה כך שתסתדרו לבד. השעתיים עם מנטור/ית הן הגיבוי שלכם. רוב הסיכויים שכלל לא תצטרכו אותן. אבל טוב לדעת שהן שם.</p>
+    <p class="safety__who">המנטורים הם נבחרת מצומצמת ששלהבת מאִימפּרוּב הרכיבה באופן אישי. כל אחד מהם בנה משרד AI מטורף לחלוטין.</p>
 
     <ul class="safety__mentors">
       <li class="safety__mentor" style="--mc:#4db6e1"><img class="safety__photo" src="assets/alumni-ilana.jpg" alt="אילנה וייס"><div><b>אילנה וייס</b><span>מטפלת בחרדות</span></div></li>
@@ -1978,78 +2429,97 @@ body{
     <div class="obj-grid">
       <div class="obj-item">
         <h3>"איך אני יודע/ת שאוציא מזה את הערך?"</h3>
-        <p>לא אבטיח לכם שתצליחו בלי לעשות את העבודה. אף אחד לא יכול, ומי שמבטיח - משקר לכם.</p>
-        <p>מה שכן: השיטה עובדת, והיא כבר בנתה משרדים אמיתיים לאנשים אמיתיים. ירדן ניסתה שנה שלמה לבנות עסק AI שירוץ לבד, ולא הצליחה - ואחר כך בנתה צוות סוכנים שמריץ לה את החנות מקצה לקצה, שש מחלקות. במילים שלה: <q>לדעתי הייתי חוסכת שנה שלמה.</q> אילנה החליפה מחלקת מזכירות של ארבע עובדות.</p>
-        <p>למעלה בדף אפשר לראות בדיוק מה כל אחד בנה.</p>
-        <figure class="obj-item__video">
-          <video controls preload="none" playsinline poster="assets/vid-hani.jpg" aria-label="המלצה של חני הופמן">
-            <source src="assets/vid-hani.mp4" type="video/mp4">
-          </video>
-          <figcaption>חני הופמן · מדריכת AI לשמאי מקרקעין</figcaption>
-        </figure>
+        <p>אף אחד לא יכול להבטיח לכם שתצליחו בלי להשקיע. ומי שמבטיח - משקר לכם.</p>
+        <p>מה שכן: השיטה עובדת, והיא כבר בנתה משרדים אמיתיים לאנשים אמיתיים. <br />ירדן ניסתה שנה שלמה לבנות עסק AI שירוץ לבד, ולא הצליחה - ובתוכנית שלנו היא בנתה צוות סוכנים שמריץ לה חנות אינטרנטית מקצה לקצה. במילים שלה: חבל שלא היה לי את הקורס הזה לפני שנה. <q>לדעתי הייתי חוסכת שנה שלמה.<br /></q> <br />אילנה הייתה משלמת 100,000 ₪ על משכורות בכל חודש, והיום היא חוסכת את כל הסכום הזה באמצעות צוות סוכנים שבנתה בתוכנית.</p>
+        <p>למעלה בדף אפשר לראות עוד דוגמאות של תלמידים.</p>
+        <div class="obj-cf">
+          <p class="obj-cf__label">בקיצור, מי שיעבוד לפי השלבים בתוכנית - יצליח בוודאות. הנה מה שתלמידים אמרו על זה:</p>
+          <div class="coverflow" data-active="0" data-videos='[{"id": "1223170501", "h": "f0bc73dba9", "poster": "assets/cf-1223170501.jpg", "cap": "100% הבטחה לבנות הכל"}, {"id": "1223170856", "h": "0f050acd50", "poster": "assets/cf-1223170856.jpg", "cap": "חני · אין מגבלות"}, {"id": "1223812414", "h": "779a9ce5c5", "poster": "assets/cf-1223812414.jpg", "cap": "שחר · התוצאה בפועל"}]'><div class="cf-stage"></div></div>
+          <div class="cf-nav"><div class="cf-dots"></div></div>
+        </div>
+      </div>
+
+      <div class="obj-item">
+        <h3>"ומה אם זה לא יתאים לי?"</h3>
+        <p>זו שאלה הוגנת, ולכן אני מעדיפה לענות עליה לפני הרכישה ולא אחריה.</p>
+        <p><b>ראשית - אני אומרת מראש למי זה לא מתאים.</b> אם אתם יודעים על עצמכם שאתם צריכים מישהו שידחוף אתכם, קבוצה שמחכה לכם ותאריכים קבועים לשיעורים - המסלול הזה לא יתאים לכם, ועדיף לכם להירשם ל׳טירונות סוכנים׳. עוד פרטים בתחתית הדף</p>
+        <p><b>שנית - אפשר לבדוק לפני.</b> אפשר לדבר עם בוגר/ת שכבר עשה את זה ולשמוע בכנות איך זה נראה מבפנים, וכל מה שנבנה עד היום בתוכנית מוצג בגלריית הבוגרים - אלה משרדים אמיתיים של אנשים.</p>
+        <p><b>ושלישית - ההתחייבות מדורגת.</b> אפשר לפרוס עד 12 תשלומים במקום לשלם הכל מראש. החזרים כספיים וביטולי עסקה - בהתאם למפורט ב<a href="https://aimprove.co.il/terms-of-use/" target="_blank" rel="noopener">תקנון</a>.</p>
+<div class="obj-cf">
+          <p class="obj-cf__label">הנה שתי תלמידות שמספרות בדיוק על זה</p>
+          <div class="coverflow" data-active="0" data-videos='[{"id": "1223812330", "h": "290c2c277f", "poster": "assets/cf-1223812330.jpg", "cap": "שחר · מתאים לרמה שלי?"}, {"id": "1223812302", "h": "deea145510", "poster": "assets/cf-1223812302.jpg", "cap": "ליטל · מתאים לרמה שלי?"}]'><div class="cf-stage"></div></div>
+          <div class="cf-nav"><div class="cf-dots"></div></div>
+        </div>
       </div>
 
       <div class="obj-item">
         <h3>"אני עובד/ת עם כלי אחר - זה רלוונטי לי?"</h3>
         <p>בונים כאן עם Claude Code.</p>
-        <p>אבל מה שלומדים כאן זה לא הכלי. זה לקחת כל רעיון שעולה לכם, או כל בעיה עסקית שצצה, ולבנות לה פתרון שלם מקצה לקצה - מהר, שעובד באמת, שיש לו אימפקט עסקי אמיתי, ושלא נשבר שבוע אחרי ומשאיר אתכם רודפים אחרי תיקונים.</p>
-        <p>אני לא רודפת אחרי כלים, אני רודפת אחרי הבעיה. וזה מה שעובר לכל כלי אחר, מה שהוא לא יהיה.</p>
+        <p>אבל מה שלומדים כאן זה לא הכלי. זה לקחת כל רעיון שעולה לכם, או כל בעיה עסקית שצצה, ולבנות לה פתרון AI שלם מקצה לקצה - מהר ויעיל. <br />פתרון שיש לו אימפקט עסקי אמיתי, כזה שאתם בונים פעם אחת, ושוכחים ממנו מרוב שהוא עובד טוב.<br />כזה שלא ישבר שבוע אחרי ולא יצריך אתכם לתקן שוב ושוב.</p>
+        <p>אצלנו תלמדו איך לצאת ממרוץ ה-AI ולהפסיק לרדוף אחרי כלים. במקום זה, תתחילו לרדוף אחרי הבעיות ולבנות להם פתרון מיידי, בקלות.</p>
+<div class="obj-cf">
+          <p class="obj-cf__label">הנה מה שתלמידים אמרו על זה</p>
+          <div class="coverflow" data-active="0" data-videos='[{"id": "1223170899", "h": "fc164b4016", "poster": "assets/cf-1223170899.jpg", "cap": "הידע נשאר גם כשהכלי משתנה"}, {"id": "1223171023", "h": "a68dff366d", "poster": "assets/cf-1223171023.jpg", "cap": "לא צריכה קורס נוסף"}]'><div class="cf-stage"></div></div>
+          <div class="cf-nav"><div class="cf-dots"></div></div>
+        </div>
       </div>
 
       <div class="obj-item">
         <h3>"אני לא טכנולוגי/ת. זה בכלל בשבילי?"</h3>
-        <p>חמישה מתוך ששת האנשים שלמעלה אינם מתכנתים - עורכת דין, מטפלת, סמנכ"לית, בעל סוכנות פרסום, וחוקרת מוח. מה שצריך כאן זה להכיר את העבודה שלכם, ואת זה אתם יודעים טוב מכולם.</p>
-        <p>בת חן, סמנכ"לית פיתוח עסקי: <q>אחרי שלמדתי אצלך, אין מצב שאני אשב מול מישהו טכני ולא אבין מה הוא אומר. 90% מהשיחה אני מבינה - בלי להיות מתכנתת.</q></p>
+        <p>95% מהתלמידים שלנו אינם מתכנתים - עורכי דין, מטפלים, משווקים, מורים, ועוד..<br />מה שצריך כאן זה להכיר את העבודה שלכם ולדעת לעבוד בצורה בסיסית עם מחשב וכלי AI.</p>
+        <p>בת חן, סמנכ"לית פיתוח עסקי (וטכנופובית לשעבר): <q>אחרי שלמדתי אצלך, אין מצב שאני אשב מול מישהו טכני ולא אבין מה הוא אומר. 90% מהשיחה אני מבינה - בלי להיות מתכנתת.</q></p>
         <figure class="obj-item__wa">
           <button class="obj-item__wa-btn" type="button" data-full="assets/wa-obj-moran.jpg" aria-label="הגדלת ההודעה">
             <img src="assets/wa-obj-moran.jpg" alt="הודעה של מורן טאובר: אני לקחתי את הסוכן, ביקשתי שיקח אותו ויארוז אותו לפלאגין, ואחרי שעשה וכתב את זה, עשיתי קומפרס לזיפ ואז העלתי כפלאגין וזהו" loading="lazy">
           </button>
           <figcaption>מורן טאובר ארזה סוכן לפלאגין והעלתה אותו בעצמה</figcaption>
         </figure>
-        <figure class="obj-item__video">
-          <video controls preload="none" playsinline poster="assets/vid-batchen.jpg" aria-label="המלצה של בת חן לוי">
-            <source src="assets/vid-batchen.mp4" type="video/mp4">
-          </video>
-          <figcaption>בת חן לוי · סמנכ"לית פיתוח עסקי</figcaption>
-        </figure>
+        <div class="obj-cf">
+          <p class="obj-cf__label">הנה תלמידים שלא באו מעולם טכני</p>
+          <div class="coverflow" data-active="0" data-videos='[{"id": "1223812129", "h": "032ec1f84f", "poster": "assets/cf-1223812129.jpg", "cap": "ליטל · אני לא טכנולוגית"}, {"id": "1223812173", "h": "17fbeca04d", "poster": "assets/cf-1223812173.jpg", "cap": "מורן · אני לא טכנולוגית"}, {"id": "1223170879", "h": "b8520792fd", "poster": "assets/cf-1223170879.jpg", "cap": "בת חן · התגברתי על הפחד"}, {"id": "1223365305", "h": "f042d3f551", "poster": "assets/cf-1223365305.jpg", "cap": "מורן · בוראת עולם מאפס"}]'><div class="cf-stage"></div></div>
+          <div class="cf-nav"><div class="cf-dots"></div></div>
+        </div>
       </div>
 
       <div class="obj-item">
         <h3>"יש על זה מלא סרטונים ברשת. למה לשלם?"</h3>
         <p>סרטונים יש בשפע. אבל יש שכבת עומק שאי אפשר ללמוד לבד מסרטונים.</p>
-        <p>כדי להגיע ממה שאתם עושים היום &#8592; למערכת שעובדת בשבילכם, צריך שיטה, ומישהו שייקח אתכם צעד אחר צעד. לשם אני יודעת להביא אתכם.</p>
+        <p>כדי להגיע ממה שאתם עושים היום &#8592; למערכת שעובדת בשבילכם, צריך שיטה, ומישהו שייקח אתכם צעד אחר צעד. לשם אנחנו יודעים להביא אתכם.</p>
         <p>ואם הגעתם עד לכאן, כנראה גם אתם מרגישים: <q>הגעתי לתקרה של מה שאני יכול לבד.</q></p>
-        <figure class="obj-item__wa">
-          <button class="obj-item__wa-btn" type="button" data-full="assets/wa-obj-anat.jpg" aria-label="הגדלת ההודעה">
-            <img src="assets/wa-obj-anat.jpg" alt="הודעה של ענת מנור: בסופו של דבר זה חושף אותנו למידע שלבד היה לוקח לי זמן להגיע אליו, ולפעמים לא בטוח שעובדים נכון והזמן שווה כסף" loading="lazy">
-          </button>
-          <figcaption>ענת מנור, על מה שלבד לוקח זמן - ולא בטוח שנכון</figcaption>
-        </figure>
+<div class="obj-cf">
+          <p class="obj-cf__label">הנה מה שתלמידים מספרים על זה</p>
+          <div class="coverflow" data-active="0" data-videos='[{"id": "1223170683", "h": "bd1d98a271", "poster": "assets/cf-1223170683.jpg", "cap": "לקחתי מלא קורסים"}, {"id": "1223170559", "h": "a3ee78b996", "poster": "assets/cf-1223170559.jpg", "cap": "זה עולם אחר לגמרי"}]'><div class="cf-stage"></div></div>
+          <div class="cf-nav"><div class="cf-dots"></div></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- סקשן 8 - מה כלול והמחיר. 5,900 הוא הנקוב, בכוונה. -->
-<section class="price">
+<section class="price" id="price">
   <div class="wrap">
     <h2>מה נכנס פנימה</h2>
     <div class="price-grid">
       <ul class="price__list">
-        <li>מסלול הלמידה והבנייה המלא, מהיסודות ועד משרד עובד</li>
-        <li>ההקלטות - נשארות אצלך</li>
-        <li>תרגולים מובנים</li>
+        <li>מסלול הלמידה והבנייה המלא, מהיסודות ועד משרד AI עובד</li>
+        <li><b>שעתיים אישיות עם מנטור/ית</b> - תקפות לכל השנה</li>
+        <li>הקלטות השיעורים והמדריכים - נשארים אצלכם</li>
+        <li>תרגולים מובנים צעד אחר צעד</li>
         <li>הלמידה ההיררכית - כל שלב ממשיך את הקודם</li>
-        <li>ספריית הסקילים</li>
+        <li>ספריית הסקילים הסודית של אִימפּרוּב</li>
         <li>שנה שלמה של גישה למשרד הווירטואלי</li>
-        <li>כרטיס בגלריה</li>
+        <li>כרטיס בגלריית הבוגרים - לראות את ההתקדמות שלכם</li>
       </ul>
 
       <div class="price__box">
         <p class="price__num">5,900 ₪</p>
-        <p class="price__pay">תשלום אחד</p>
-        <p class="price__benefit">יש הטבת הרשמה, והיא נשמרת <b>24 שעות</b> מרגע שמתחילים. אין כאן ספירה לאחור - השעון מתחיל רק כשלוקחים אותה.</p>
-        <p class="price__note">מעבר לזה יש עלויות שוטפות של הכלים עצמם, והעיקרית היא מנוי לקלוד - אנחנו ממליצים על 100 דולר בחודש לפחות. הפירוט המלא בשאלות שלמטה.</p>
+        <p class="price__pay">עד <b>12 תשלומים</b></p>
+        <p class="price__anchor">כולל את חומרי התוכנית המלאים, גישה למשרד הווירטואלי לשנה (שווי 1,800 ₪) ושעתיים אישיות עם מנטור (שווי 800 ₪)</p>
+        <p class="price__benefit">רוצים הטבה של 1,000 ₪?<br />היא <b>מחכה לכם בפנים</b>, ונשמרת לכם למשך <b>24 שעות</b> מרגע שנכנסתם.</p>
+        <a class="btn price__cta" href="מסך-ההטבה.html">לראות את ההטבה ולהתחיל</a>
+        <p class="price__calm">לחיצה לא מחייבת - קודם רואים את ההטבה.</p>
+        <p class="price__note">מעבר לזה יש כמובן את עלות המנוי לקלוד - אנחנו ממליצים על 100 דולר בחודש לפחות. הפירוט המלא בשאלות שלמטה.</p>
       </div>
     </div>
   </div>
@@ -2060,6 +2530,31 @@ body{
 <section class="faq">
   <div class="wrap">
     <h2>עוד כמה שאלות</h2>
+
+    <details>
+      <summary>כמה זמן זה לוקח?</summary>
+      <div class="faq__a">
+        <p>אין לוח זמנים ואין תאריך סיום - מתקדמים בקצב שלכם, ועוברים שלב כשאתם מוכנים.</p>
+        <p>חומרי הלמידה עצמם הם <b>15 שעות מובנות, בארבעה שיעורים מלאים</b>. מעליהן יש את שעות התרגול ושיעורי הבית - והן לא נספרות בתוך ה-15, כי הן משתנות מאדם לאדם ולפי מה שאתם בוחרים לבנות.</p>
+        <p>ויש כאן עבודה אמיתית: התרגולים אינם תוספת אופציונלית אלא הדרך שבה הלמידה קורית, ומי שלא משקיע בהם את השעות לא ייצא עם משרד. הגישה למשרד הווירטואלי היא לשנה שלמה, כך שיש מרווח נדיב גם למי שמתקדם לאט או עוצר באמצע.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>ומה אם לא אצליח?</summary>
+      <div class="faq__a">
+        <p>לא אבטיח לכם הצלחה בלי שתעשו את העבודה - זה כתוב גם למעלה בדף, וזה נכון. מה שכן בנוי כאן הוא שלא תיתקעו לבד: השיטה מובילה צעד אחר צעד ואף פעם לא צריך לנחש מה עכשיו, יש תרגול אחרי כל שלב שמוודא שהיסוד יציב לפני שממשיכים, יש סוכני עזר בתוך המשרד הווירטואלי, ויש שתי שעות אישיות עם מנטור/ית בדיוק לרגעים שנתקעים בהם.</p>
+        <p>ומדד ההצלחה שלנו פשוט: שתדעו לבנות מה שתרצו. אם בסוף אתם לא יודעים - אנחנו נכשלנו.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>אפשר לפרוס לתשלומים? ומה אם התחרטתי?</summary>
+      <div class="faq__a">
+        <p>כן. אפשר לשלם בתשלום אחד, או לפרוס <b>עד 12 תשלומים</b>.</p>
+        <p>החזרים כספיים וביטולי עסקה - בהתאם למפורט ב<a href="https://aimprove.co.il/terms-of-use/" target="_blank" rel="noopener">תקנון</a>.</p>
+      </div>
+    </details>
 
     <details>
       <summary>למה אין רשימת נושאים?</summary>
@@ -2102,8 +2597,10 @@ body{
 <section class="final">
   <div class="wrap">
     <h2>מתי מתחילים?</h2>
-    <p>משלמים פעם אחת, נכנסים למשרד, ומתחילים מהשיעור הראשון - מיד.</p>
+    <p>נרשמים, נכנסים למשרד, ומתחילים מהשיעור הראשון - מיד.</p>
+    <p class="final__price">5,900 ₪, או עד 12 תשלומים - ובפנים מחכה הטבת הרשמה.</p>
     <a class="btn" href="מסך-ההטבה.html">אני רוצה להתחיל</a>
+    <p class="final__calm">לחיצה לא מחייבת. ההטבה נשמרת לכם 24 שעות מרגע שלוקחים אותה.</p>
   </div>
 </section>
 
@@ -2114,8 +2611,9 @@ body{
   <div class="wrap">
     <h2>זה לא מתאים לכולם, וזה בסדר</h2>
     <p>אם אתם יודעים על עצמכם שאתם צריכים מישהו שידחוף אתכם - תלכו על הטירונות סוכנים.</p>
-    <p class="door__canon">אותו יעד. אותה שיטה. אותם כלים.<br />בטירונות אני לוקחת אתכם לשם. כאן, אתם לוקחים את עצמכם.</p>
-    <a href="https://agent-course.aimprove.co.il/">לדף של טירונות סוכנים &#8592;</a>
+    <p class="door__canon">אותו יעד. אותה שיטה. אותם כלים.<br />בטירונות, שלהבת לוקחת אתכם לשם. כאן, אתם לוקחים את עצמכם.</p>
+    <p class="door__compare">טירונות סוכנים - 9,300 ₪, עם קבוצה, מפגשים וליווי לאורך הדרך.<br />המפתח - 5,900 ₪, באותה שיטה, בקצב שלכם.</p>
+    <a href="https://agent-course.aimprove.co.il/" target="_blank" rel="noopener">לדף של טירונות סוכנים &#8592;</a>
   </div>
 </section>
 
@@ -2623,5 +3121,477 @@ body{
 })();
 </script>
 
+  <script>
+(function () {
+/* ---------- ליבת הנגן, משותפת ללייטבוקס ולנגן-בתוך-האריח ----------
+       שתי מלכודות ששוות זהב למי שיגע בזה: (1) אסור להסתמך על אירוע play
+       של Vimeo - הוא נורה גם כשהניגון נחסם מיד אחריו; ההכרעה היא getPaused
+       בפועל, ופעמיים (900ms, 2400ms). (2) ה-iframe חייב להיווצר סינכרונית
+       בתוך מטפל-ההקשה וכשהמכולה שלו כבר גלויה - זה מעביר את אישור-המשתמש
+       (מתיר קול) ומונע מ-Vimeo לקבוע גודל מ-iframe של 0x0. */
+    var ICON_PLAY = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+    var ICON_PAUSE = '<svg viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>';
+    var vimeoApiPromise = null;
+    function loadVimeoApi() {
+      if (window.Vimeo) return Promise.resolve();
+      if (!vimeoApiPromise) {
+        vimeoApiPromise = new Promise(function (res, rej) {
+          var s = document.createElement('script');
+          s.src = 'https://player.vimeo.com/api/player.js';
+          s.onload = res; s.onerror = rej;
+          document.head.appendChild(s);
+        });
+      }
+      return vimeoApiPromise;
+    }
+    /* refs = {holder, tap, icon, sound} - ארבעתם כבר ב-DOM (מודל או אריח).
+       onReady (אופציונלי) נקרא עם הנגן מיד אחרי ready(). onFirstPlay
+       (אופציונלי) נקרא ברגע שהניגון בפועל מתחיל - נמדד בדף החי: כ-2
+       שניות אמיתיות מהלחיצה, גם כש-ready() כבר חלף מזמן (ready = הנגן
+       מוכן לקבל פקודות, לא שהתמונה כבר זזה על המסך). לא נשענים על אירוע
+       play - הוא נורה גם רגע לפני שהניגון נחסם; זו סקירה נפרדת של
+       getPaused, לא קשורה ל-ensurePlaying שלמטה (זו רוצה לדעת "כבר?"
+       כמה שיותר מהר, זו רוצה לחכות מספיק לפני שמחליטה על השתקה). */
+    function mountVimeoPlayer(refs, v, onReady, onFirstPlay) {
+      var player = null, userTouched = false, destroyed = false;
+
+      function flash(html) {
+        refs.icon.innerHTML = html;
+        refs.icon.classList.add('show');
+        clearTimeout(refs.icon._t);
+        refs.icon._t = setTimeout(function () { refs.icon.classList.remove('show'); }, 550);
+      }
+      function toggle() {
+        if (!player) return;
+        userTouched = true;   // מכאן ואילך לא מתערבים בניגון מאחורי גבו
+        player.getPaused().then(function (paused) {
+          if (paused) { player.play(); flash(ICON_PLAY); }
+          else { player.pause(); flash(ICON_PAUSE); }
+        });
+      }
+      refs.tap.onclick = toggle;
+      refs.icon.classList.remove('show');
+      /* מתג קול קבוע. קודם זה היה כפתור חד-פעמי שנחשף רק כשהדפדפן חסם
+         ניגון-עם-קול ונעלם לתמיד ברגע שנלחץ. */
+      function syncSound() {
+        if (!player || !refs.sound) return;
+        player.getMuted().then(function (m) {
+          refs.sound.classList.toggle('muted', !!m);
+          refs.sound.setAttribute('aria-label', m ? 'הפעלת קול' : 'השתקה');
+        }).catch(function () {});
+      }
+      refs.sound.onclick = function (e) {
+        e.stopPropagation();
+        if (!player) return;
+        userTouched = true;
+        player.getMuted().then(function (m) {
+          if (!m) return player.setMuted(true);
+          return player.setMuted(false).then(function () {
+            player.setVolume(1); return player.play();
+          });
+        }).then(syncSound).catch(syncSound);
+      };
+
+      refs.holder.innerHTML = '';
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://player.vimeo.com/video/' + v.id + '?h=' + v.h +
+        '&autoplay=1&muted=0&controls=0&playsinline=1&title=0&byline=0&portrait=0&badge=0&dnt=1';
+      iframe.allow = 'autoplay; fullscreen; picture-in-picture; encrypted-media';
+      refs.holder.appendChild(iframe);
+
+      loadVimeoApi().then(function () {
+        if (destroyed) return;
+        var p = player = new Vimeo.Player(iframe);
+        var settled = false;
+        p.on('volumechange', syncSound);
+        syncSound();
+
+        /* בר ההתקדמות. stopPropagation חיוני: האירועים עולים ל-.cf-stage
+           שמפרש תנועה אופקית כהחלקה בין סרטונים. */
+        var bar = refs.bar, fill = bar && bar.querySelector('i');
+        var dur = 0, scrubbing = false;
+        if (bar) {
+          p.getDuration().then(function (d) { dur = d || 0; }).catch(function () {});
+          p.on('timeupdate', function (e) {
+            if (!scrubbing && fill) fill.style.width = ((e.percent || 0) * 100).toFixed(2) + '%';
+          });
+          var track = bar.querySelector('span');
+          var at = function (clientX) {
+            var r = track.getBoundingClientRect();
+            var pct = r.width ? (clientX - r.left) / r.width : 0;
+            pct = Math.max(0, Math.min(1, pct));
+            if (fill) fill.style.width = (pct * 100).toFixed(2) + '%';
+            return pct;
+          };
+          bar.addEventListener('click', function (e) { e.stopPropagation(); });
+          bar.addEventListener('pointerdown', function (e) {
+            e.stopPropagation(); e.preventDefault();
+            scrubbing = true; at(e.clientX);
+            try { bar.setPointerCapture(e.pointerId); } catch (err) {}
+          });
+          bar.addEventListener('pointermove', function (e) {
+            if (!scrubbing) return; e.stopPropagation(); at(e.clientX);
+          });
+          bar.addEventListener('pointerup', function (e) {
+            if (!scrubbing) return;
+            e.stopPropagation(); scrubbing = false;
+            var pct = at(e.clientX);
+            if (dur && player) player.setCurrentTime(pct * dur).catch(function () {});
+          });
+          bar.addEventListener('pointercancel', function () { scrubbing = false; });
+        }
+        /* אם הדפדפן חסם ניגון-עם-קול - מנגנים מושתק ומציעים כפתור קול,
+           במקום להשאיר סרטון שנראה תקוע. */
+        function ensurePlaying() {
+          if (settled || userTouched || destroyed || p !== player) return;
+          p.getPaused().then(function (paused) {
+            if (!paused || settled || userTouched || destroyed || p !== player) return;
+            settled = true;
+            p.setMuted(true).then(function () { return p.play(); })
+              .then(function () { if (!destroyed && p === player) syncSound(); })
+              .catch(function () {});
+          }).catch(function () {});
+        }
+        setTimeout(ensurePlaying, 900);
+        setTimeout(ensurePlaying, 2400);
+
+        if (onFirstPlay) {
+          var firstPlayFired = false;
+          (function pollFirstPlay(triesLeft) {
+            if (firstPlayFired || destroyed || p !== player || triesLeft <= 0) return;
+            p.getPaused().then(function (paused) {
+              if (destroyed || p !== player || firstPlayFired) return;
+              if (!paused) { firstPlayFired = true; onFirstPlay(); return; }
+              setTimeout(function () { pollFirstPlay(triesLeft - 1); }, 150);
+            }).catch(function () {});
+          })(65);   // ~10 שניות; אחרי זה משאירים את הספינר - עדיף מלולאה אינסופית
+        }
+
+        p.ready().then(function () {
+          if (onReady) onReady(p);
+          return p.setVolume(1).then(function () { return p.play(); });
+        }).catch(function () {});
+      }).catch(function () {
+        // player.js לא נטען - מחזירים את סרגל הבקרה המובנה, שלפחות שמיש
+        iframe.src = iframe.src.replace('&controls=0', '&controls=1');
+        if (onFirstPlay) onFirstPlay();   // אין לנו getPaused בלי ה-API - מסירים את הספינר בכל מקרה
+      });
+
+      return {
+        stop: function () { destroyed = true; player = null; refs.holder.innerHTML = ''; }
+      };
+    }
+
+    /* ---------- נגן-בתוך-האריח - זו ברירת המחדל בלחיצה על סרטון ----------
+       רק סרטון אחד מתנגן בכל רגע נתון בכל הדף, ולכן המצב גלובלי. */
+    var ACTIVE_INLINE = null;   // { it, v, ctrl }
+    function posterMarkup(v) {
+      return '<img src="' + v.poster + '" alt="' + v.cap + '"><div class="cf-play"><span></span></div><div class="cf-cap">' + v.cap + '</div>';
+    }
+    function stopActiveInline() {
+      if (!ACTIVE_INLINE) return;
+      ACTIVE_INLINE.ctrl.stop();
+      ACTIVE_INLINE.it.innerHTML = posterMarkup(ACTIVE_INLINE.v);
+      ACTIVE_INLINE = null;
+    }
+    function stopActiveInlineIfAmong(items) {
+      if (ACTIVE_INLINE && items.indexOf(ACTIVE_INLINE.it) !== -1) stopActiveInline();
+    }
+    function inlineMarkup(v) {
+      return (
+        '<div class="cf-item-player">' +
+          '<div class="cf-item-holder"></div>' +
+          '<div class="cf-item-loading"><img src="' + v.poster + '" alt=""><div class="cf-item-spinner"></div></div>' +
+          '<button class="cf-item-tap" type="button" aria-label="עצירה או המשך"></button>' +
+          '<div class="cf-item-icon" aria-hidden="true"></div>' +
+          '<button class="cf-item-sound muted" type="button" aria-label="הפעלת קול">' +
+            '<svg class="ic-on" viewBox="0 0 24 24"><path d="M3 10v4a1 1 0 0 0 1 1h2l4 4V5L6 9H4a1 1 0 0 0-1 1zm13.5 2a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a6.8 6.8 0 0 1 0 13.4v2.1a8.9 8.9 0 0 0 0-17.6z"/></svg>' + '<svg class="ic-off" viewBox="0 0 24 24"><path d="M3 10v4a1 1 0 0 0 1 1h2l4 4V5L6 9H4a1 1 0 0 0-1 1zm18.5-.6-1.4-1.4-2.1 2.1-2.1-2.1-1.4 1.4L16.6 12l-2.1 2.1 1.4 1.4 2.1-2.1 2.1 2.1 1.4-1.4L19.4 12z"/></svg>' +
+            '<b>קול</b></button>' +
+          '<div class="cf-item-bar"><span><i></i></span></div>' +
+          '<button class="cf-item-expand" type="button" aria-label="הגדלת הסרטון">' +
+            '<svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>' +
+          '</button>' +
+        '</div>'
+      );
+    }
+    function startInline(it, v) {
+      if (ACTIVE_INLINE && ACTIVE_INLINE.it === it) return;   // כבר מתנגן כאן
+      stopActiveInline();
+      it.innerHTML = inlineMarkup(v);
+      var loadingEl = it.querySelector('.cf-item-loading');
+      var ctrl = mountVimeoPlayer({
+        holder: it.querySelector('.cf-item-holder'),
+        tap: it.querySelector('.cf-item-tap'),
+        icon: it.querySelector('.cf-item-icon'),
+        sound: it.querySelector('.cf-item-sound'),
+        bar: it.querySelector('.cf-item-bar')
+      }, v, null, function () { loadingEl.classList.add('hide'); });
+      it.querySelector('.cf-item-expand').addEventListener('click', function (e) {
+        e.stopPropagation();
+        LB.open(v, it);   // LB.open עוצר את הניגון-בתוך-האריח בעצמו
+      });
+      ACTIVE_INLINE = { it: it, v: v, ctrl: ctrl };
+    }
+
+    // Flip on tap - but not when interacting with a link, screenshot, or the video gallery
+    document.querySelectorAll('.card').forEach(function (card) {
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('a') || e.target.closest('.media') || e.target.closest('.coverflow') || e.target.closest('.cf-nav')) return;
+        var wasFlipped = card.classList.contains('flipped');
+        card.classList.toggle('flipped');
+        // הופכים כרטיס שהסרטון-באריח שלו מתנגן - עוצרים, אחרת הקול ממשיך
+        // מאחורי כרטיס שכבר לא רואים
+        if (wasFlipped && ACTIVE_INLINE && card.contains(ACTIVE_INLINE.it)) stopActiveInline();
+      });
+    });
+
+    /* ---------- הלייטבוקס - פעולת "הגדלה" מפורשת בלבד ----------
+       לא תוצאה אוטומטית של לחיצה על סרטון (זו מנגנת באריח עצמו,
+       startInline למעלה) - רק כפתור ה-⤢ שמופיע כשסרטון כבר מתנגן שם
+       פותח את זה. (שונה מגרסה קודמת שקפצה למסך מלא בכל לחיצה - שלהבת
+       15-08-2026: "אני לא רוצה שהוא יגדל... אם אני רוצה, אני אוכל
+       ללחוץ ולהגדיל אותו".) */
+    var LB = (function () {
+      var el, frameEl, holder, iconEl, soundBtn, capEl, tapBtn, loadingEl, loadingImg;
+      var opener = null, current = null;
+
+      function build() {
+        el = document.createElement('div');
+        el.className = 'cf-lb';
+        el.hidden = true;
+        el.innerHTML =
+          '<button class="cf-lb-close" type="button" aria-label="סגירת הסרטון">×</button>' +
+          '<div class="cf-lb-frame">' +
+            '<div class="cf-lb-holder"></div>' +
+            '<div class="cf-lb-loading"><img alt=""><div class="cf-lb-spinner"></div></div>' +
+            '<button class="cf-lb-tap" type="button" aria-label="עצירה או המשך"></button>' +
+            '<div class="cf-lb-icon" aria-hidden="true"></div>' +
+            '<button class="cf-lb-sound" type="button" hidden>' +
+              '<svg viewBox="0 0 24 24"><path d="M3 10v4a1 1 0 0 0 1 1h2l4 4V5L6 9H4a1 1 0 0 0-1 1zm13.5 2a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a6.8 6.8 0 0 1 0 13.4v2.1a8.9 8.9 0 0 0 0-17.6z"/></svg>' +
+              'לחצו להפעלת קול</button>' +
+            '<p class="cf-lb-cap"></p>' +
+          '</div>';
+        document.body.appendChild(el);
+        frameEl = el.querySelector('.cf-lb-frame');
+        holder = el.querySelector('.cf-lb-holder');
+        loadingEl = el.querySelector('.cf-lb-loading');
+        loadingImg = loadingEl.querySelector('img');
+        iconEl = el.querySelector('.cf-lb-icon');
+        soundBtn = el.querySelector('.cf-lb-sound');
+        capEl = el.querySelector('.cf-lb-cap');
+        tapBtn = el.querySelector('.cf-lb-tap');
+
+        el.querySelector('.cf-lb-close').addEventListener('click', close);
+        el.addEventListener('click', function (e) { if (e.target === el) close(); });
+        document.addEventListener('keydown', function (e) {
+          if (!el.hidden && (e.key === 'Escape' || e.key === 'Esc')) close();
+        });
+      }
+
+      function open(v, fromEl) {
+        stopActiveInline();
+        if (!el) build();
+        opener = fromEl || null;
+        capEl.textContent = v.cap || '';
+        frameEl.style.removeProperty('--lb-ar');
+        loadingImg.src = v.poster || '';
+        loadingEl.classList.remove('hide');
+
+        holder.innerHTML = '';
+        el.hidden = false;
+        document.body.style.overflow = 'hidden';
+        requestAnimationFrame(function () { el.classList.add('is-open'); });
+
+        current = mountVimeoPlayer(
+          { holder: holder, tap: tapBtn, icon: iconEl, sound: soundBtn },
+          v,
+          function (p) {
+            Promise.all([p.getVideoWidth(), p.getVideoHeight()]).then(function (d) {
+              if (d[0] && d[1]) frameEl.style.setProperty('--lb-ar', d[0] / d[1]);
+            }).catch(function () {});
+          },
+          function () { loadingEl.classList.add('hide'); }
+        );
+      }
+
+      function close() {
+        if (!el || el.hidden) return;
+        el.classList.remove('is-open');
+        if (current) { current.stop(); current = null; }
+        el.hidden = true;
+        document.body.style.overflow = '';
+        if (opener && opener.focus) opener.focus();
+        opener = null;
+      }
+
+      return { open: open };
+    })();
+
+    // Coverflow video galleries (one per card that has videos)
+    document.querySelectorAll('.coverflow').forEach(function (cf) {
+      var VIDEOS = JSON.parse(cf.getAttribute('data-videos'));
+      var active = parseInt(cf.getAttribute('data-active') || '0', 10);
+      var stage = cf.querySelector('.cf-stage');
+      var nav = cf.nextElementSibling;
+      var dotsBox = nav.querySelector('.cf-dots');
+      var swiped = false;   // סוף החלקה - לא לפרש כלחיצה שפותחת סרטון
+      VIDEOS.forEach(function (v, i) {
+        var it = document.createElement('div'); it.className = 'cf-item'; it.dataset.i = i;
+        it.innerHTML = posterMarkup(v);
+        it.setAttribute('role', 'button');
+        it.setAttribute('aria-label', 'הפעלת הסרטון: ' + v.cap);
+        it.addEventListener('click', function () { if (!swiped) onClick(i); });
+        it.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(i); }
+        });
+        stage.appendChild(it);
+        var d = document.createElement('button'); d.className = 'cf-dot';
+        d.addEventListener('click', function () { stopActiveInlineIfAmong(items); active = i; layout(); });
+        dotsBox.appendChild(d);
+      });
+      var items = Array.from(stage.children), dots = Array.from(dotsBox.children);
+      /* התצוגה נקבעת לפי מספר הסרטונים: קרוסלה עולה ברוחב רק כשיש בין מה
+         לבין מה לנווט. סרטון בודד מקבל את כל הרוחב. */
+      var single = VIDEOS.length < 2;
+      cf.classList.add(single ? 'is-single' : 'is-strip');
+      // סרטון בודד - אין לאן לנווט, והנקודה הבודדת היא רעש ויזואלי בלבד.
+      if (single) nav.style.display = 'none';
+      function layout() {
+        if (single) { items[0].tabIndex = 0; return; }
+        /* הרוחב נלקח מ---cf-card שב-CSS ולא נמדד: מדידה מחזירה 0 כל עוד
+           האזור מוסתר - וזה בדיוק המצב שבו layout רץ לראשונה - ומספר-קסם
+           שנשמר משם נשאר שגוי לתמיד. משתנה CSS נקרא נכון גם כשמוסתר. */
+        var cs = getComputedStyle(cf);
+        var card = parseFloat(cs.getPropertyValue('--cf-card'));
+        var spread = parseFloat(cs.getPropertyValue('--cf-spread')) || 0.86;
+        var fan = card > 0;
+        var w = fan ? card : (items[0].getBoundingClientRect().width || 257);
+        items.forEach(function (it, i) {
+          var off = i - active, tr, op, zi;
+          if (fan) {
+            /* גלישה מעגלית לתצוגה בלבד, כדי שהשכנים לא ייערמו לצד אחד.
+               הניווט עצמו (נקודות/החלקה/לחיצה) נשאר ליניארי. */
+            var half = items.length / 2;
+            if (off > half) off -= items.length;
+            else if (off < -half) off += items.length;
+          }
+          var abs = Math.abs(off), dir = off < 0 ? -1 : 1;
+          if (fan) {
+            var lvl = Math.min(abs, 2);
+            var x = lvl === 0 ? 0 : dir * (lvl === 1 ? spread : spread * 1.8) * w;
+            var ry = lvl === 0 ? 0 : -dir * (lvl === 1 ? 24 : 38);
+            var sc = lvl === 0 ? 1 : (lvl === 1 ? 0.84 : 0.68);
+            tr = 'translate(-50%, -50%) translateX(' + x + 'px) rotateY(' + ry + 'deg) scale(' + sc + ')';
+            op = abs === 0 ? 1 : (abs === 1 ? 0.65 : (abs === 2 ? 0.34 : 0));
+            zi = 30 - lvl * 10;
+          } else {
+            tr = 'translate(-50%, -50%) translateX(' + (off * (w + 10)) + 'px)';
+            op = off === 0 ? 1 : 0.45;
+            zi = 10 - abs;
+          }
+          it.style.transform = tr;
+          it.style.opacity = op;
+          it.style.filter = off === 0 ? 'none' : 'brightness(.7)';
+          it.style.zIndex = zi;
+          it.style.pointerEvents = abs > (fan ? 2 : 1) ? 'none' : 'auto';
+          it.tabIndex = off === 0 ? 0 : -1;
+        });
+        dots.forEach(function (d, i) { d.classList.toggle('on', i === active); });
+      }
+      if (!single) window.addEventListener('resize', layout);
+      function onClick(i) {
+        if (i !== active) { stopActiveInlineIfAmong(items); active = i; layout(); return; }
+        startInline(items[i], VIDEOS[i]);
+      }
+
+      /* החלקה אצבע/עכבר בין הסרטונים - זו הציפייה הטבעית בגלריה כזו,
+         והלחיצה על החץ/נקודה נשארת כדרך נוספת ולא כדרך היחידה.
+         מזיזים כבר תוך כדי התנועה (ולא בשחרור) כדי שההחלקה תרגיש מיידית. */
+      if (VIDEOS.length > 1) {
+        var x0 = 0, y0 = 0, dragging = false;
+        var STEP = 44;   // מרחק אצבע שנחשב החלקה ולא נגיעה מקרית
+        stage.addEventListener('pointerdown', function (e) {
+          if (e.pointerType === 'mouse' && e.button !== 0) return;
+          x0 = e.clientX; y0 = e.clientY; dragging = true; swiped = false;
+        });
+        stage.addEventListener('pointermove', function (e) {
+          if (!dragging) return;
+          var dx = e.clientX - x0, dy = e.clientY - y0;
+          // גלילה אנכית של הדף מנצחת - משחררים ולא מתערבים
+          if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 12) { dragging = false; return; }
+          if (Math.abs(dx) < STEP) return;
+          // גרירה שמאלה מביאה למרכז את הסרטון שמימין
+          var next = Math.max(0, Math.min(VIDEOS.length - 1, active + (dx < 0 ? 1 : -1)));
+          if (next !== active) { stopActiveInlineIfAmong(items); active = next; layout(); }
+          swiped = true;
+          dragging = false;   // סרטון אחד לכל החלקה - גרירה ארוכה לא מדלגת על שלושה
+        });
+        /* משחררים את הדגל מיד אחרי הקליק שהדפדפן יורה בסוף החלקה, כדי שלא
+           יישאר דלוק וימנע פתיחת סרטון בנגיעה הבאה */
+        function endDrag() {
+          dragging = false;
+          if (swiped) setTimeout(function () { swiped = false; }, 60);
+        }
+        stage.addEventListener('pointerup', endDrag);
+        stage.addEventListener('pointercancel', endDrag);
+        stage.addEventListener('pointerleave', endDrag);
+      }
+
+      var nx = nav.querySelector('.cf-next'); if (nx) nx.addEventListener('click', function () { stopActiveInlineIfAmong(items); active = Math.min(VIDEOS.length - 1, active + 1); layout(); });
+      var pv = nav.querySelector('.cf-prev'); if (pv) pv.addEventListener('click', function () { stopActiveInlineIfAmong(items); active = Math.max(0, active - 1); layout(); });
+      layout();
+    });
+  })();
+  </script>
+
+<script>
+/* חשיפה בגלילה. שלוש רשתות ביטחון, לפי הסדר:
+   1. מה שכבר בתוך המסך בטעינה נחשף מיד - בלי הבהוב.
+   2. IntersectionObserver לשאר.
+   3. טיימר שחושף הכול אחרי 2.5 שניות, למקרה שה-observer לא נורה
+      (קורה בלשונית מוסתרת ובסביבות בדיקה). בלעדיו תוכן היה יכול
+      להישאר בלתי-נראה לצמיתות, וזה גרוע מלא-להנפיש-בכלל. */
+(function () {
+  var SEL = [
+    ['section > .wrap > h2', 'rv'],
+    ['.road-step', 'rv'],
+    ['.opens-card', 'rv'],
+    ['.obj-item', 'rv'],
+    ['.proof-card', 'rv-fade']
+  ];
+  var items = [];
+  SEL.forEach(function (pair) {
+    var nodes = document.querySelectorAll(pair[0]);
+    Array.prototype.forEach.call(nodes, function (el, i) {
+      if (el.dataset.rvSet) return;
+      el.dataset.rvSet = '1';
+      el.classList.add(pair[1]);
+      el.style.setProperty('--rv-d', (Math.min(i, 3) * 70) + 'ms');
+      items.push(el);
+    });
+  });
+  if (!items.length) return;
+  document.documentElement.classList.add('rv-on');
+
+  function show(el) { el.classList.add('rv-in'); }
+  function inView(el) {
+    var r = el.getBoundingClientRect();
+    return r.top < (window.innerHeight || 0) + 120 && r.bottom > -40;
+  }
+  items.forEach(function (el) { if (inView(el)) show(el); });
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { show(e.target); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px 120px 0px', threshold: 0 });
+    items.forEach(function (el) { if (!el.classList.contains('rv-in')) io.observe(el); });
+  } else {
+    items.forEach(show);
+  }
+  setTimeout(function () { items.forEach(show); }, 2500);
+})();
+</script>
 </body>
 </html>

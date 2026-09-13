@@ -185,6 +185,20 @@ body{
   line-height:1.32;font-size:clamp(21px,5vw,32px);
 }
 .pain h2 b{font-weight:800}
+/* שורת הזיהוי. נוספה 13/09: הדף מדבר בשלושה קולות - "אני" (שלהבת),
+   "אנחנו" (אִימפּרוּב) ו"שלהבת" בגוף שלישי - וכל אחד עושה עבודה אחרת.
+   מה שחסר לא היה אחידות אלא שהקורא ידע מי מדבר איתו, וזה נדרש בדיוק
+   כאן, בפעם הראשונה שנכתב "אני". */
+.pain__by{
+  display:flex;align-items:center;gap:9px;
+  margin:0 0 14px;font-size:clamp(13.5px,3.4vw,15px);
+  font-weight:700;color:var(--blue);letter-spacing:.2px;
+}
+.pain__by::before{
+  content:"";width:22px;height:2px;border-radius:2px;
+  background:var(--gold);flex:none;
+}
+.pain__by span{font-weight:500;color:rgba(20,9,59,.6)}
 .pain__body{margin:0 0 18px;font-weight:400;color:var(--body);font-size:clamp(16.5px,4vw,19px);line-height:1.65}
 .pain__punch{margin:0;font-weight:700;color:var(--navy);font-size:clamp(17px,4.2vw,21px);line-height:1.5}
 
@@ -1755,6 +1769,7 @@ html.rv-on .rv-fade.rv-in{opacity:1}
 
 <section class="pain">
   <div class="wrap">
+    <p class="pain__by">שלהבת ורדי <span>· מייסדת אִימפּרוּב</span></p>
     <h2>המשפט שאני שומעת הכי הרבה: <b>&quot;זה לא רץ בלעדיי.&quot;</b></h2>
     <p class="pain__body">אתם כבר עובדים הרבה עם AI. אתם פשוט לא ממצים אותו.<br />
  אולי בניתם כמה סקילים. <br />אולי אפילו סוכן אחד. <br />ואולי אתם פשוט עובדים עם קלוד כל יום ומרגישים שיש שם עוד הרבה.</p>
@@ -1797,46 +1812,68 @@ html.rv-on .rv-fade.rv-in{opacity:1}
   </div>
 </section>
 
-<!-- סקשן 3א - "מה נפתח לכם". נוסף 30/08. ר' ההערה המלאה ב-CSS:
-     עונה על חמש השאלות ששלהבת שאלה במפורש (מה / איך / איפה רואים /
-     מתי / איך דואגים שיצליחו), במקום רשימת-תכונות שנפסלה. -->
-<section class="opens">
-  <div class="wrap">
-    <h2>אז מה נפתח לכם, ומתי</h2>
-    <p class="opens__lead">נרשמים, נכנסים ומתחילים לבנות סוכני AI מדהימים <b>באותו רגע</b> - השיעור והסוכן הראשון שלכם, כבר היום.</p>
-
-    <div class="opens-grid">
-      <div class="opens-card">
-        <div class="opens-card__top"><h3>אתר חומרי הלמידה</h3><span class="opens-card__val">15 שעות</span></div>
-        <p class="opens-card__scope"><b>כ-15 שעות של למידה מובנית. </b>חמישה שיעורים קלים מאוד לצריכה עצמאית - ובנוסף יש את שעות התרגול ושיעורי הבית, שאינן נספרות כאן</p>
-        <ul>
-          <li>כל השיטה מוקלטת ומסודרת - מהצעד הראשון ועד משרד שעובד</li>
-          <li>צופים מתי שנוח, עוצרים באמצע, חוזרים כמה פעמים שצריך</li>
-          <li>ההקלטות והחומרים נשארים אצלכם - גם אחרי שסיימתם</li>
-        </ul>
+<!-- סקשן 4א - המשרד. ר' ההערה ב-CSS: התמונה הסטטית היא ברירת המחדל
+     לפי המפרט, והסצנה החיה היא שדרוג שטרם חוּוט.
+     ⚠️ id="office-full" ולא "office" - האחרון תפוס בהירו. -->
+<section class="office-sec">
+  <div class="office" id="office-full">
+      <img src="assets/office-hero-final8.png" alt="המשרד הווירטואלי - שמונה מחלקות, סוכנים, סקילים ותהליכים אוטומטיים" loading="lazy" />
+      <span class="deptlabel" style="left:32.0%;top:24.3%;--dc:#cdc6d5">תהליכים אוטומטיים</span>
+      <span class="deptlabel" style="left:63.9%;top:23.1%;--dc:#4db6e1">פדגוגיה</span>
+      <span class="deptlabel" style="left:73.7%;top:36.1%;--dc:#38bdae">תשתית</span>
+      <span class="deptlabel" style="left:44.0%;top:41.0%;--dc:#f17f52">שיווק</span>
+      <span class="deptlabel" style="left:14.4%;top:42.4%;--dc:#f375c5">קריאייטיב</span>
+      <span class="deptlabel" style="left:49.6%;top:46.0%;--dc:#f1e086">צוות אישי</span>
+      <span class="deptlabel" style="left:27.4%;top:55.5%;--dc:#d4afcb">מכירות</span>
+      <span class="deptlabel" style="left:68.0%;top:59.4%;--dc:#e0c7e1">מוצרי AI</span>
+      <!-- נראים רק במצב מסך-מלא. המקרא נכנס ל-office-full-legend ב-JS
+           מהפאנל שלמטה, כדי שלא יהיו שתי גרסאות שלו בקוד. -->
+      <div class="office-full-bar">
+        <p class="office-full-bar__hint"><b>זה המשרד האמיתי של שלהבת - וכזה אתם הולכים לבנות.</b>
+          <span>שחקו בו: גררו כדי לסובב · גלגלו כדי להתקרב · לחצו על כל סוכן כדי לראות למה הוא מחובר</span></p>
+        <button type="button" class="office-full-bar__close">🚪 יציאה מהמשרד <span class="office-full-bar__kbd">Esc</span></button>
       </div>
+      <div class="office-full-legend"></div>
+  </div>
 
-      <div class="opens-card">
-        <div class="opens-card__top"><h3>המשרד הווירטואלי</h3><span class="opens-card__val">שנה · שווי 1,800 ₪</span></div>
-        <ul>
-          <li>הסביבה שבה אתם מתעדים את המחלקות והסוכנים שבניתם - כדי לשלוט במה שבניתם, גם כשזה גדל</li>
-          <li>סוכני עזר שעוזרים לכם לבנות סוכנים, לארגן ולתעד את מה שבניתם</li>
-          <li>גישה לספריית הסקילים הסודית של שלהבת -הסקילים של הסוכנים שמנהלים את אִימפּרוּב. (שיווק, אסטרטגיה, תוכן, סושיאל, קופירייטינג ועוד ועוד). כדי שלא תתחילו מ-0</li>
-        </ul>
-      </div>
+  <div class="office-sec__scrim" aria-hidden="true"></div>
 
-      <div class="opens-card">
-        <div class="opens-card__top"><h3>שעתיים אישיות</h3><span class="opens-card__val">שווי 800 ₪</span></div>
-        <ul>
-          <li>שני שוברים של שעה עם מנטור/ית - נפתחים לכם מיד</li>
-          <li>תקפים לכל השנה - מתי שתצטרכו את המנטור, תוכלו לקבוע שיעור</li>
-          <li>התוכנית בנויה כך שתחוו הצלחה מהירה ואמיתית גם ללא מנטור, אבל דאגנו לכם לרשת ביטחון בכל זאת</li>
-        </ul>
+  <div class="wrap office-sec__content"><!-- ר' ההערה ב-CSS: הטקסט צף מעל
+       המשרד, כמו כרטיס ההתחברות ב-/login - לא סקשן נפרד עם ריבוע בתוכו. -->
+    <div class="office-sec__panel">
+    <h2>זה מה שאתם הולכים לבנות</h2>
+    <p class="office-sec__lead">מחלקות, ובכל אחת סוכנים עם תפקיד מוגדר, עם ידע וסקילים משלהם.</p>
+    <p class="office-sec__cap"><b>זה לא איור וזו לא הדגמה - זה משרד ה-AI האמיתי של שלהבת, צילום מסך מתוכו.</b> זה מה שמנהל את כל האופרציה של אִימפּרוּב: אופרציה שדורשת עשרות עובדים, בלי עובד אנושי אחד. כל קובייה פה היא סוכן שרץ היום - ובמשרד עצמו לוחצים על כל אחד מהם ורואים לאיזה ידע ויכולות הוא מחובר.</p>
+
+    <div class="office-legend">
+      <h3>מה כל צורה אומרת</h3>
+      <p class="office-legend__note">הדוגמאות שבתמונה הן טעימה בלבד - בונים כל דבר שהעסק שלכם צריך</p>
+      <div class="office-legend__grid">
+        <div class="office-legend__item"><span class="office-legend__shape office-legend__shape--cube" aria-hidden="true"></span><span class="office-legend__text"><b>קובייה</b> - סוכן. עובד עם תפקיד מוגדר, יושב במחלקה שלו</span></div>
+        <div class="office-legend__item"><span class="office-legend__shape office-legend__shape--capsule" aria-hidden="true"></span><span class="office-legend__text"><b>גלולה</b> - מסמך ידע. מה שהסוכן יודע <i>על</i> העסק, הקהל, איך עובדים אצלכם</span></div>
+        <div class="office-legend__item"><span class="office-legend__shape office-legend__shape--cone" aria-hidden="true"></span><span class="office-legend__text"><b>חרוט</b> - סקיל. מה שהסוכן יודע <i>לעשות</i></span></div>
+        <div class="office-legend__item"><span class="office-legend__shape office-legend__shape--ring" aria-hidden="true"></span><span class="office-legend__text"><b>טבעת</b> - תהליך אוטומטי. סדר קבוע של פעולות שהסוכן מריץ לבד</span></div>
       </div>
     </div>
 
+    <p class="office-sec__more">בכל מחלקה יושבים הסוכנים שעוסקים בתחום שלה, וכל סוכן מרכיבים משלושת הדברים שלמעלה - לא בונים אותו מאפס בכל פעם. ולמטה בדף תראו בדיוק מה בוגרים כבר בנו כך - משרדים אמיתיים שרצים היום.</p>
+
+    <button type="button" class="office__hint">להיכנס למשרד ולשחק בו</button>
+    <a class="office-sec__cta" href="#price">רוצים משרד כזה משלכם? ←</a>
+    </div>
   </div>
 </section>
+
+<!-- סקשן 4ב - הגשר. ר' ההערה ב-CSS. -->
+<section class="bridge">
+  <div class="wrap">
+    <p class="bridge__kicker">ראיתם את המשרד הזה?</p>
+    <h2>זו לא הדגמה.<br /><span class="accent">זה מה שאתם הולכים לבנות.</span></h2>
+    <p class="bridge__lead">לעסק שלכם. עם המחלקות שלכם, עם הסוכנים שאתם צריכים, ועם הידע שרק אתם מכירים. <b>ואתם מגיעים לשם בצורה שיטתית - ולא באלתור אינטואיטיבי.</b></p>
+    <p class="bridge__how">יש סדר: <b>מתחילים מדבר אחד קטן שרץ בלי שנגעתם בו</b>, ומשם מרכיבים. כל שלב נשען על מה שכבר עובד, ו<b>אף פעם לא צריך לנחש מה עכשיו</b> - וזה מה שהופך את זה מ"עוד ניסיון בקלוד" למשרד AI שעובד.</p>
+  </div>
+</section>
+
 
 <!-- סקשן 4 - מפת המסע. ארבעה שלבים, ר' ההערה ב-CSS: שלושה היה
      שגיאת-תמלול, לא הכרעה. הקופי הוא map_h/map_intro/st1-st4/map_note
@@ -1927,57 +1964,6 @@ html.rv-on .rv-fade.rv-in{opacity:1}
   </div>
 </section>
 
-<!-- סקשן 4א - המשרד. ר' ההערה ב-CSS: התמונה הסטטית היא ברירת המחדל
-     לפי המפרט, והסצנה החיה היא שדרוג שטרם חוּוט.
-     ⚠️ id="office-full" ולא "office" - האחרון תפוס בהירו. -->
-<section class="office-sec">
-  <div class="office" id="office-full">
-      <img src="assets/office-hero-final8.png" alt="המשרד הווירטואלי - שמונה מחלקות, סוכנים, סקילים ותהליכים אוטומטיים" loading="lazy" />
-      <span class="deptlabel" style="left:32.0%;top:24.3%;--dc:#cdc6d5">תהליכים אוטומטיים</span>
-      <span class="deptlabel" style="left:63.9%;top:23.1%;--dc:#4db6e1">פדגוגיה</span>
-      <span class="deptlabel" style="left:73.7%;top:36.1%;--dc:#38bdae">תשתית</span>
-      <span class="deptlabel" style="left:44.0%;top:41.0%;--dc:#f17f52">שיווק</span>
-      <span class="deptlabel" style="left:14.4%;top:42.4%;--dc:#f375c5">קריאייטיב</span>
-      <span class="deptlabel" style="left:49.6%;top:46.0%;--dc:#f1e086">צוות אישי</span>
-      <span class="deptlabel" style="left:27.4%;top:55.5%;--dc:#d4afcb">מכירות</span>
-      <span class="deptlabel" style="left:68.0%;top:59.4%;--dc:#e0c7e1">מוצרי AI</span>
-      <!-- נראים רק במצב מסך-מלא. המקרא נכנס ל-office-full-legend ב-JS
-           מהפאנל שלמטה, כדי שלא יהיו שתי גרסאות שלו בקוד. -->
-      <div class="office-full-bar">
-        <p class="office-full-bar__hint"><b>זה המשרד האמיתי של שלהבת - וכזה אתם הולכים לבנות.</b>
-          <span>שחקו בו: גררו כדי לסובב · גלגלו כדי להתקרב · לחצו על כל סוכן כדי לראות למה הוא מחובר</span></p>
-        <button type="button" class="office-full-bar__close">🚪 יציאה מהמשרד <span class="office-full-bar__kbd">Esc</span></button>
-      </div>
-      <div class="office-full-legend"></div>
-  </div>
-
-  <div class="office-sec__scrim" aria-hidden="true"></div>
-
-  <div class="wrap office-sec__content"><!-- ר' ההערה ב-CSS: הטקסט צף מעל
-       המשרד, כמו כרטיס ההתחברות ב-/login - לא סקשן נפרד עם ריבוע בתוכו. -->
-    <div class="office-sec__panel">
-    <h2>זה מה שאתם הולכים לבנות</h2>
-    <p class="office-sec__lead">מחלקות, ובכל אחת סוכנים עם תפקיד מוגדר, עם ידע וסקילים משלהם.</p>
-    <p class="office-sec__cap"><b>זה לא איור וזו לא הדגמה - זה משרד ה-AI האמיתי של שלהבת, צילום מסך מתוכו.</b> זה מה שמנהל את כל האופרציה של אִימפּרוּב: אופרציה שדורשת עשרות עובדים, בלי עובד אנושי אחד. כל קובייה פה היא סוכן שרץ היום - ובמשרד עצמו לוחצים על כל אחד מהם ורואים לאיזה ידע ויכולות הוא מחובר.</p>
-
-    <div class="office-legend">
-      <h3>מה כל צורה אומרת</h3>
-      <p class="office-legend__note">הדוגמאות שבתמונה הן טעימה בלבד - בונים כל דבר שהעסק שלכם צריך</p>
-      <div class="office-legend__grid">
-        <div class="office-legend__item"><span class="office-legend__shape office-legend__shape--cube" aria-hidden="true"></span><span class="office-legend__text"><b>קובייה</b> - סוכן. עובד עם תפקיד מוגדר, יושב במחלקה שלו</span></div>
-        <div class="office-legend__item"><span class="office-legend__shape office-legend__shape--capsule" aria-hidden="true"></span><span class="office-legend__text"><b>גלולה</b> - מסמך ידע. מה שהסוכן יודע <i>על</i> העסק, הקהל, איך עובדים אצלכם</span></div>
-        <div class="office-legend__item"><span class="office-legend__shape office-legend__shape--cone" aria-hidden="true"></span><span class="office-legend__text"><b>חרוט</b> - סקיל. מה שהסוכן יודע <i>לעשות</i></span></div>
-        <div class="office-legend__item"><span class="office-legend__shape office-legend__shape--ring" aria-hidden="true"></span><span class="office-legend__text"><b>טבעת</b> - תהליך אוטומטי. סדר קבוע של פעולות שהסוכן מריץ לבד</span></div>
-      </div>
-    </div>
-
-    <p class="office-sec__more">בכל מחלקה יושבים הסוכנים שעוסקים בתחום שלה, וכל סוכן מרכיבים משלושת הדברים שלמעלה - לא בונים אותו מאפס בכל פעם. ולמטה בדף תראו בדיוק מה בוגרים כבר בנו כך - משרדים אמיתיים שרצים היום.</p>
-
-    <button type="button" class="office__hint">להיכנס למשרד ולשחק בו</button>
-    <a class="office-sec__cta" href="#price">רוצים משרד כזה משלכם? ←</a>
-    </div>
-  </div>
-</section>
 
 <!-- שורת הפתיח (29/08) אינה מהקופי המאושר - אין שם שורה שמתאימה,
      כי מבנה "עונה על: <התנגדות>" נבחר בשיחה ב-28/08 ואינו קיים
@@ -1986,15 +1972,6 @@ html.rv-on .rv-fade.rv-in{opacity:1}
      מוביל את כל קבוצת ההמראה במדד היציאות". -->
 <!-- סקשן 5 - הוכחה. התוכן אמיתי, מדף הבוגרים החי (25/08). הכיתובים
      מתארים מה נבנה, לא שבחים - ר' ההערה ב-CSS. אין כאן שום הפניה. -->
-<!-- סקשן 4ב - הגשר. ר' ההערה ב-CSS. -->
-<section class="bridge">
-  <div class="wrap">
-    <p class="bridge__kicker">ראיתם את המשרד הזה?</p>
-    <h2>זו לא הדגמה.<br /><span class="accent">זה מה שאתם הולכים לבנות.</span></h2>
-    <p class="bridge__lead">לעסק שלכם. עם המחלקות שלכם, עם הסוכנים שאתם צריכים, ועם הידע שרק אתם מכירים. <b>ואתם מגיעים לשם בצורה שיטתית - ולא באלתור אינטואיטיבי.</b></p>
-    <p class="bridge__how">יש סדר: <b>מתחילים מדבר אחד קטן שרץ בלי שנגעתם בו</b>, ומשם מרכיבים. כל שלב נשען על מה שכבר עובד, ו<b>אף פעם לא צריך לנחש מה עכשיו</b> - וזה מה שהופך את זה מ"עוד ניסיון בקלוד" למשרד AI שעובד.</p>
-  </div>
-</section>
 
 <section class="proof">
   <div class="wrap">
@@ -2493,6 +2470,47 @@ html.rv-on .rv-fade.rv-in{opacity:1}
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- סקשן 3א - "מה נפתח לכם". נוסף 30/08. ר' ההערה המלאה ב-CSS:
+     עונה על חמש השאלות ששלהבת שאלה במפורש (מה / איך / איפה רואים /
+     מתי / איך דואגים שיצליחו), במקום רשימת-תכונות שנפסלה. -->
+<section class="opens">
+  <div class="wrap">
+    <h2>אז מה נפתח לכם, ומתי</h2>
+    <p class="opens__lead">נרשמים, נכנסים ומתחילים לבנות סוכני AI מדהימים <b>באותו רגע</b> - השיעור והסוכן הראשון שלכם, כבר היום.</p>
+
+    <div class="opens-grid">
+      <div class="opens-card">
+        <div class="opens-card__top"><h3>אתר חומרי הלמידה</h3><span class="opens-card__val">15 שעות</span></div>
+        <p class="opens-card__scope"><b>כ-15 שעות של למידה מובנית. </b>חמישה שיעורים קלים מאוד לצריכה עצמאית - ובנוסף יש את שעות התרגול ושיעורי הבית, שאינן נספרות כאן</p>
+        <ul>
+          <li>כל השיטה מוקלטת ומסודרת - מהצעד הראשון ועד משרד שעובד</li>
+          <li>צופים מתי שנוח, עוצרים באמצע, חוזרים כמה פעמים שצריך</li>
+          <li>ההקלטות והחומרים נשארים אצלכם - גם אחרי שסיימתם</li>
+        </ul>
+      </div>
+
+      <div class="opens-card">
+        <div class="opens-card__top"><h3>המשרד הווירטואלי</h3><span class="opens-card__val">שנה · שווי 1,800 ₪</span></div>
+        <ul>
+          <li>הסביבה שבה אתם מתעדים את המחלקות והסוכנים שבניתם - כדי לשלוט במה שבניתם, גם כשזה גדל</li>
+          <li>סוכני עזר שעוזרים לכם לבנות סוכנים, לארגן ולתעד את מה שבניתם</li>
+          <li>גישה לספריית הסקילים הסודית של שלהבת -הסקילים של הסוכנים שמנהלים את אִימפּרוּב. (שיווק, אסטרטגיה, תוכן, סושיאל, קופירייטינג ועוד ועוד). כדי שלא תתחילו מ-0</li>
+        </ul>
+      </div>
+
+      <div class="opens-card">
+        <div class="opens-card__top"><h3>שעתיים אישיות</h3><span class="opens-card__val">שווי 800 ₪</span></div>
+        <ul>
+          <li>שני שוברים של שעה עם מנטור/ית - נפתחים לכם מיד</li>
+          <li>תקפים לכל השנה - מתי שתצטרכו את המנטור, תוכלו לקבוע שיעור</li>
+          <li>התוכנית בנויה כך שתחוו הצלחה מהירה ואמיתית גם ללא מנטור, אבל דאגנו לכם לרשת ביטחון בכל זאת</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </section>
 

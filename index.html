@@ -178,6 +178,17 @@ body{
 /* ---------- 2. הכאב (לבן) ---------- */
 .pain{background:#fff;padding:64px 0}
 .pain .wrap{max-width:780px}
+/* כל הסקשן הוא ציטוט של שלהבת (13/09). הגרש הוא אלמנט עיצובי בפינה
+   הימנית-עליונה. הוא **בזרימה** ולא ממוקם מוחלט - גרסה קודמת הייתה
+   absolute והגליף ישב על המילה הראשונה בכותרת. line-height נמוך גוזם
+   את הרווח שגליף ענק גורר מתחתיו. */
+.pain__qm{
+  display:block;margin:0 0 2px;
+  font-size:clamp(84px,12.5vw,144px);line-height:.58;
+  font-weight:900;font-style:normal;
+  color:var(--gold);
+  user-select:none;pointer-events:none;
+}
 /* הכותרת נושאת משפט מלא, והציטוט הוא המודגש בתוכו - לכן היא קטנה יותר
    מכותרת-סקשן רגילה, והמשקל הרגיל הוא 600 עם 800 רק על הציטוט */
 .pain h2{
@@ -189,16 +200,18 @@ body{
    "אנחנו" (אִימפּרוּב) ו"שלהבת" בגוף שלישי - וכל אחד עושה עבודה אחרת.
    מה שחסר לא היה אחידות אלא שהקורא ידע מי מדבר איתו, וזה נדרש בדיוק
    כאן, בפעם הראשונה שנכתב "אני". */
+/* החתימה. יושבת מתחת לדברים ולא מעליהם - כי כל הסקשן הוא ציטוט,
+   וחתימה באה בסוף ציטוט. */
 .pain__by{
-  display:flex;align-items:center;gap:9px;
-  margin:0 0 14px;font-size:clamp(13.5px,3.4vw,15px);
-  font-weight:700;color:var(--blue);letter-spacing:.2px;
+  display:flex;align-items:center;gap:10px;
+  margin:26px 0 0;font-size:clamp(14px,3.5vw,16px);
+  font-weight:800;color:var(--navy);letter-spacing:.2px;
 }
 .pain__by::before{
-  content:"";width:22px;height:2px;border-radius:2px;
+  content:"";width:30px;height:2px;border-radius:2px;
   background:var(--gold);flex:none;
 }
-.pain__by span{font-weight:500;color:rgba(20,9,59,.6)}
+.pain__by span{font-weight:500;color:rgba(20,9,59,.58)}
 .pain__body{margin:0 0 18px;font-weight:400;color:var(--body);font-size:clamp(16.5px,4vw,19px);line-height:1.65}
 .pain__punch{margin:0;font-weight:700;color:var(--navy);font-size:clamp(17px,4.2vw,21px);line-height:1.5}
 
@@ -278,7 +291,7 @@ body{
    4(לבן) ← 6(תכלת), כלומר אף שני סקשנים סמוכים לא חולקים רקע -
    זה מה שהיה שבור לפני תיקון-העיצוב של 27/08.
    החץ ← ולא ← הפוך: RTL, הזרימה קדימה היא שמאלה (כלל טיפוגרפיה). */
-.road{background:#fff;padding:88px 0}
+.road{background:var(--sky);padding:88px 0}
 .road h2{margin:0 0 14px;font-weight:800;color:var(--navy);line-height:1.25;font-size:clamp(24px,5.4vw,36px)}
 .road__lead{margin:0 0 38px;font-weight:400;color:var(--body);font-size:clamp(16px,3.9vw,18.5px);line-height:1.65;max-width:46em}
 .road-grid{display:grid;gap:18px}
@@ -319,7 +332,7 @@ body{
    דף הטירונות נוקב באתר כזה ולא היה מקור שמאשר שהוא קיים גם במפתח.
    ⚠️ מה שעדיין **לא** אושר: כתובת/שם-מותג של האתר, ואם זה אותו אתר
    של הטירונות או נפרד. אל תכתבו URL בלי לשאול. */
-.opens{background:var(--sky);padding:88px 0}
+.opens{background:#fff;padding:88px 0}
 .opens .wrap{max-width:1000px}
 .opens h2{margin:0 0 10px;font-weight:800;color:var(--navy);line-height:1.25;font-size:clamp(24px,5.4vw,36px)}
 .opens__lead{margin:0 0 36px;font-weight:500;color:var(--body);font-size:clamp(16.5px,4vw,19px);line-height:1.6}
@@ -1013,7 +1026,7 @@ body{
 .succeed h2{margin:0 0 14px;font-weight:800;color:var(--navy);line-height:1.25;font-size:clamp(24px,5.4vw,36px)}
 .succeed__lead{margin:0 0 26px;font-weight:400;color:var(--body);font-size:clamp(16px,3.9vw,18.5px);line-height:1.65;max-width:46em}
 .succeed .opens__succeed{margin:0}
-.stay{background:#fff;padding:88px 0}
+.stay{background:var(--sky);padding:88px 0}
 .stay h2{margin:0 0 36px;font-weight:800;color:var(--navy);line-height:1.25;font-size:clamp(24px,5.4vw,36px)}
 .stay-grid{display:grid;gap:22px}
 .stay-item{
@@ -1051,7 +1064,7 @@ body{
    ⚠️ כלל האיזון (סעיף 3ב): משקל המנטורית במסע = משקלה במוצר. היא
    בונוס, לא תנאי. לכן הסקשן הזה קטן ומאופק בכוונה, ואינו גיבור הדף
    - אם הוא ייראה כמו תנאי, מי שלא התחברה לאף מנטורית לא תרכוש. */
-.safety{background:var(--sky);padding:88px 0}
+.safety{background:#fff;padding:88px 0}
 .safety .wrap{max-width:820px}
 .safety h2{margin:0 0 18px;font-weight:800;color:var(--navy);line-height:1.25;font-size:clamp(24px,5.4vw,34px)}
 .safety__line{margin:0 0 26px;font-weight:400;color:var(--body);font-size:clamp(16.5px,4vw,19px);line-height:1.7}
@@ -1206,7 +1219,7 @@ body{
 }
 .road-ex ul.road-ex__flow li::before{display:none}
 .road-ex ul.road-ex__flow .road-ex__sep{
-  background:none;box-shadow:none;padding:0;color:rgba(20,9,59,.4);font-size:17px;line-height:1;
+  background:none;box-shadow:none;padding:0;color:rgba(20,9,59,.62);font-size:17px;line-height:1;
 }
 .road-ex__out{
   margin:10px 0 0;font-size:15px;line-height:1.55;
@@ -1266,7 +1279,7 @@ body{
    לה מזמינה בלבול עם כלל אין-מנוי (שחל על המנוי של אימפרוב, לא של
    קלוד). ⚠️ בסקשן השאלות-תשובות היא כן מופיעה, וזה תקין - שם זו
    גילוי-עלות הכרחי, בלשונה המאושרת (a3). */
-.obj{background:#fff;padding:88px 0}
+.obj{background:var(--sky);padding:88px 0}
 /* צילומי-הודעה בהתנגדויות (30/08). המאגר מסווג לפי אותן התנגדויות,
    ולכן כל צילום כאן יושב מתחת להתנגדות שהוא באמת עונה עליה.
    ⚠️ מי שמחליף צילום - לקרוא אותו בעין קודם. בודק-שפת-הקורס אינו
@@ -1769,12 +1782,13 @@ html.rv-on .rv-fade.rv-in{opacity:1}
 
 <section class="pain">
   <div class="wrap">
-    <p class="pain__by">שלהבת ורדי <span>· מייסדת אִימפּרוּב</span></p>
+    <span class="pain__qm" aria-hidden="true">&#8220;</span>
     <h2>המשפט שאני שומעת הכי הרבה: <b>&quot;זה לא רץ בלעדיי.&quot;</b></h2>
     <p class="pain__body">אתם כבר עובדים הרבה עם AI. אתם פשוט לא ממצים אותו.<br />
  אולי בניתם כמה סקילים. <br />אולי אפילו סוכן אחד. <br />ואולי אתם פשוט עובדים עם קלוד כל יום ומרגישים שיש שם עוד הרבה.</p>
     <p class="pain__punch">בכל מקרה - זה עדיין לא מערכת. זה עדיין תלוי בכם.</p>
     <p class="pain__cost">ובכל יום שעובר, אתם עושים ידנית דברים שכבר יכלו לרוץ לבד.</p>
+    <p class="pain__by">שלהבת ורדי <span>· מייסדת אִימפּרוּב</span></p>
   </div>
 </section>
 
@@ -1961,6 +1975,47 @@ html.rv-on .rv-fade.rv-in{opacity:1}
     </div>
 
     <p class="road__note">אין לוח זמנים. עוברים שלב כשאתם מוכנים.</p>
+  </div>
+</section>
+
+<!-- סקשן 3א - "מה נפתח לכם". נוסף 30/08. ר' ההערה המלאה ב-CSS:
+     עונה על חמש השאלות ששלהבת שאלה במפורש (מה / איך / איפה רואים /
+     מתי / איך דואגים שיצליחו), במקום רשימת-תכונות שנפסלה. -->
+<section class="opens">
+  <div class="wrap">
+    <h2>אז מה נפתח לכם, ומתי</h2>
+    <p class="opens__lead">נרשמים, נכנסים ומתחילים לבנות סוכני AI מדהימים <b>באותו רגע</b> - השיעור והסוכן הראשון שלכם, כבר היום.</p>
+
+    <div class="opens-grid">
+      <div class="opens-card">
+        <div class="opens-card__top"><h3>אתר חומרי הלמידה</h3><span class="opens-card__val">15 שעות</span></div>
+        <p class="opens-card__scope"><b>כ-15 שעות של למידה מובנית. </b>חמישה שיעורים קלים מאוד לצריכה עצמאית - ובנוסף יש את שעות התרגול ושיעורי הבית, שאינן נספרות כאן</p>
+        <ul>
+          <li>כל השיטה מוקלטת ומסודרת - מהצעד הראשון ועד משרד שעובד</li>
+          <li>צופים מתי שנוח, עוצרים באמצע, חוזרים כמה פעמים שצריך</li>
+          <li>ההקלטות והחומרים נשארים אצלכם - גם אחרי שסיימתם</li>
+        </ul>
+      </div>
+
+      <div class="opens-card">
+        <div class="opens-card__top"><h3>המשרד הווירטואלי</h3><span class="opens-card__val">שנה · שווי 1,800 ₪</span></div>
+        <ul>
+          <li>הסביבה שבה אתם מתעדים את המחלקות והסוכנים שבניתם - כדי לשלוט במה שבניתם, גם כשזה גדל</li>
+          <li>סוכני עזר שעוזרים לכם לבנות סוכנים, לארגן ולתעד את מה שבניתם</li>
+          <li>גישה לספריית הסקילים הסודית של שלהבת -הסקילים של הסוכנים שמנהלים את אִימפּרוּב. (שיווק, אסטרטגיה, תוכן, סושיאל, קופירייטינג ועוד ועוד). כדי שלא תתחילו מ-0</li>
+        </ul>
+      </div>
+
+      <div class="opens-card">
+        <div class="opens-card__top"><h3>שעתיים אישיות</h3><span class="opens-card__val">שווי 800 ₪</span></div>
+        <ul>
+          <li>שני שוברים של שעה עם מנטור/ית - נפתחים לכם מיד</li>
+          <li>תקפים לכל השנה - מתי שתצטרכו את המנטור, תוכלו לקבוע שיעור</li>
+          <li>התוכנית בנויה כך שתחוו הצלחה מהירה ואמיתית גם ללא מנטור, אבל דאגנו לכם לרשת ביטחון בכל זאת</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -2473,46 +2528,6 @@ html.rv-on .rv-fade.rv-in{opacity:1}
   </div>
 </section>
 
-<!-- סקשן 3א - "מה נפתח לכם". נוסף 30/08. ר' ההערה המלאה ב-CSS:
-     עונה על חמש השאלות ששלהבת שאלה במפורש (מה / איך / איפה רואים /
-     מתי / איך דואגים שיצליחו), במקום רשימת-תכונות שנפסלה. -->
-<section class="opens">
-  <div class="wrap">
-    <h2>אז מה נפתח לכם, ומתי</h2>
-    <p class="opens__lead">נרשמים, נכנסים ומתחילים לבנות סוכני AI מדהימים <b>באותו רגע</b> - השיעור והסוכן הראשון שלכם, כבר היום.</p>
-
-    <div class="opens-grid">
-      <div class="opens-card">
-        <div class="opens-card__top"><h3>אתר חומרי הלמידה</h3><span class="opens-card__val">15 שעות</span></div>
-        <p class="opens-card__scope"><b>כ-15 שעות של למידה מובנית. </b>חמישה שיעורים קלים מאוד לצריכה עצמאית - ובנוסף יש את שעות התרגול ושיעורי הבית, שאינן נספרות כאן</p>
-        <ul>
-          <li>כל השיטה מוקלטת ומסודרת - מהצעד הראשון ועד משרד שעובד</li>
-          <li>צופים מתי שנוח, עוצרים באמצע, חוזרים כמה פעמים שצריך</li>
-          <li>ההקלטות והחומרים נשארים אצלכם - גם אחרי שסיימתם</li>
-        </ul>
-      </div>
-
-      <div class="opens-card">
-        <div class="opens-card__top"><h3>המשרד הווירטואלי</h3><span class="opens-card__val">שנה · שווי 1,800 ₪</span></div>
-        <ul>
-          <li>הסביבה שבה אתם מתעדים את המחלקות והסוכנים שבניתם - כדי לשלוט במה שבניתם, גם כשזה גדל</li>
-          <li>סוכני עזר שעוזרים לכם לבנות סוכנים, לארגן ולתעד את מה שבניתם</li>
-          <li>גישה לספריית הסקילים הסודית של שלהבת -הסקילים של הסוכנים שמנהלים את אִימפּרוּב. (שיווק, אסטרטגיה, תוכן, סושיאל, קופירייטינג ועוד ועוד). כדי שלא תתחילו מ-0</li>
-        </ul>
-      </div>
-
-      <div class="opens-card">
-        <div class="opens-card__top"><h3>שעתיים אישיות</h3><span class="opens-card__val">שווי 800 ₪</span></div>
-        <ul>
-          <li>שני שוברים של שעה עם מנטור/ית - נפתחים לכם מיד</li>
-          <li>תקפים לכל השנה - מתי שתצטרכו את המנטור, תוכלו לקבוע שיעור</li>
-          <li>התוכנית בנויה כך שתחוו הצלחה מהירה ואמיתית גם ללא מנטור, אבל דאגנו לכם לרשת ביטחון בכל זאת</li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-</section>
 
 <!-- סקשן 8 - מה כלול והמחיר. 5,900 הוא הנקוב, בכוונה. -->
 <section class="price" id="price">

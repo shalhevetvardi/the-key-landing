@@ -3011,15 +3011,13 @@ html.rv-on .rv-fade.rv-in{opacity:1}
    (פיקסל פייסבוק + גוגל אנליטיקס): הוא מעביר מידע החוצה ודורש הסכמה
    וכפתור-פרטיות, וזו החלטה נפרדת שלא התבקשה.
 
-   ⛔⛔ **הוא אינו מייצר נתונים עדיין, וזה לא ייראה כשגיאה.**
-   ה-Worker ב-`~/קוד/aimprove-redirector/src/index.ts` הוא רשימת-היתר
+   ✅ **מ-09-10-2026 השרת שומר את האירועים של הדף** (aimprove-redirector,
+   PR #12). השרת (`src/index.ts` בריפו aimprove-redirector) הוא רשימת-היתר
    קפדנית, ו**מחזיר 204 גם על אירוע שהוא זורק** ("a malformed or hostile
-   body is indistinguishable from a good one to the sender"). שלושת
-   הדברים שחייבים להתווסף שם כדי שהמדידה תתחיל לעבוד:
-     1. `EV_PAGES`  ← 'maftecha'
-     2. `EV_DEPTHS` ← 14 שמות הסקשנים שב-SECTIONS למטה
-     3. `EV_KINDS`  ← 'start', 'mentor', 'tironot', 'office'
-   שינוי ה-Worker נפרס אוטומטית בכל מיזוג ל-main, ולכן הוא לא נעשה כאן.
+   body is indistinguishable from a good one to the sender"). לכן כל שם חדש
+   ב-SECTIONS למטה וכל סוג לחיצה חדש חייבים להתווסף גם שם (`EV_DEPTHS` /
+   `EV_KINDS`) וגם לבדיקה `test/funnel-maftecha.test.mjs`, אחרת הם נזרקים
+   בשקט. שינוי בשרת עולה לאוויר בכל מיזוג ל-main, ולכן הוא לא נעשה כאן.
 
    הסקריפט לעולם לא שובר את הדף: הכל בתוך try/catch, אפס שינוי ויזואלי,
    ואם נקודת-הקצה לא זמינה הדף מתפקד בדיוק כרגיל. */
@@ -3178,9 +3176,7 @@ html.rv-on .rv-fade.rv-in{opacity:1}
        ועל המשך-אחרי-עצירה - ולכן sendOnce לכל סרטון בנפרד, אחרת המשך
        ניגון היה נספר כצפייה נוספת. הקליפים preload="none", אז האירוע
        הזה הוא גם המדד היחיד לכך שמישהו בכלל ביקש לראות אותם.
-       ⚠️ תלוי ב-EV_KINDS בצד השרת: 'video' כבר ברשימה-הלבנה בענף
-       claude/maftecha-funnel-events, שטרם מוזג. עד שימוזג, האירוע
-       נשלח ונשמט בשקט עם 204. */
+       'video' ברשימת-ההיתר של השרת (EV_KINDS), ולכן האירוע נשמר. */
     document.addEventListener('play', function (e) {
       try {
         var v = e.target;

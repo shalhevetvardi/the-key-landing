@@ -148,7 +148,10 @@ body{
      ⚠️ הסקשן של המשרד (`.office-sec`) ממשיך להשתמש בתמונת
      הדסקטופ בכל הרוחבים, ולכן התגים שם **נשארים תקפים** - הבורר
      כאן מכוון ל-`#office` בלבד. */
-  #office .deptlabel{display:none}
+  /* מ-11-10-2026 (שלהבת: "קטן ולא חתוך", כמו בדף הטירונות): בטלפון כל המשרד - תמונת המחשב חתוכה רק לשוליים
+     השקופים - והתגים חוזרים, עם אחוזים משלהם לחיתוך הזה (--ml/--mt בכל תג). מחליפים תמונה ← מכיילים מחדש */
+  #office .deptlabel{left:var(--ml)!important;top:var(--mt)!important;font-size:9px;padding:3px 7px;letter-spacing:0}
+  #office picture.office-img--mobile{display:block}
 }
 .office img{display:block;width:100%;height:auto}
 
@@ -1776,16 +1779,16 @@ html.rv-on .rv-fade.rv-in{opacity:1}
 
       <div class="office" id="office">
         <img class="office-img office-img--desktop" src="assets/office-hero-final8.png" alt="המשרד הווירטואלי - מחלקות, סוכנים, סקילים ותהליכים אוטומטיים" />
-        <img class="office-img office-img--mobile" src="assets/office-hero-mobile.png" alt="המשרד הווירטואלי - מחלקות, סוכנים, סקילים ותהליכים אוטומטיים" />
+        <picture class="office-img--mobile"><source srcset="assets/office-hero-mobile.webp?v=2" type="image/webp"><img class="office-img office-img--mobile" src="assets/office-hero-mobile.png?v=2" width="1170" height="544" alt="המשרד הווירטואלי - מחלקות, סוכנים, סקילים ותהליכים אוטומטיים" /></picture>
 
-        <span class="deptlabel" style="left:32.0%;top:24.3%;--dc:#cdc6d5">תהליכים אוטומטיים</span>
-        <span class="deptlabel" style="left:63.9%;top:23.1%;--dc:#4db6e1">פדגוגיה</span>
-        <span class="deptlabel" style="left:73.7%;top:36.1%;--dc:#38bdae">תשתית</span>
-        <span class="deptlabel" style="left:44.0%;top:41.0%;--dc:#f17f52">שיווק</span>
-        <span class="deptlabel" style="left:14.4%;top:42.4%;--dc:#f375c5">קריאייטיב</span>
-        <span class="deptlabel" style="left:49.6%;top:46.0%;--dc:#f1e086">צוות אישי</span>
-        <span class="deptlabel" style="left:27.4%;top:55.5%;--dc:#d4afcb">מכירות</span>
-        <span class="deptlabel" style="left:68.0%;top:59.4%;--dc:#e0c7e1">מוצרי AI</span>
+        <span class="deptlabel" style="left:32.0%;top:24.3%;--ml:31.5%;--mt:20.3%;--dc:#cdc6d5">תהליכים אוטומטיים</span>
+        <span class="deptlabel" style="left:63.9%;top:23.1%;--ml:65.8%;--mt:18.7%;--dc:#4db6e1">פדגוגיה</span>
+        <span class="deptlabel" style="left:73.7%;top:36.1%;--ml:76.4%;--mt:35.6%;--dc:#38bdae">תשתית</span>
+        <span class="deptlabel" style="left:44.0%;top:41.0%;--ml:44.4%;--mt:42.0%;--dc:#f17f52">שיווק</span>
+        <span class="deptlabel" style="left:14.4%;top:42.4%;--ml:12.6%;--mt:43.8%;--dc:#f375c5">קריאייטיב</span>
+        <span class="deptlabel" style="left:49.6%;top:46.0%;--ml:50.4%;--mt:48.5%;--dc:#f1e086">צוות אישי</span>
+        <span class="deptlabel" style="left:27.4%;top:55.5%;--ml:26.6%;--mt:60.9%;--dc:#d4afcb">מכירות</span>
+        <span class="deptlabel" style="left:68.0%;top:59.4%;--ml:70.2%;--mt:66.0%;--dc:#e0c7e1">מוצרי AI</span>
       </div>
     </div>
   </div>

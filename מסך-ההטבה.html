@@ -153,14 +153,16 @@ body.is-done .done{display:block}
 .done .mail-note{margin:18px 0 0;font-size:14.5px;color:rgba(255,255,255,.8)}
 .done .mail-note b{font-weight:800;color:#fff;direction:ltr;unicode-bidi:isolate}
 
-/* ── ערכה בהירה (13-10-2026, לבקשת שלהבת): כהה על לבן בתוך הכרטיס.
-   "זה קצת קשה לקרוא את זה. זה יותר מדי צהוב וכחול." הרקע שמסביב נשאר
-   נייבי כדי שהלוגו הלבן ייראה והמעבר מדף המפתח יישאר רציף. ── */
-.card{background:#fff;border-color:#fff}
-.gift{background:#F3F4F6;border-color:#D9DCE3;color:var(--navy)}
-h1,h1 b{color:#111}
+/* ── ערכה בהירה עם זהב (13-10-2026, לבקשת שלהבת). הכהה על נייבי היה
+   "יותר מדי צהוב וכחול" וקשה לקריאה; לבן עם נייבי בלבד היה "משמים
+   ומשעמם". ההכרעה: טקסט כהה על כרטיס לבן, והזהב חוזר כצבע של הדגשה
+   (הכפתור הראשי, הסימון על הסכום, תיבת הקוד), לא כצבע של טקסט. ── */
+.card{background:#fff;border-color:#fff;box-shadow:0 0 0 5px rgba(255,215,71,.9)}
+.gift{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+h1{color:#111}
+h1 b{color:#111;background:linear-gradient(transparent 58%,var(--gold) 58%);padding:0 4px}
 .lead{color:#333}
-.rule{background:#F5F6F8;border-color:#E1E4EA;color:#222}
+.rule{background:#FFF8DB;border-color:#F3DE8A;color:#222}
 .rule b{color:#111}
 .ref{color:var(--navy)}
 label{color:#222}
@@ -172,22 +174,22 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
 .consent input{accent-color:var(--navy)}
 .consent label{color:#333}
 .consent.is-bad label{color:#B3261E}
-.submit{background:var(--navy);color:#fff}
-.submit:hover{box-shadow:0 12px 30px -14px rgba(20,9,59,.55)}
-.submit:focus-visible{outline-color:var(--blue)}
+.submit{box-shadow:0 10px 24px -12px rgba(20,9,59,.45)}
+.submit:hover{box-shadow:0 14px 30px -12px rgba(20,9,59,.55)}
+.submit:focus-visible{outline-color:var(--navy)}
 .fine{color:#666}
 .back{color:#555}
 .back:hover{color:#111}
 .form-err{background:#FDECEC;border-color:#F3B8B8;color:#8C1D18}
-.form-err.is-saved{background:#F5F6F8;border-color:#D9DCE3;color:#222}
+.form-err.is-saved{background:#FFF8DB;border-color:#F3DE8A;color:#222}
 .done h2{color:#111}
 .done p{color:#333}
 .done .deadline{color:#111}
-.done .code-box{border-color:var(--navy);background:#F5F6F8}
+.done .code-box{border-color:#E0B400;background:#FFF8DB}
 .done .code-box .code-label{color:#444}
 .done .code-box b{color:#111}
-.done .copy{border-color:var(--navy);color:var(--navy)}
-.done .copy:focus-visible{outline-color:var(--blue)}
+.done .copy{border-color:var(--navy);background:#fff;color:var(--navy)}
+.done .copy:focus-visible{outline-color:var(--navy)}
 .done .copy.is-copied{background:var(--navy);color:#fff}
 .done .mail-note{color:#444}
 .done .mail-note b{color:#111}

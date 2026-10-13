@@ -152,6 +152,47 @@ body.is-done .done{display:block}
 .done .copy.is-copied{background:var(--gold);color:var(--navy)}
 .done .mail-note{margin:18px 0 0;font-size:14.5px;color:rgba(255,255,255,.8)}
 .done .mail-note b{font-weight:800;color:#fff;direction:ltr;unicode-bidi:isolate}
+
+/* ── ערכה בהירה עם זהב (13-10-2026, לבקשת שלהבת). הכהה על נייבי היה
+   "יותר מדי צהוב וכחול" וקשה לקריאה; לבן עם נייבי בלבד היה "משמים
+   ומשעמם". ההכרעה: טקסט כהה על כרטיס לבן, והזהב חוזר כצבע של הדגשה
+   (הכפתור הראשי, הסימון על הסכום, תיבת הקוד), לא כצבע של טקסט. ── */
+.card{background:#fff;border-color:#fff;box-shadow:0 0 0 5px rgba(255,215,71,.9)}
+.gift{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+h1{color:#111}
+h1 b{color:#111;background:linear-gradient(transparent 58%,var(--gold) 58%);padding:0 4px}
+.lead{color:#333}
+.rule{background:#FFF8DB;border-color:#F3DE8A;color:#222}
+.rule b{color:#111}
+.ref{color:var(--navy)}
+label{color:#222}
+input[type=text],input[type=email],input[type=tel]{border-color:#B9BEC9;background:#fff;color:#111}
+input::placeholder{color:#8A8F9A}
+input:focus{outline-color:var(--navy)}
+input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
+.err{color:#B3261E}
+.consent input{accent-color:var(--navy)}
+.consent label{color:#333}
+.consent.is-bad label{color:#B3261E}
+.submit{box-shadow:0 10px 24px -12px rgba(20,9,59,.45)}
+.submit:hover{box-shadow:0 14px 30px -12px rgba(20,9,59,.55)}
+.submit:focus-visible{outline-color:var(--navy)}
+.fine{color:#666}
+.back{color:#555}
+.back:hover{color:#111}
+.form-err{background:#FDECEC;border-color:#F3B8B8;color:#8C1D18}
+.form-err.is-saved{background:#FFF8DB;border-color:#F3DE8A;color:#222}
+.done h2{color:#111}
+.done p{color:#333}
+.done .deadline{color:#111}
+.done .code-box{border-color:#E0B400;background:#FFF8DB}
+.done .code-box .code-label{color:#444}
+.done .code-box b{color:#111}
+.done .copy{border-color:var(--navy);background:#fff;color:var(--navy)}
+.done .copy:focus-visible{outline-color:var(--navy)}
+.done .copy.is-copied{background:var(--navy);color:#fff}
+.done .mail-note{color:#444}
+.done .mail-note b{color:#111}
 </style>
 </head>
 <body>

@@ -1254,8 +1254,8 @@ body{
 .faq__todo{background:#FFF6E0;border:1px dashed #A06A00;border-radius:8px;padding:9px 13px;color:#A06A00;font-weight:600;font-size:14.5px}
 .price__cta{margin:18px 0 0;width:100%;justify-content:center;font-size:clamp(16px,4vw,18px);padding:14px 22px}
 .price__calm{margin:10px 0 0;font-weight:400;color:rgba(255,255,255,.62);font-size:12.5px}
-.final__price{margin:6px 0 0;font-weight:700;color:var(--navy);font-size:clamp(16px,4vw,18px)}
-.final__calm{margin:12px 0 0;font-weight:500;color:rgba(20,9,59,.66);font-size:13.5px}
+.final .final__price{margin:6px 0 20px;font-weight:700;color:var(--navy);font-size:clamp(16px,4vw,18px)}
+.final .final__calm{margin:18px 0 0;font-weight:500;color:rgba(20,9,59,.66);font-size:13.5px}
 @media (min-width:820px){ .price-grid{grid-template-columns:1.25fr .75fr;gap:44px;align-items:start} }
 
 /* ---------- 8א. ההתנגדויות ----------
@@ -2083,7 +2083,7 @@ html.rv-on .rv-fade.rv-in{opacity:1}
               <img class="proof-card__photo" src="assets/alumni-lital.jpg" alt="ליטל יעקובוביץ דראי">
               <div>
                 <p class="proof-card__name">ליטל יעקובוביץ דראי</p>
-                <p class="proof-card__role">עורכת דין לענייני משפחה, 20 שנה</p>
+                <p class="proof-card__role">עורכת דין ושופטת</p>
               </div>
             </div>
               <div class="proof-card__arc"><span class="arc-from">20 שנה של כתבי טענות סיזיפיים</span><span class="arc-sep" aria-hidden="true">&#8592;</span><span class="arc-to">משרד משפטי של שישה סוכנים</span></div>
@@ -2520,8 +2520,8 @@ html.rv-on .rv-fade.rv-in{opacity:1}
         <p>זו שאלה הוגנת, ולכן אני מעדיפה לענות עליה לפני הרכישה ולא אחריה.</p>
         <p><b>השיטה כבר הוכיחה את עצמה.</b> עברו אצלנו תלמידים מכל קצוות התעשייה ומכל המקצועות: עורכת דין, מטפלת, אשת שיווק ומכירות מתחום רפואת השיניים, סמנכ"לית בחברה בינלאומית, בעל סוכנות פרסום, דוקטור לחקר המוח, מפתח אפליקציות. שכירים ועצמאים, כאלה שכבר עבדו עם AI וכאלה שבקושי פתחו את קלוד. ומי שעבד לפי השלבים - בנה את מה שהוא בא בשבילו, ובגדול.</p>
         <p><b>ולכן אין סיבה שזה לא יתאים גם לכם.</b> מה שצריך כאן הוא לא רקע טכני ולא ניסיון קודם, אלא כיוון: משהו אחד בעסק או בעבודה שאתם רוצים שירוץ בלעדיכם. משם השיטה לוקחת אתכם, צעד אחר צעד.</p>
-        <p><b>הדבר היחיד שכדאי לבדוק הוא הקצב.</b> אם אתם יודעים על עצמכם שאתם צריכים מישהו שידחוף אתכם, קבוצה שמחכה לכם ותאריכים קבועים לשיעורים - עדיף לכם להירשם ל׳טירונות סוכנים׳. עוד פרטים בתחתית הדף.</p>
-        <p><b>וההתחייבות מדורגת.</b> אפשר לפרוס עד 12 תשלומים במקום לשלם הכל מראש. החזרים כספיים וביטולי עסקה - בהתאם למפורט ב<a href="https://aimprove.co.il/terms-of-use/" target="_blank" rel="noopener">תקנון</a>.</p>
+        <p><b>הדבר היחיד שכדאי לבדוק הוא הקצב.</b> אם אתם יודעים על עצמכם שאתם צריכים מישהו שידחוף אתכם, קבוצה שמחכה לכם ותאריכים קבועים לשיעורים - עדיף לכם להירשם ל<a href="https://agent-course.aimprove.co.il/" target="_blank" rel="noopener">׳טירונות סוכנים׳</a>. עוד פרטים בתחתית הדף.</p>
+        <p>החזרים כספיים וביטולי עסקה - בהתאם למפורט ב<a href="https://aimprove.co.il/terms-of-use/" target="_blank" rel="noopener">תקנון</a>.</p>
 <div class="obj-cf">
           <p class="obj-cf__label">הנה תלמידות שמספרות בדיוק על זה</p>
           <div class="coverflow" data-active="0" data-videos='[{"id": "1234076466", "h": "43c7f1c31a", "poster": "assets/cf-1234076466.jpg", "cap": "רננה · אם יש לכם כיוון"}, {"id": "1234197070", "h": "5b5b9f5e83", "poster": "assets/cf-1234197070.jpg", "cap": "מורן · משנה חיים"}]'><div class="cf-stage"></div></div>
@@ -2598,7 +2598,6 @@ html.rv-on .rv-fade.rv-in{opacity:1}
         <p class="price__benefit">רוצים הטבה של 1,000 ₪?<br />היא <b>מחכה לכם בפנים</b>, ונשמרת לכם למשך <b>24 שעות</b> מרגע שנכנסתם.</p>
         <a class="btn price__cta" href="מסך-ההטבה.html">לראות את ההטבה ולהתחיל</a>
         <p class="price__calm">לחיצה לא מחייבת - קודם רואים את ההטבה.</p>
-        <p class="price__note">מעבר לזה יש כמובן את עלות המנוי לקלוד - אנחנו ממליצים על 100 דולר בחודש לפחות. הפירוט המלא בשאלות שלמטה.</p>
       </div>
     </div>
   </div>
@@ -2629,6 +2628,13 @@ html.rv-on .rv-fade.rv-in{opacity:1}
           <div class="coverflow" data-active="0" data-videos='[{"id": "1234045834", "h": "04735e81b5", "poster": "assets/cf-1234045834.jpg", "cap": "ירדן · סוכן העל שלי"}, {"id": "1217933716", "h": "f6c857e89b", "poster": "assets/cf-1217933716.jpg", "cap": "חני · לעשות כל דבר"}]'><div class="cf-stage"></div></div>
           <div class="cf-nav"><div class="cf-dots"></div></div>
         </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>ואם ארגיש שלבד זה לא בשבילי?</summary>
+      <div class="faq__a">
+        <p>אפשר לעבור לטירונות סוכנים. בתוך חודש מהיום שהתחלתם לבנות, הסכום ששילמתם על המפתח מקוזז: משלמים רק את ההפרש, ומצטרפים לאחד המחזורים של הטירונות - עם קבוצה, מפגשים וליווי לאורך הדרך.</p>
       </div>
     </details>
 
@@ -2691,7 +2697,7 @@ html.rv-on .rv-fade.rv-in{opacity:1}
   <div class="wrap">
     <h2>מתי מתחילים?</h2>
     <p>נרשמים, נכנסים לאזור האישי, ומתחילים מהשיעור הראשון - מיד.</p>
-    <p class="final__price">5,900 ₪, או עד 12 תשלומים - ובפנים מחכה הטבת הרשמה.</p>
+    <p class="final__price">5,900 ₪, ובקישור מטה מחכה לכם הטבת הרשמה, ואז ניתן לחלק עד 12 תשלומים.</p>
     <a class="btn" href="מסך-ההטבה.html">אני רוצה להתחיל</a>
     <p class="final__calm">לחיצה לא מחייבת. ההטבה נשמרת לכם 24 שעות מרגע שלוקחים אותה.</p>
   </div>
@@ -2706,6 +2712,7 @@ html.rv-on .rv-fade.rv-in{opacity:1}
     <p>אם אתם יודעים על עצמכם שאתם צריכים מישהו שידחוף אתכם - תלכו על הטירונות סוכנים.</p>
     <p class="door__canon">אותו יעד. אותה שיטה. אותם כלים.<br />בטירונות, שלהבת לוקחת אתכם לשם. כאן, אתם לוקחים את עצמכם.</p>
     <p class="door__compare">טירונות סוכנים - 9,300 ₪, עם קבוצה, מפגשים וליווי לאורך הדרך.<br />המפתח - 5,900 ₪, באותה שיטה, בקצב שלכם.</p>
+    <p class="door__switch">התחלתם במפתח והבנתם שאתם צריכים מישהו שידחוף אתכם? בתוך חודש מהיום שהתחלתם לבנות אפשר לעבור לטירונות, והסכום ששילמתם על המפתח יקוזז - משלמים רק את ההפרש.</p>
     <a href="https://agent-course.aimprove.co.il/" target="_blank" rel="noopener">לדף של טירונות סוכנים &#8592;</a>
   </div>
 </section>
@@ -3174,7 +3181,7 @@ html.rv-on .rv-fade.rv-in{opacity:1}
         var t = evt.target;
         if (!t || !t.closest) return;
         var kind = '';
-        if (t.closest('.door a'))       kind = 'tironot';
+        if (t.closest('.door a, a[href^="https://agent-course.aimprove.co.il"]')) kind = 'tironot';
         else if (t.closest('.office__hint'))  kind = 'office';
         else if (t.closest('.btn'))          kind = 'start';
         if (!kind) return;

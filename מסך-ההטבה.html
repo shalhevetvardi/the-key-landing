@@ -201,6 +201,10 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
 .done .copy.is-copied{background:var(--navy);color:#fff}
 .done .mail-note{color:#444}
 .done .mail-note b{color:#111}
+.done .mail-note.is-first{margin:0 0 18px;padding:12px 14px;border:1px solid #E1E4EA;border-radius:12px;background:#F5F6F8}
+.done .no-wait{margin:0 0 12px;color:#222}
+.done .no-wait strong{color:#111}
+.done .after-pay{margin:14px 0 0;font-size:14.5px}
 </style>
 </head>
 <body>
@@ -278,15 +282,17 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
 
       <div class="done">
         <h2>ההטבה נתפסה. היא רשומה על השם שלך.</h2>
+        <!-- הסדר (14-10-2026, לבקשת שלהבת): קודם המייל, ואחריו מי שלא רוצה לחכות
+             לו מקבל כאן את הקוד, כפתור העתקה וכפתור ישר לרכישה. -->
+        <p class="mail-note is-first">שלחנו לך את הקוד ואת כל הפרטים לאימייל. המייל מגיע תוך כמה דקות, מהכתובת <b>connect@aimprove.co.il</b>. אם הוא לא מופיע, כדאי לחפש את הכתובת הזו גם בתיקיית הספאם.</p>
+        <p class="no-wait"><strong>לא רוצה לחכות למייל?</strong> הנה הקוד שלך. אפשר להעתיק אותו ולהמשיך לרכישה כבר עכשיו.</p>
         <div class="code-box">
           <p class="code-label">קוד ההטבה שלך</p>
           <b id="coupon-code">-</b>
           <button class="copy" type="button" id="copy-code" aria-live="polite">העתקת הקוד</button>
         </div>
-        <p>ההטבה בתוקף עד <span class="deadline" id="deadline">-</span>.</p>
-        <p>אפשר להמשיך לתשלום עכשיו, או לחזור בתוך החלון הזה - ההנחה תחכה.</p>
-        <button class="submit" type="button" id="to-pay">להמשיך לתשלום</button>
-        <p class="mail-note">שלחנו את הקוד גם לאימייל. המייל מגיע תוך כמה דקות, מהכתובת <b>connect@aimprove.co.il</b>. אם הוא לא מופיע, כדאי לחפש את הכתובת הזו גם בתיקיית הספאם.</p>
+        <button class="submit" type="button" id="to-pay">להמשיך לרכישה</button>
+        <p class="after-pay">ההטבה בתוקף עד <span class="deadline" id="deadline">-</span>. אפשר גם לחזור בתוך החלון הזה - ההנחה תחכה.</p>
       </div>
 
       <a class="back" href="index.html">חזרה לעמוד התוכנית</a>

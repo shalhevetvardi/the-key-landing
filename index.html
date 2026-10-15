@@ -1683,8 +1683,10 @@ body{
     .cf-lb-icon svg { width: 32px; height: 32px; fill: #fff; }
     /* יושב מעל הסרטון (שתופס עכשיו את כל הרוחב), ולכן צריך רקע כהה משלו
        ומרווח מהמצלמה/הכפתורים של הטלפון */
+    /* z-index מעל .cf-lb-tap (2): בטלפון הסרטון מגיע עד ה-X, ושכבת העצירה כיסתה אותו - לחיצה על X עצרה את
+       הסרטון במקום לסגור. כמו בדפי הטירונות (15-10-2026) */
     .cf-lb-close {
-      position: absolute; z-index: 2;
+      position: absolute; z-index: 5;
       top: calc(12px + env(safe-area-inset-top, 0px));
       left: calc(12px + env(safe-area-inset-left, 0px));
       width: 44px; height: 44px;

@@ -1923,10 +1923,12 @@ html.k3-on .k3-static{display:none}
 .k3-chain__art{width:118px}
 .k3-chain__art canvas,.k3-chain__art .k3-static{width:118px;height:176px}
 .road-step__head .road-step__num{vertical-align:middle}
-.k3-art__lead{margin:6px 0 0;background:#F3F0FC;border-radius:12px;padding:11px 14px;line-height:1.6;color:var(--navy)}
+/* סבב 7 (הערה 61): "הרווחים בין הטקסטים ובין השורות, אחיד" - אותו גופן ומרווח שורה כמו הפסקאות, ו-12px בין כל שני חלקים */
+.road-step__body > p.k3-art__lead{margin:0 0 12px;background:#F3F0FC;border-radius:12px;padding:11px 14px;font-size:clamp(15px,3.7vw,16.5px);line-height:1.65;color:var(--navy)}
 .k3-art__lead b{font-weight:800}
-.k3-art{position:relative;width:100%;max-width:340px;margin:4px auto 14px;color:var(--navy)}
-.k3-art canvas{display:block;width:100%;height:auto;aspect-ratio:320/250}
+.k3-art{position:relative;width:100%;max-width:340px;margin:0 auto 12px;color:var(--navy)}
+.road-step__body .k3-art + .road-ex{margin-top:0}
+.k3-art canvas{display:block;width:100%;height:auto;aspect-ratio:320/228}
 .k3-art__arrows{position:absolute;inset:0;width:100%;height:100%;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
 .k3-art__l{position:absolute;left:0;top:0;transform:translate(-50%,-50%);font-size:15px;font-weight:800;color:var(--navy);white-space:nowrap;opacity:0;transition:opacity .3s}
 .k3-art.is-placed .k3-art__l{opacity:1}
@@ -2185,8 +2187,8 @@ html.k3-on .k3-static{display:none}
         <h3>סוכן מורכב שחושב כמוכם</h3></div>
         <div class="road-step__body"><p>לא בוט שעונה תשובות מוכנות. <br />סוכן עם שם, אופי ומוח. שמכיר את הידע שלכם ופועל לפי הלוגיקה שלכם.</p>
         <p>בקיצור, יודע לעשות דברים שעד היום דרשו את המוח שלכם.</p>
-          <p class="k3-art__lead">ממה בנוי סוכן? מ<b>סקילים</b> - מה שהוא יודע לעשות (החרוט), ומ<b>מסמכי ידע</b> - מה שהוא יודע (הגליל). הקובייה היא <b>הסוכן</b> עצמו, שמחבר ביניהם ופועל.</p>
-          <figure class="k3-art" aria-label="סוכן, סקיל ומסמך ידע"><img class="k3-static" src="assets/k3-static-stage2.png" alt="" width="640" height="500"><canvas class="k3" data-kind="agent-plus" width="320" height="250" aria-hidden="true"></canvas><svg class="k3-art__arrows" aria-hidden="true"><defs><marker id="k3ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs></svg><span class="k3-art__l" data-at="agent">סוכן</span><span class="k3-art__l" data-at="know">מסמך ידע</span><span class="k3-art__l" data-at="skill">סקיל</span></figure>
+          <p class="k3-art__lead">ממה בנוי סוכן? <b>מסקילים</b> - מה שהוא יודע לעשות (החרוט), <b>ממסמכי ידע</b> - מה שהוא יודע (הגליל), <b>ומתהליכי עבודה</b> - סדר הפעולות שהוא מריץ לבד (הטבעות). הקובייה היא <b>הסוכן</b> עצמו, שמחבר ביניהם ופועל.</p>
+          <figure class="k3-art" aria-label="סוכן, סקיל, מסמך ידע ותהליך עבודה"><img class="k3-static" src="assets/k3-static-stage2.png" alt="" width="640" height="456"><canvas class="k3" data-kind="agent-plus" width="320" height="228" aria-hidden="true"></canvas><svg class="k3-art__arrows" aria-hidden="true"><defs><marker id="k3ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs></svg><span class="k3-art__l" data-at="agent">סוכן</span><span class="k3-art__l" data-at="know">מסמך ידע</span><span class="k3-art__l" data-at="skill">סקיל</span><span class="k3-art__l" data-at="flow">תהליך עבודה</span></figure>
           <div class="road-ex">
             <p class="road-ex__label">לדוגמה</p>
             <ul>
@@ -4330,7 +4332,7 @@ document.querySelectorAll('.pc-qm__track').forEach(function (t) {
     }
     // סבב 4 (הערה 45): התוויות והחצים של שלב 2 ממוקמים לפי המקום שבו כל צורה מצוירת, כך שבכל רוחב מסך החץ יוצא מהצורה.
     // לכל תווית: נקודה על הצורה (בעולם התלת-ממדי), וכיוון שבו התווית יושבת ממנה (בפיקסלים).
-    var K3_LABELS = { agent: { p: [.31, .36, .05], d: [78, -46] }, know: { p: [-.3, .44, 1.0], d: [-18, -70] }, skill: { p: [1.0, .1, -.05], d: [-6, 62] } };
+    var K3_LABELS = { agent: { p: [.31, .02, .31], d: [-8, 58] }, flow: { p: [.22, 1.16, 0], d: [84, 2] }, know: { p: [-.3, .44, 1.0], d: [-18, -70] }, skill: { p: [1.14, .34, -.25], d: [24, 62] } };
     function place(cv, cam) {
       var fig = cv.closest('.k3-art'); if (!fig) return;
       var svg = fig.querySelector('.k3-art__arrows'), W = cv.clientWidth, H = cv.clientHeight, NS = 'http://www.w3.org/2000/svg';
@@ -4365,7 +4367,7 @@ document.querySelectorAll('.pc-qm__track').forEach(function (t) {
     [].forEach.call(document.querySelectorAll('canvas.k3'), function (cv) {
       var kind = cv.dataset.kind;
       if (kind === 'ring') make(cv, .36, .2, function (o) { o.rings = rings(o.g, PAL.turq, 1, .2); o.spin = true; });
-      else if (kind === 'agent-plus') make(cv, 1.22, .3, function (o) {
+      else if (kind === 'agent-plus') make(cv, 1.1, .3, function (o) {
         agent(o.g, PAL.purple); o.rings = rings(o.g, PAL.purple, 2, .62 + .24);
         var cone = new T.Mesh(new T.ConeGeometry(.24, .52, 48).translate(0, .26, 0), face(PAL.orange, 3)); cone.position.set(1.0, 0, -.25); o.g.add(cone);
         var cyl = new T.Mesh(new T.CylinderGeometry(.21, .21, .44, 48).translate(0, .22, 0), face(PAL.turq, 3)); cyl.position.set(-.25, 0, 1.0); o.g.add(cyl);

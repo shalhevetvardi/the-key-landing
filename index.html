@@ -1923,13 +1923,15 @@ html.k3-on .k3-static{display:none}
 .k3-chain__art{width:118px}
 .k3-chain__art canvas,.k3-chain__art .k3-static{width:118px;height:176px}
 .road-step__head .road-step__num{vertical-align:middle}
+.k3-art__lead{margin:6px 0 0;background:#F3F0FC;border-radius:12px;padding:11px 14px;line-height:1.6;color:var(--navy)}
+.k3-art__lead b{font-weight:800}
 .k3-art{position:relative;width:100%;max-width:340px;margin:4px auto 14px;color:var(--navy)}
 .k3-art canvas{display:block;width:100%;height:auto;aspect-ratio:320/250}
 .k3-art__arrows{position:absolute;inset:0;width:100%;height:100%;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
 .k3-art__l{position:absolute;left:0;top:0;transform:translate(-50%,-50%);font-size:15px;font-weight:800;color:var(--navy);white-space:nowrap;opacity:0;transition:opacity .3s}
 .k3-art.is-placed .k3-art__l{opacity:1}
 .k3-tag{display:inline-flex;align-items:center;gap:2px;margin:-8px 0 0;margin-inline-start:-16px;font-size:14px;font-weight:800;color:var(--navy)}
-.k3-tag__arrow{width:40px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;flex:0 0 auto}
+.k3-tag__arrow{width:40px;height:14px;stroke-linejoin:round;stroke-width:2;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;flex:0 0 auto}
 /* סבב 4 (הערה 57): הנעות לפעולה לאורך הדף */
 .mid-cta{display:flex;justify-content:center;margin:34px 0 0}
 .mid-cta .btn{justify-content:center;text-align:center}
@@ -2162,7 +2164,7 @@ html.k3-on .k3-static{display:none}
 
     <div class="road-grid">
       <div class="road-step">
-        <div class="road-step__head"><span class="road-step__num" aria-hidden="true">1</span><span class="k3-head"><img class="k3-static" src="assets/k3-static-ring.png" alt="" width="136" height="136"><canvas class="k3" data-kind="ring" width="84" height="84" aria-hidden="true"></canvas></span><span class="k3-tag"><svg class="k3-tag__arrow" viewBox="0 0 40 26" aria-hidden="true"><defs><marker id="k3ah1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs><path d="M36 12 C 28 24, 12 24, 4 12" marker-end="url(#k3ah1)"/></svg>תהליך אוטומטי</span>
+        <div class="road-step__head"><span class="road-step__num" aria-hidden="true">1</span><span class="k3-head"><img class="k3-static" src="assets/k3-static-ring.png" alt="" width="136" height="136"><canvas class="k3" data-kind="ring" width="84" height="84" aria-hidden="true"></canvas></span><span class="k3-tag"><svg class="k3-tag__arrow" viewBox="0 0 40 14" aria-hidden="true"><path d="M38 7H6"/><path d="M11 2L5 7l6 5"/></svg>תהליך אוטומטי</span>
         <h3>הדבר הראשון שרץ בלעדיכם</h3></div>
         <div class="road-step__body"><p>נתחיל מלבנות סוכן אוטומטי שעושה את העבודה הכי שחורה שלכם במקומכם. משהו שקורה מעצמו, כל יום, בלי שנגעתם בו.</p>
         <p>לאחר שתראו כמה קל לבנות סוכן כזה, תמשיכו לבנות עוד עשרות כאלה - עד שנוריד מכם את כל העבודה המשעממת והרוטינית.</p>
@@ -2183,6 +2185,7 @@ html.k3-on .k3-static{display:none}
         <h3>סוכן מורכב שחושב כמוכם</h3></div>
         <div class="road-step__body"><p>לא בוט שעונה תשובות מוכנות. <br />סוכן עם שם, אופי ומוח. שמכיר את הידע שלכם ופועל לפי הלוגיקה שלכם.</p>
         <p>בקיצור, יודע לעשות דברים שעד היום דרשו את המוח שלכם.</p>
+          <p class="k3-art__lead">ממה בנוי סוכן? מ<b>סקילים</b> - מה שהוא יודע לעשות (החרוט), ומ<b>מסמכי ידע</b> - מה שהוא יודע (הגליל). הקובייה היא <b>הסוכן</b> עצמו, שמחבר ביניהם ופועל.</p>
           <figure class="k3-art" aria-label="סוכן, סקיל ומסמך ידע"><img class="k3-static" src="assets/k3-static-stage2.png" alt="" width="640" height="500"><canvas class="k3" data-kind="agent-plus" width="320" height="250" aria-hidden="true"></canvas><svg class="k3-art__arrows" aria-hidden="true"><defs><marker id="k3ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs></svg><span class="k3-art__l" data-at="agent">סוכן</span><span class="k3-art__l" data-at="know">מסמך ידע</span><span class="k3-art__l" data-at="skill">סקיל</span></figure>
           <div class="road-ex">
             <p class="road-ex__label">לדוגמה</p>

@@ -1683,8 +1683,10 @@ body{
     .cf-lb-icon svg { width: 32px; height: 32px; fill: #fff; }
     /* יושב מעל הסרטון (שתופס עכשיו את כל הרוחב), ולכן צריך רקע כהה משלו
        ומרווח מהמצלמה/הכפתורים של הטלפון */
+    /* z-index מעל .cf-lb-tap (2): בטלפון הסרטון מגיע עד ה-X, ושכבת העצירה כיסתה אותו - לחיצה על X עצרה את
+       הסרטון במקום לסגור. כמו בדפי הטירונות (15-10-2026) */
     .cf-lb-close {
-      position: absolute; z-index: 2;
+      position: absolute; z-index: 5;
       top: calc(12px + env(safe-area-inset-top, 0px));
       left: calc(12px + env(safe-area-inset-left, 0px));
       width: 44px; height: 44px;
@@ -1866,7 +1868,10 @@ html.rv-on .rv-fade.rv-in{opacity:1}
 .pc-qm{max-width:100%}
 .pc-qm{position:relative;direction:ltr;overflow:hidden;margin:14px -4px 4px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
 .pc-qm__track{display:flex;width:max-content;padding:4px 0}
-@media (prefers-reduced-motion:no-preference){.pc-qm__track{animation:pcQm 22s linear infinite}.pc-qm:hover .pc-qm__track{animation-play-state:paused}}
+@media (prefers-reduced-motion:no-preference){.pc-qm:not(.is-mq) .pc-qm__track{animation:pcQm 22s linear infinite}.pc-qm:not(.is-mq):hover .pc-qm__track{animation-play-state:paused}}
+/* סבב 8: אפשר לגרור את הרצועה לצדדים, כמו את שאר הרצועות בדף (tmMarquee). האנימציה למעלה רק כשהמנוע לא נטען */
+.pc-qm.is-mq{touch-action:pan-y;cursor:grab}
+.pc-qm.is-mq .pc-qm__track{will-change:transform}
 @media (prefers-reduced-motion:reduce){.pc-qm{overflow-x:auto}}
 @keyframes pcQm{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .pc-qm__card{direction:rtl;text-align:right;flex:0 0 auto;width:226px;margin:0 6px;background:#F4F2FB;border:1px solid #E6E1F5;border-radius:16px;padding:13px}
@@ -1978,6 +1983,31 @@ html.k3-on .k3-static{display:none}
 .opens-grid > .opens-card:nth-child(4) .opens-card__top{background:#FFE48A}
 .opens-card__top .opens-card__val{background:var(--navy);color:#fff;border-radius:999px;padding:3px 12px;font-size:13.5px}
 .opens-card li b{color:var(--navy)}
+/* סבב 8 (הערה 63): השאלות כרצועה של כפתורים, כמו בדף הטירונות. ההסתרה רק כשהסקריפט רץ (html.obj-tabs-on) */
+.obj-lead{margin:0 0 14px;color:var(--body);font-size:clamp(15px,3.7vw,16.5px);line-height:1.6}
+.obj-chips{display:none}
+html.obj-tabs-on .obj-chips{display:flex;flex-wrap:nowrap;gap:10px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;margin:0 -16px 22px;padding:4px 16px 8px;scroll-padding-inline:16px}
+html.obj-tabs-on .obj-chips::-webkit-scrollbar{display:none}
+@media (min-width:820px){html.obj-tabs-on .obj-chips{flex-wrap:wrap;justify-content:center;overflow:visible;margin:0 0 26px;padding:0}}
+.obj-chip{flex:0 0 auto;white-space:nowrap;font:inherit;font-size:15px;font-weight:700;color:var(--navy);background:#fff;border:1.5px solid #CFDAEA;border-radius:50px;padding:9px 16px;cursor:pointer}
+.obj-chip[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+html.obj-tabs-on .obj-grid{grid-template-columns:1fr}
+html.obj-tabs-on .obj-item:not(.is-on){display:none}
+html:not(.obj-tabs-on) .obj-lead{display:none}
+/* סבב 8: דוגמאות בשלבים 1-2 - תיבה לבנה לכל דוגמה, עם הישות שלה */
+.road-ex p.road-ex__label{font-size:15.5px;font-weight:800;color:var(--navy);letter-spacing:0;margin-bottom:8px}
+.road-step--dark .road-ex p.road-ex__label{color:#BDB6DA}
+.road-ex ul.road-ex__items{display:grid;gap:8px}
+.road-ex ul.road-ex__items li{display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:8px 10px;color:var(--navy);font-size:14.5px;line-height:1.45}
+.road-ex ul.road-ex__items li::before{content:"";position:static;flex:0 0 auto;width:26px;height:26px;margin:0;border-radius:0;background:center/contain no-repeat}
+.road-ex ul.road-ex__items--ring li::before{background-image:url(assets/k3-static-ring.png)}
+.road-ex ul.road-ex__items--cube li::before{background-image:url(assets/k3-agent-purple.png)}
+.hold-pts{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:7px}
+.hold-pts li{position:relative;padding-inline-start:16px;color:var(--body);font-size:clamp(15px,3.7vw,16.5px);line-height:1.6}
+.hold-pts li::before{content:"";position:absolute;inset-inline-start:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.hold-pts b{color:var(--navy)}
+.stay-item .hold-pts{margin-top:8px}
+.what .obj-item__wa{max-width:360px;margin:14px auto 0}
 /* מה מחזיק אותך: שלוש שורות */
 .hold-row{display:grid;grid-template-columns:42px 1fr;gap:12px;align-items:start;margin-top:16px}
 .hold-row__ic{width:42px;height:42px;border-radius:12px;background:#E3F0FB;color:var(--blue);display:grid;place-items:center}
@@ -2077,13 +2107,14 @@ html.k3-on .k3-static{display:none}
         <p>לדוגמה: אם תחליטו בעתיד לעבור לקודקס של OpenAI, תוכלו לעשות את זה בלי בעיה, כיוון שאנחנו משתמשים בכלים רק בשלב הבניה.</p>
         <p>וכן, השיטה שתלמדו כאן חסינה מפני שינויים ב-AI, ותישאר רלוונטית לכל כלי גם בעתיד.</p>
         <div class="proof-strip"><p class="proof-strip__label">מה תלמידים מספרים על המשרד שלהם</p><div class="tm-qm"><div class="tm-qm__row"><div class="tm-qm__track"><button type="button" class="tm-qm__card"><span class="tm-qm__h">משרד סוכנים עם שמונה מחלקות</span><span class="tm-qm__q"><span class="tm-qm__l"><span class="tm-hl">זה מהפך של 180 מעלות</span>. קודם כל יש לי משרד מסודר עם שמונה מחלקות, 20 סקילים.</span><span class="tm-qm__l">יש לי סוכן על שנקרא קפטן אדי, שיודע לנווט בין כולם. [...] <span class="tm-hl">אני לא צריך להסביר</span>. אני טוען את הסקיל את המשרד ואני נותן לו פקודת עבודה ראשונה בהמשך לפקודה שסגרתי אתמול בלילה. והכול מתועד -  כי למדתי איך לתעד.</span><span class="tm-qm__l">אז הוא מתחיל מאותה נקודה, הוא בודק את עצמו.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ron.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">רון אלון</span><span class="tm-qm__role">יזם ומפתח אפליקציות</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">הסוכנים עושים שיווק דיגיטלי</span><span class="tm-qm__q"><span class="tm-qm__l">כל דבר שאפשר לעשות בעולם השיווק הדיגיטלי, פרסום - עשיתי את זה. <span class="tm-hl">יש לי סוכנים שעושים את זה</span>.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/dolev.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">דולב דרי</span><span class="tm-qm__role">בעל סוכנות פרסום</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">בניתי סוכנת שמנהלת את השיווק</span><span class="tm-qm__q"><span class="tm-qm__l">בניתי סוכנת שקראתי לה ג&#x27;וליה, שהיא <span class="tm-hl">אחראית על כל תחום השיווק</span> אצלנו בחברה. היא מכינה לי את כל הפורמטים, את כל הגאנטים לאורך כל החודש, כולל כל התמונות והוויז&#x27;ואל - <span class="tm-hl">כל הדבר הזה קורה אוטומטית</span>.</span></span><span class="tm-qm__who"><span class="tm-qm__av tm-qm__av--4" aria-hidden="true">ס</span><span class="tm-qm__id"><span class="tm-qm__name">ספיר אלה</span><span class="tm-qm__role">מנהלת רכש תוכן לטלוויזיה</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">כל האדריכלות של העסק שלי בנויה על הסוכנים</span><span class="tm-qm__q"><span class="tm-qm__l"><span class="tm-hl">כל האדריכלות של העסק שלי</span> בנויה על הסוכנים שלמדתי לבנות בקורס.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/growdigitalsol.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">יסמין אלון</span><span class="tm-qm__role">אסטרטגיה שיווקית לעסקים קטנים</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">בונה לבד צי סוכנים</span><span class="tm-qm__q"><span class="tm-qm__l">זה פסיכי איך התקדמתי מאז השיעור הראשון! <span class="tm-hl">היכולת לבנות לבד צי של עובדים/סוכנים</span> שיעשו את העבודה, ויעשו אותה יותר טוב ממני, היא פשוט mind blowing.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/renana.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">רננה צברי</span><span class="tm-qm__role">משווקת קורסים לרופאי שיניים</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">עובדת עם שמונה סוכנים</span><span class="tm-qm__q"><span class="tm-qm__l">אני מתחילה עם סוכן אחד או עם skill אחד שאני צריכה. פתאום עולה לי משהו לראש, אז אני פותחת עוד שיחה ואז בסוף יוצא שאני עם שמונה שיחות במקביל, עם שמונה סוכנים במקביל.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/lital.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">ליטל יעקובוביץ דראי</span><span class="tm-qm__role">עו״ד ושופטת</span></span></span></button></div></div><div class="tm-qm__row tm-qm__row--rev"><div class="tm-qm__track"><button type="button" class="tm-qm__card"><span class="tm-qm__h">יש לי משרד של סוכנים</span><span class="tm-qm__q"><span class="tm-qm__l">השקעתי המון זמן (הזנחתי עבודה אפילו), אבל <span class="tm-hl">אשכרה יש לי משרד</span>! ולאט לאט הוא יהיה מלא יותר ויותר.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/renana.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">רננה צברי</span><span class="tm-qm__role">משווקת קורסים לרופאי שיניים</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">הסוכן מכיר את הסגנון שלי</span><span class="tm-qm__q"><span class="tm-qm__l">יצרתי סוכן שותף, והוא בעצם <span class="tm-hl">מרכז לי את כל המשרד המשפטי</span>. התחלתי ממה שמציק לי, מה שכואב לי, שזה אותם כתבי טענות, ומפה זה נהפך לעוד ועוד skill, וכל פעם הוספתי לו עוד איזושהי תת-מחלקה.</span><span class="tm-qm__l">הוא גם מכיר אותי ויודע מי אני, ואוטומטית הוא שולף באיזה תחום אני ומה אני אוהבת ומה הסגנון שלי. <span class="tm-hl">זה חוסך מיליון הודעות ותכתובות</span>.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/lital.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">ליטל יעקובוביץ דראי</span><span class="tm-qm__role">עו״ד ושופטת</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">בניתי את גרייס</span><span class="tm-qm__q"><span class="tm-qm__l">בניתי את גרייס: מקבלת בקשה בצ&#x27;אט, מעבירה אותה בין סוכנים לכתיבה ולבדיקה, ואחרי אישור אנושי <span class="tm-hl">מריצה אותה במערכת</span>.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ybuskila.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">ירון בוסקילה</span><span class="tm-qm__role">מהנדס תוכנה</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">מאז הסוכנים, השתחרר לי הלחץ</span><span class="tm-qm__q"><span class="tm-qm__l">מאז שבניתי צוות סוכנים, המעסה שלי אומר לי: <span class="tm-hl">השתחרר לך הלחץ</span>, הוא ממש מרגיש בכתפיים. כי תמיד היה לי תפוס על הכתפיים, כל המשקל הזה.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/dolev.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">דולב דרי</span><span class="tm-qm__role">בעל סוכנות פרסום</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">הסוכנים עושים 70% מהעבודה</span><span class="tm-qm__q"><span class="tm-qm__l">פיתחתי סוכנים: יש לי סוכנת שהיא עוזרת האישית שלי, יש סוכן פדגוגי שעוזר לי בהכנת החומרים. <span class="tm-hl">הם עושים 70% מהעבודה</span>.</span><span class="tm-qm__l">וכל יום נוסף שאני עובדת איתם ומלמדת אותם, הזיכרון והידע נשמרים לי בצורה מתודולוגית - אז זה משתפר.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/hani.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">חני הופמן</span><span class="tm-qm__role">מדריכת AI לשמאי מקרקעין</span></span></span></button></div></div></div></div>
+        <figure class="obj-item__wa"><button class="obj-item__wa-btn" type="button" data-full="assets/wa-trn-0029.jpg" aria-label="הגדלת ההודעה של רון אלון"><img src="assets/wa-trn-0029.jpg" alt="הודעה של רון אלון: הצלחתי לחבר את קלוד לפלטפורמה של לאבאבל. שזה אומר שהמשרד שבניתי עכשיו גם כותב את הפרומפטים וגם מתחבר ומעלה לבד!" loading="lazy"></button></figure>
       </div>
       <div class="what__col">
         <h3>הסוכנים שבונים איתכם</h3>
         <p>כחלק מהתוכנית תקבלו גישה לסוכנים שיעזרו לכם לבנות כל סוכן שרק תחלמו. הם יושבים בתוך הקלוד שלכם ומלווים אתכם צעד אחר צעד.</p>
         <p>הסוכנים הראשיים הם בנייה, מעיין ואליאב, ויש עוד. ואתם לא נשארים תלויים בהם: <b>הסוכנים הם גלגלי עזר.</b> הם בונים איתכם, ואתם קולטים את השיטה תוך כדי. את השיטה עצמה אתם מקבלים במלואה, ובהמשך תדעו לבנות כל דבר שתרצו גם בלעדיהם.</p>
         <p>כל מה שתבנו - עצמאי ולא תלוי בנו. מה שבניתם נשאר שלכם, אצלכם, גם אחרי שסיימתם.</p>
-        <div class="proof-strip"><p class="proof-strip__label">מה תלמידים מספרים על סוכני העזר</p><div class="tm-qm"><div class="tm-qm__row"><div class="tm-qm__track"><button type="button" class="tm-qm__card"><span class="tm-qm__h">מחזיקים לך את היד</span><span class="tm-qm__q"><span class="tm-qm__l">הסוכנים שהיא בנתה ליוו אותי בבניית הסוכנים שלי. בהתחלה <span class="tm-hl">מחזיקים לך את היד</span>, ולאט לאט משחררים בקצב שלך.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/adidotan1.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">עדי דותן</span><span class="tm-qm__role">שכירה בהייטק</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">כמו לשבת מול איש מקצוע</span><span class="tm-qm__q"><span class="tm-qm__l">בנייה (סוכן עזר בקורס), בצורה מאוד שיטתית וברורה, אומר לי: עכשיו תעשי את זה, עכשיו תעשי את זה.</span><span class="tm-qm__l">זה פשוט מרגיש כאילו ישבתי מול איש מקצוע, נגיד בזום. הוא שואל אותי שאלות, נותן לי משימות ומעביר אותי תהליך.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ilana.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">אילנה וייס</span><span class="tm-qm__role">מטפלת בחרדות ומרצה</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">נעשה ממש על ידי סוכנים ייעודיים</span><span class="tm-qm__q"><span class="tm-qm__l">תהליך הליווי במהלך הקורס נעשה ממש על ידי סוכנים ייעודיים, זה מדהים.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/adidotan1.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">עדי דותן</span><span class="tm-qm__role">שכירה בהייטק</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">הסוכן חילץ את הידע שלי</span><span class="tm-qm__q"><span class="tm-qm__l">שילמתי המון כסף לאנשי מקצוע שונים, שהמטרה הייתה שהם יצליחו לחלץ ממני את המידע מהראש שלי ולבנות משהו טוב מזה, ואת בטח יכולה לנחש שזה לא הצליח.</span><span class="tm-qm__l">ופתאום <span class="tm-hl">בנייה כותב לי דברים פשוט מטורפים</span>.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ilana.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">אילנה וייס</span><span class="tm-qm__role">מטפלת בחרדות ומרצה</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">סוכן שותף, מישהו שלומד להכיר אותי</span><span class="tm-qm__q"><span class="tm-qm__l">פתאום שכחתי שאני יושבת מול המחשב. זה ממש היה כמו לדבר עם, כמו שאת אומרת, סוכן שותף, מישהו שלומד להכיר אותי ויצר איתי משהו <span class="tm-hl">שלא האמנתי שאני אצליח ליצור</span>. עוד לפני השיעור הראשון.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/lital.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">ליטל יעקובוביץ דראי</span><span class="tm-qm__role">עו״ד ושופטת</span></span></span></button></div></div><div class="tm-qm__row tm-qm__row--rev"><div class="tm-qm__track"><button type="button" class="tm-qm__shot" style="--ar:4.583" data-full="assets/wa-trn-0362.jpg" aria-label="הגדלת ההודעה של בת חן לוי"><img src="assets/wa-trn-0362.jpg" alt="הודעה של בת חן לוי: הסוכנים שלך הם הזהב." loading="lazy"></button><button type="button" class="tm-qm__shot" style="--ar:1.828" data-full="assets/wa-trn-0538.jpg" aria-label="הגדלת ההודעה של סיגל יער"><img src="assets/wa-trn-0538.jpg" alt="הודעה של סיגל יער: בקורס אנו מקבלים לשימושינו, באופן מדורג, סוכנים שעוזרים לנו לבנות סוכנים, וככל שעובדים איתם יותר לומדים גם לעבוד בלעדיהם - אבל הצעדים הראשונים איתם חיוניים" loading="lazy"></button><button type="button" class="tm-qm__shot" style="--ar:1.828" data-full="assets/wa-trn-0682.jpg" aria-label="הגדלת ההודעה של דבורי חשין"><img src="assets/wa-trn-0682.jpg" alt="הודעה של דבורי חשין: האליאב הזה פנומן!  כשדנים בשאלה האם סוכן יכול להחליף בני אדם - התשובה במקרה הזה ברור!   וואו, מי מהנדס סוכן ברמה כזו של ליווי - אליפות!" loading="lazy"></button><button type="button" class="tm-qm__shot" style="--ar:2.609" data-full="assets/wa-trn-0714.jpg" aria-label="הגדלת ההודעה של זיו עמר"><img src="assets/wa-trn-0714.jpg" alt="הודעה של זיו עמר: מעיין בנתה לי מערכת ניטור שמוודאת שהכל עובד, ואם יש תקלות - היא מעדכנת אותי בטלגרם." loading="lazy"></button><button type="button" class="tm-qm__shot" style="--ar:1.407" data-full="assets/wa-trn-0321.jpg" aria-label="הגדלת ההודעה של אילנה וייס"><img src="assets/wa-trn-0321.jpg" alt="הודעה של אילנה וייס: עבדתי עם בניה הסוכן ששלחת, שעושה איתנו את ההכנה לקורס.. וזה היה כאילו לעבור תהליך פסיכולוגי - לקחת את כל החיים שלי והעסק שלי, ולעשות מזה משהו סופר מסודר.  אני חושבת שהרבה בעלי עסקים יכולים להזדהות עם התחושה הזאת." loading="lazy"></button><button type="button" class="tm-qm__shot" style="--ar:2.284" data-full="assets/wa-trn-0345.jpg" aria-label="הגדלת ההודעה של ענת מנור"><img src="assets/wa-trn-0345.jpg" alt="הודעה של ענת מנור: בוקר טוב, היום ב 1:30 לפנות בוקר סיימתי שיעורים😍כולל ההתקנה של מעיין סוכנת האוטומציות ועדי סוכנת העיצוב😍" loading="lazy"></button></div></div></div></div>
+        <div class="proof-strip"><p class="proof-strip__label">מה תלמידים מספרים על סוכני העזר</p><div class="tm-qm"><div class="tm-qm__row"><div class="tm-qm__track"><button type="button" class="tm-qm__card"><span class="tm-qm__h">מחזיקים לך את היד</span><span class="tm-qm__q"><span class="tm-qm__l">הסוכנים שהיא בנתה ליוו אותי בבניית הסוכנים שלי. בהתחלה <span class="tm-hl">מחזיקים לך את היד</span>, ולאט לאט משחררים בקצב שלך.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/adidotan1.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">עדי דותן</span><span class="tm-qm__role">שכירה בהייטק</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">כמו לשבת מול איש מקצוע</span><span class="tm-qm__q"><span class="tm-qm__l">בנייה (סוכן עזר בקורס), בצורה מאוד שיטתית וברורה, אומר לי: עכשיו תעשי את זה, עכשיו תעשי את זה.</span><span class="tm-qm__l">זה פשוט מרגיש כאילו ישבתי מול איש מקצוע, נגיד בזום. הוא שואל אותי שאלות, נותן לי משימות ומעביר אותי תהליך.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ilana.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">אילנה וייס</span><span class="tm-qm__role">מטפלת בחרדות ומרצה</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">נעשה ממש על ידי סוכנים ייעודיים</span><span class="tm-qm__q"><span class="tm-qm__l">תהליך הליווי במהלך הקורס נעשה ממש על ידי סוכנים ייעודיים, זה מדהים.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/adidotan1.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">עדי דותן</span><span class="tm-qm__role">שכירה בהייטק</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">הסוכן חילץ את הידע שלי</span><span class="tm-qm__q"><span class="tm-qm__l">שילמתי המון כסף לאנשי מקצוע שונים, שהמטרה הייתה שהם יצליחו לחלץ ממני את המידע מהראש שלי ולבנות משהו טוב מזה, ואת בטח יכולה לנחש שזה לא הצליח.</span><span class="tm-qm__l">ופתאום <span class="tm-hl">בנייה כותב לי דברים פשוט מטורפים</span>.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ilana.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">אילנה וייס</span><span class="tm-qm__role">מטפלת בחרדות ומרצה</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">סוכן שותף, מישהו שלומד להכיר אותי</span><span class="tm-qm__q"><span class="tm-qm__l">פתאום שכחתי שאני יושבת מול המחשב. זה ממש היה כמו לדבר עם, כמו שאת אומרת, סוכן שותף, מישהו שלומד להכיר אותי ויצר איתי משהו <span class="tm-hl">שלא האמנתי שאני אצליח ליצור</span>. עוד לפני השיעור הראשון.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/lital.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">ליטל יעקובוביץ דראי</span><span class="tm-qm__role">עו״ד ושופטת</span></span></span></button></div></div><div class="tm-qm__row tm-qm__row--rev"><div class="tm-qm__track"><button type="button" class="tm-qm__shot" style="--ar:4.583" data-full="assets/wa-trn-0362.jpg" aria-label="הגדלת ההודעה של בת חן לוי"><img src="assets/wa-trn-0362.jpg" alt="הודעה של בת חן לוי: הסוכנים שלך הם הזהב." loading="lazy"></button><button type="button" class="tm-qm__shot" style="--ar:1.828" data-full="assets/wa-trn-0538.jpg" aria-label="הגדלת ההודעה של סיגל יער"><img src="assets/wa-trn-0538.jpg" alt="הודעה של סיגל יער: בקורס אנו מקבלים לשימושינו, באופן מדורג, סוכנים שעוזרים לנו לבנות סוכנים, וככל שעובדים איתם יותר לומדים גם לעבוד בלעדיהם - אבל הצעדים הראשונים איתם חיוניים" loading="lazy"></button><button type="button" class="tm-qm__shot" style="--ar:1.828" data-full="assets/wa-trn-0682.jpg" aria-label="הגדלת ההודעה של דבורי חשין"><img src="assets/wa-trn-0682.jpg" alt="הודעה של דבורי חשין: האליאב הזה פנומן!  כשדנים בשאלה האם סוכן יכול להחליף בני אדם - התשובה במקרה הזה ברור!   וואו, מי מהנדס סוכן ברמה כזו של ליווי - אליפות!" loading="lazy"></button></div></div></div></div>
       </div>
     </div>
     <div class="mid-cta"><a class="btn" href="#price">אני רוצה את כל זה</a></div>
@@ -2168,11 +2199,11 @@ html.k3-on .k3-static{display:none}
       <div class="road-step">
         <div class="road-step__head"><span class="road-step__num" aria-hidden="true">1</span><span class="k3-head"><img class="k3-static" src="assets/k3-static-ring.png" alt="" width="136" height="136"><canvas class="k3" data-kind="ring" width="84" height="84" aria-hidden="true"></canvas></span><span class="k3-tag"><svg class="k3-tag__arrow" viewBox="0 0 40 14" aria-hidden="true"><path d="M38 7H6"/><path d="M11 2L5 7l6 5"/></svg>תהליך אוטומטי</span>
         <h3>הדבר הראשון שרץ בלעדיכם</h3></div>
-        <div class="road-step__body"><p>נתחיל מלבנות סוכן אוטומטי שעושה את העבודה הכי שחורה שלכם במקומכם. משהו שקורה מעצמו, כל יום, בלי שנגעתם בו.</p>
-        <p>לאחר שתראו כמה קל לבנות סוכן כזה, תמשיכו לבנות עוד עשרות כאלה - עד שנוריד מכם את כל העבודה המשעממת והרוטינית.</p>
+        <div class="road-step__body"><p>נתחיל מלבנות תהליך אוטומטי שעושה את העבודה הכי שחורה שלכם במקומכם. משהו שקורה מעצמו, כל יום, בלי שנגעתם בו.</p>
+        <p>לאחר שתראו כמה קל לבנות תהליך כזה, תמשיכו לבנות עוד עשרות כאלה - עד שנוריד מכם את כל העבודה המשעממת והרוטינית.</p>
           <div class="road-ex">
             <p class="road-ex__label">לדוגמה</p>
-            <ul>
+            <ul class="road-ex__items road-ex__items--ring">
               <li>איסוף חשבוניות ושליחה לרואה חשבון</li>
               <li>מעבר על המיילים ומענה עליהם</li>
               <li>מענה ללקוחות בוואטסאפ</li>
@@ -2187,11 +2218,11 @@ html.k3-on .k3-static{display:none}
         <h3>סוכן מורכב שחושב כמוכם</h3></div>
         <div class="road-step__body"><p>לא בוט שעונה תשובות מוכנות. <br />סוכן עם שם, אופי ומוח. שמכיר את הידע שלכם ופועל לפי הלוגיקה שלכם.</p>
         <p>בקיצור, יודע לעשות דברים שעד היום דרשו את המוח שלכם.</p>
-          <p class="k3-art__lead">ממה בנוי סוכן? <b>מסקילים</b> - מה שהוא יודע לעשות (החרוט), <b>ממסמכי ידע</b> - מה שהוא יודע (הגליל), <b>ומתהליכי עבודה</b> - סדר הפעולות שהוא מריץ לבד (הטבעות). הקובייה היא <b>הסוכן</b> עצמו, שמחבר ביניהם ופועל.</p>
+          <p class="k3-art__lead">ממה בנוי סוכן? <b>מסקילים</b> - מה שהוא יודע לעשות (החרוט), <b>ממסמכי ידע</b> - מה שהוא יודע (הגליל), <b>ומתהליכי עבודה</b> - תהליכים אוטומטיים, סדר פעולות שהוא מריץ לבד (הטבעות). הקובייה היא <b>הסוכן</b> עצמו, שמחבר ביניהם ופועל.</p>
           <figure class="k3-art" aria-label="סוכן, סקיל, מסמך ידע ותהליך עבודה"><img class="k3-static" src="assets/k3-static-stage2.png" alt="" width="640" height="456"><canvas class="k3" data-kind="agent-plus" width="320" height="228" aria-hidden="true"></canvas><svg class="k3-art__arrows" aria-hidden="true"><defs><marker id="k3ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs></svg><span class="k3-art__l" data-at="agent">סוכן</span><span class="k3-art__l" data-at="know">מסמך ידע</span><span class="k3-art__l" data-at="skill">סקיל</span><span class="k3-art__l" data-at="flow">תהליך עבודה</span></figure>
           <div class="road-ex">
             <p class="road-ex__label">לדוגמה</p>
-            <ul>
+            <ul class="road-ex__items road-ex__items--cube">
               <li>כתיבת הצעות מחיר מורכבות</li>
               <li>יצירת תוכן והעלאה לרשתות</li>
               <li>אסטרטגיה ויישום לקמפיינים ממומנים</li>
@@ -2264,7 +2295,7 @@ html.k3-on .k3-static{display:none}
           <li><b>גישה לספריית הסקילים הסודית של שלהבת</b> -הסקילים של הסוכנים שמנהלים את אִימפּרוּב. (שיווק, אסטרטגיה, תוכן, סושיאל, קופירייטינג ועוד ועוד). כדי שלא תתחילו מ-0</li>
           <li><b>הסוכנים הם גלגלי עזר:</b> עוזרים בהתחלה, ואת השיטה עצמה אתם מקבלים במלואה, כדי שבהמשך תבנו גם בלעדיהם</li>
         </ul>
-        
+        <div class="proof-strip"><p class="proof-strip__label">ככה תלמידים כותבים לנו על הסוכנים</p><div class="tm-qm"><div class="tm-qm__row"><div class="tm-qm__track"><button type="button" class="tm-qm__shot" style="--ar:2.609" data-full="assets/wa-trn-0714.jpg" aria-label="הגדלת ההודעה של זיו עמר"><img src="assets/wa-trn-0714.jpg" alt="הודעה של זיו עמר: מעיין בנתה לי מערכת ניטור שמוודאת שהכל עובד, ואם יש תקלות - היא מעדכנת אותי בטלגרם." loading="lazy"></button><button type="button" class="tm-qm__shot" style="--ar:2.284" data-full="assets/wa-trn-0345.jpg" aria-label="הגדלת ההודעה של ענת מנור"><img src="assets/wa-trn-0345.jpg" alt="הודעה של ענת מנור: בוקר טוב, היום ב 1:30 לפנות בוקר סיימתי שיעורים😍כולל ההתקנה של מעיין סוכנת האוטומציות ועדי סוכנת העיצוב😍" loading="lazy"></button><button type="button" class="tm-qm__shot" style="--ar:1.407" data-full="assets/wa-trn-0321.jpg" aria-label="הגדלת ההודעה של אילנה וייס"><img src="assets/wa-trn-0321.jpg" alt="הודעה של אילנה וייס: עבדתי עם בניה הסוכן ששלחת, שעושה איתנו את ההכנה לקורס.. וזה היה כאילו לעבור תהליך פסיכולוגי - לקחת את כל החיים שלי והעסק שלי, ולעשות מזה משהו סופר מסודר.  אני חושבת שהרבה בעלי עסקים יכולים להזדהות עם התחושה הזאת." loading="lazy"></button></div></div></div></div>
       </div>
 
       <div class="opens-card">
@@ -2311,7 +2342,7 @@ html.k3-on .k3-static{display:none}
 <section class="proof">
   <div class="wrap">
     <h2>דוגמאות של תלמידים - וזה מה שכל אחד מהם בנה</h2>
-    <p class="proof__lead">ששת האנשים שלמטה הגיעו מעולמות רחוקים זה מזה - עריכת דין, טיפול, פרסום, מסחר, פיתוח. כל אחד מהם בנה לעצמו משרד שעובד בשבילו, בקלות ובמינימום זמן ומאמץ.</p>
+    <p class="proof__lead">האנשים שלמטה הגיעו מעולמות רחוקים זה מזה - עריכת דין, טיפול, פרסום, מסחר, פיתוח. כל אחד מהם בנה לעצמו משרד שעובד בשבילו, בקלות ובמינימום זמן ומאמץ.</p>
 
     <!-- מקרא מקוצר. שלהבת: *"נעשה להם מקראה, שיהיה כתוב הקובייה זה סוכן,
          החרוט זה סקיל וכן הלאה."* ⛔ **בלי הגלולה** (מסמך ידע) - בבקשה
@@ -2335,7 +2366,7 @@ html.k3-on .k3-static{display:none}
             <div class="pc-ba pc-ba--b"><span class="pc-ba__l">הגיעה אלינו כש...</span><p>"פעם זה היה נשמע לי כמו סינית, כאילו הגעתי לשיעור מדעי המחשב, וזה לא אני."</p></div>
             <div class="pc-ba pc-ba--a"><span class="pc-ba__l">ויצאה עם...</span><p>"יצרתי עשרות סוכנים לעבודה שלי המשפטית, כולל משרד משפטי מלא."</p></div>
             <p class="pc-agents__h">מתוך הצוות שלה היום</p>
-            <ul class="pc-agents"><li style="--i:0"><img src="assets/k3-agent-purple.png" alt="" width="40" height="46" loading="lazy"><span>כתבי טענות</span></li><li style="--i:1"><img src="assets/k3-agent-blue.png" alt="" width="40" height="46" loading="lazy"><span>אפוטרופוס לדין</span></li><li style="--i:2"><img src="assets/k3-agent-turquoise.png" alt="" width="40" height="46" loading="lazy"><span>ייפוי כוח</span></li><li style="--i:3"><img src="assets/k3-agent-orange.png" alt="" width="40" height="46" loading="lazy"><span>הסכמי גירושין</span></li><li style="--i:4"><img src="assets/k3-agent-red.png" alt="" width="40" height="46" loading="lazy"><span>בדיקת הסכמים</span></li><li style="--i:5"><img src="assets/k3-agent-gold.png" alt="" width="40" height="46" loading="lazy"><span>ניסוח צוואות</span></li></ul>
+            <ul class="pc-agents"><li style="--i:0"><img src="assets/k3-agent-purple.png" alt="" width="40" height="46" loading="lazy"><span>כתבי טענות</span><small>אוסף את החומר וכותב כתב טענות מסודר</small></li><li style="--i:1"><img src="assets/k3-agent-blue.png" alt="" width="40" height="46" loading="lazy"><span>אפוטרופוס לדין</span><small>תיקי אפוטרופוס לדין</small></li><li style="--i:2"><img src="assets/k3-agent-turquoise.png" alt="" width="40" height="46" loading="lazy"><span>ייפוי כוח</span><small>מנסח ייפויי כוח</small></li><li style="--i:3"><img src="assets/k3-agent-orange.png" alt="" width="40" height="46" loading="lazy"><span>הסכמי גירושין</span><small>מנסח הסכמי גירושין</small></li><li style="--i:4"><img src="assets/k3-agent-red.png" alt="" width="40" height="46" loading="lazy"><span>בדיקת הסכמים</span><small>בודק הסכמים</small></li><li style="--i:5"><img src="assets/k3-agent-gold.png" alt="" width="40" height="46" loading="lazy"><span>ניסוח צוואות</span><small>מנסח צוואות</small></li></ul>
             <button class="proof-card__flip" type="button">צפו בה מספרת</button>
           </div>
           <div class="proof-card__face proof-card__face--back" inert>
@@ -2348,7 +2379,6 @@ html.k3-on .k3-static{display:none}
               <figure class="proof-card__cf">
                 <div class="coverflow" data-active="0" data-videos='[{"id": "1223170501", "h": "f0bc73dba9", "poster": "assets/cf-1223170501.jpg", "cap": "100% הבטחה לבנות הכל"}, {"id": "1223170597", "h": "4116d42c2d", "poster": "assets/cf-1223170597.jpg", "cap": "שקלתי והחלטתי"}, {"id": "1223170818", "h": "1ceee5b64e", "poster": "assets/cf-1223170818.jpg", "cap": "חסכתי שנה שלמה"}]'><div class="cf-stage"></div></div>
                 <div class="cf-nav"><div class="cf-dots"></div></div>
-                <figcaption>ליטל מספרת</figcaption>
               </figure>
               <figure class="proof-card__wa">
                 <button class="proof-card__wa-btn" type="button" data-full="assets/wa-lital.jpg" aria-label="הגדלת ההודעה של ליטל יעקובוביץ דראי">
@@ -2388,7 +2418,6 @@ html.k3-on .k3-static{display:none}
             <figure class="proof-card__cf">
               <div class="coverflow" data-active="0" data-videos='[{"id": "1217933800", "h": "765aad977a", "poster": "assets/cf-1217933800.jpg", "cap": "בת חן · \"אני לא טכנולוגית\""}, {"id": "1223171023", "h": "a68dff366d", "poster": "assets/cf-1223171023.jpg", "cap": "בת חן · לא צריכה קורס נוסף"}]'><div class="cf-stage"></div></div>
               <div class="cf-nav"><div class="cf-dots"></div></div>
-              <figcaption>בת חן על הפחד שהתברר כלא מוצדק</figcaption>
             </figure>
               <figure class="proof-card__wa">
                 <button class="proof-card__wa-btn" type="button" data-full="assets/wa-batchen.jpg" aria-label="הגדלת ההודעה של בת חן לוי">
@@ -2430,7 +2459,6 @@ html.k3-on .k3-static{display:none}
             <figure class="proof-card__cf">
               <div class="coverflow" data-active="0" data-videos='[{"id": "1223170501", "h": "f0bc73dba9", "poster": "assets/cf-1223170501.jpg", "cap": "100% הבטחה לבנות הכל"}, {"id": "1223170559", "h": "a3ee78b996", "poster": "assets/cf-1223170559.jpg", "cap": "עולם אחר"}, {"id": "1223170683", "h": "bd1d98a271", "poster": "assets/cf-1223170683.jpg", "cap": "לקחתי מלא קורסים"}]'><div class="cf-stage"></div></div>
               <div class="cf-nav"><div class="cf-dots"></div></div>
-              <figcaption>אילנה בין הבוגרים שמספרים</figcaption>
             </figure>
               <figure class="proof-card__wa">
                 <button class="proof-card__wa-btn" type="button" data-full="assets/wa-ilana.jpg" aria-label="הגדלת ההודעה של אילנה וייס">
@@ -2454,7 +2482,7 @@ html.k3-on .k3-static{display:none}
               </div>
             </div>
             <div class="pc-qm" aria-label="ציטוטים של ירדן"><div class="pc-qm__track"><div class="pc-qm__card"><p class="pc-qm__h">סוכן שיש לו שמונה שלבים</p><p class="pc-qm__q">זה סוכן שיש לו שמונה שלבים, וזו הייתה הנקודה הכי כואבת שלי מבחינת העסק, מה שלא אפשר לעסק שלי לרוץ כמו שאני רוצה ובמהירות שאני רוצה.</p></div><div class="pc-qm__card"><p class="pc-qm__h">זו הרגשה מדהימה</p><p class="pc-qm__q">אני יכולה לקחת עכשיו כל משימה שאני רוצה, ואחרי תהליך מול קלוד אני אדע לבנות לה סוכן שיעשה את זה. זו הרגשה מדהימה.</p></div><div class="pc-qm__card"><p class="pc-qm__h">חוסך לך משכורות כל חודש</p><p class="pc-qm__q">אם את עצמאית, בזכות זה את כנראה תצטרכי להעסיק הרבה פחות אנשים - זה חוסך לך משכורות כל חודש.</p></div></div></div>
-            <p class="pc-sent">ירדן בנתה צוות AI שמנהל איתה חנות אינטרנטית מקצה לקצה.</p>
+            <p class="pc-sent">ירדן בנתה צוות AI שמריץ לה חנות אינטרנטית מקצה לקצה, לבד.</p>
             <div class="pc-ba pc-ba--b"><span class="pc-ba__l">הגיעה אלינו כש...</span><p>"במשך שנה פלוס ניסיתי לבד. יצרתי כלים על גבי כלים, עוזרים אישיים ב-ChatGPT ובג'מיני, ופשוט לא הצלחתי לעשות את זה לבד."</p></div>
             <div class="pc-ba pc-ba--a"><span class="pc-ba__l">ויצאה עם...</span><p>"והיום אני יודעת ליצור סוכנים שעושים את העבודה במקומי מקצה לקצה. למדתי לשכפל את המוח שלי."</p></div>
             <p class="pc-agents__h">מתוך הצוות שלה היום</p>
@@ -2471,7 +2499,6 @@ html.k3-on .k3-static{display:none}
             <figure class="proof-card__cf">
               <div class="coverflow" data-active="0" data-videos='[{"id": "1234043593", "h": "f401958167", "poster": "assets/cf-1234043593.jpg", "cap": "ירדן · לשכפל את המוח שלי"}, {"id": "1234045834", "h": "04735e81b5", "poster": "assets/cf-1234045834.jpg", "cap": "ירדן · סוכן העל שלי"}, {"id": "1234046711", "h": "34cd8f321f", "poster": "assets/cf-1234046711.jpg", "cap": "ירדן · לא צריכה עוד קורסים"}]'><div class="cf-stage"></div></div>
               <div class="cf-nav"><div class="cf-dots"></div></div>
-              <figcaption>ירדן מספרת מה בנתה</figcaption>
             </figure>
             <button class="proof-card__flip proof-card__flip--back" type="button">חזרה</button>
           </div>
@@ -2484,7 +2511,7 @@ html.k3-on .k3-static{display:none}
          שזה יהפוך להיות סקשן ארוך מדי."* הכרטיסים שבפנים בנויים באותה
          מבנה בדיוק, רק בלי צילום-הודעה (ר' ההערה על שער-השפה למטה). -->
     <div class="mid-cta mid-cta--proof"><a class="proof__cta btn" href="#price">אני רוצה משרד כזה</a></div>
-    <button class="proof-more__btn" type="button" aria-expanded="false" aria-controls="proof-more">רוצים לראות עוד שני משרדים? של דולב ושל רון</button>
+    <button class="proof-more__btn" type="button" aria-expanded="false" aria-controls="proof-more">רוצים לראות עוד ארבעה משרדים?</button>
     <div class="proof-more" id="proof-more" hidden>
       <div class="proof-grid">
         <article class="proof-card" style="--pc:#f17f52">
@@ -2504,20 +2531,19 @@ html.k3-on .k3-static{display:none}
             <div class="pc-ba pc-ba--b"><span class="pc-ba__l">הגיע אלינו כש...</span><p>"בוקר רגיל שלי לפני שהתחלתי את הקורס זה לקום, קפה עם בן הזוג שלי, ואז לפתוח את המחשב ואז כאוס. כאוס, הוואטסאפים, המיילים, בלאגן."</p></div>
             <div class="pc-ba pc-ba--a"><span class="pc-ba__l">ויצא עם...</span><p>"הדבר היחידי שאני עושה זה פותח את המחשב בבוקר, מקבל את הבריף, כי זה רץ שלוש פעמים ביום, ושולח ללקוח."</p></div>
             <p class="pc-agents__h">מתוך הצוות שלו היום</p>
-            <ul class="pc-agents"><li style="--i:0"><img src="assets/k3-agent-purple.png" alt="" width="40" height="46" loading="lazy"><span>מערכת השידוך</span></li><li style="--i:1"><img src="assets/k3-agent-blue.png" alt="" width="40" height="46" loading="lazy"><span>שון, ניהול לקוחות</span></li><li style="--i:2"><img src="assets/k3-agent-turquoise.png" alt="" width="40" height="46" loading="lazy"><span>דילן, תשובות ללקוחות</span></li><li style="--i:3"><img src="assets/k3-agent-orange.png" alt="" width="40" height="46" loading="lazy"><span>שיר, עוזרת אישית</span></li><li style="--i:4"><img src="assets/k3-agent-red.png" alt="" width="40" height="46" loading="lazy"><span>הבריף היומי</span></li></ul>
+            <ul class="pc-agents"><li style="--i:0"><img src="assets/k3-agent-purple.png" alt="" width="40" height="46" loading="lazy"><span>מערכת השידוך</span><small>מחברת בין משפיענים לעסקים שמחפשים פרסום</small></li><li style="--i:1"><img src="assets/k3-agent-blue.png" alt="" width="40" height="46" loading="lazy"><span>שון, ניהול לקוחות</span><small>קורא את קבוצות הלקוחות ושולח סיכום בוקר</small></li><li style="--i:2"><img src="assets/k3-agent-turquoise.png" alt="" width="40" height="46" loading="lazy"><span>דילן, תשובות ללקוחות</span><small>מנסח לו תשובות ללקוחות, באנגלית שלו</small></li><li style="--i:3"><img src="assets/k3-agent-orange.png" alt="" width="40" height="46" loading="lazy"><span>שיר, עוזרת אישית</span><small>עוזרת אישית עם אופי משלה</small></li><li style="--i:4"><img src="assets/k3-agent-red.png" alt="" width="40" height="46" loading="lazy"><span>הבריף היומי</span><small>ידיעות, קופי ותמונה ללקוח, שלוש פעמים ביום</small></li></ul>
             <button class="proof-card__flip" type="button">צפו בו מספר</button>
           </div>
           <div class="proof-card__face proof-card__face--back" inert>
             <p class="proof-card__backhead">מה עוד עובד אצל דולב</p>
             <ul class="proof-card__list">
-                <li class="is-cube"><b>דילן</b> - מחובר לוואטסאפ ול-CRM של כל הלקוחות, שומע גם הקלטות קוליות, ומחזיר תשובה מנוסחת באנגלית שלו. נבנה אחרי שמצא את עצמו מנהל משא ומתן באחת בלילה, מהספה, מהטלפון.</li>
-                <li class="is-cone"><b>שיר</b> - עוזרת אישית עם אופי משלה. אנשים דיברו איתה בלי לדעת שהיא לא בן אדם.</li>
-                <li class="is-ring"><b>הבריף היומי</b> - סורק ידיעות, מייצר קופי לשלוש רשתות, מייצר תמונה ומוסיף גרפיקה עם הלוגו. רץ שלוש פעמים ביום.</li>
+                <li class="is-cube"><b>56 סוכנים</b> - בשלושה חודשים בנה 56 סוכנים, במערכת שעולה לו כ-1,500 דולר בחודש.</li>
+                <li class="is-ring"><b>הלקוח ששתק</b> - לקוח חדש התלונן על שלוש שעות בלי מענה. הסוכנים מדדו חודשיים אחורה ברמת הדקה, והוא הגיע לפגישה עם נתונים.</li>
+                <li class="is-cone"><b>35 עד 40 אלף ₪</b> - החיסכון בחודש, במילים שלו, בעלות מעביד.</li>
               </ul>
               <figure class="proof-card__cf">
                 <div class="coverflow" data-active="0" data-videos='[{"id": "1223170597", "h": "4116d42c2d", "poster": "assets/cf-1223170597.jpg", "cap": "שקלתי והחלטתי"}, {"id": "1223170501", "h": "f0bc73dba9", "poster": "assets/cf-1223170501.jpg", "cap": "100% הבטחה לבנות הכל"}]'><div class="cf-stage"></div></div>
                 <div class="cf-nav"><div class="cf-dots"></div></div>
-                <figcaption>דולב מספר</figcaption>
               </figure>
             <button class="proof-card__flip proof-card__flip--back" type="button">חזרה</button>
           </div>
@@ -2540,20 +2566,19 @@ html.k3-on .k3-static{display:none}
             <div class="pc-ba pc-ba--b"><span class="pc-ba__l">הגיע אלינו כש...</span><p>"הידע שהיה לי היה מפוזר, בלאגן בראש."</p></div>
             <div class="pc-ba pc-ba--a"><span class="pc-ba__l">ויצא עם...</span><p>"אתה פשוט נותן שתיים, שלוש פקודות או אתה מסביר מה אתה רוצה והכול עובד."</p></div>
             <p class="pc-agents__h">מתוך הצוות שלו היום</p>
-            <ul class="pc-agents"><li style="--i:0"><img src="assets/k3-agent-purple.png" alt="" width="40" height="46" loading="lazy"><span>קפטן אדי</span></li><li style="--i:1"><img src="assets/k3-agent-blue.png" alt="" width="40" height="46" loading="lazy"><span>שוטר אזולאי</span></li><li style="--i:2"><img src="assets/k3-agent-turquoise.png" alt="" width="40" height="46" loading="lazy"><span>עוזר אישי בטלפון</span></li><li style="--i:3"><img src="assets/k3-agent-orange.png" alt="" width="40" height="46" loading="lazy"><span>שני המוחות</span></li><li style="--i:4"><img src="assets/k3-agent-red.png" alt="" width="40" height="46" loading="lazy"><span>חדר הבקרה</span></li></ul>
+            <ul class="pc-agents"><li style="--i:0"><img src="assets/k3-agent-purple.png" alt="" width="40" height="46" loading="lazy"><span>קפטן אדי</span><small>מקבל כל בקשה ומנתב לסוכן הנכון</small></li><li style="--i:1"><img src="assets/k3-agent-blue.png" alt="" width="40" height="46" loading="lazy"><span>שוטר אזולאי</span><small>בודק בעצמו את העבודה של האחרים</small></li><li style="--i:2"><img src="assets/k3-agent-turquoise.png" alt="" width="40" height="46" loading="lazy"><span>עוזר אישי בטלפון</span><small>קובע פגישות ומסכם מיילים, גם מהודעה קולית</small></li><li style="--i:3"><img src="assets/k3-agent-orange.png" alt="" width="40" height="46" loading="lazy"><span>שני המוחות</span><small>קלוד ו-OpenAI עונים יחד, תשובה אחת</small></li><li style="--i:4"><img src="assets/k3-agent-red.png" alt="" width="40" height="46" loading="lazy"><span>חדר הבקרה</span><small>מסך אחד: מה כל סוכן עשה ומה עוד רץ</small></li></ul>
             <button class="proof-card__flip" type="button">צפו בו מספר</button>
           </div>
           <div class="proof-card__face proof-card__face--back" inert>
             <p class="proof-card__backhead">מה עוד עובד אצל רון</p>
             <ul class="proof-card__list">
-                <li class="is-cube"><b>שוטר אזולאי</b> - סוכן שכל תפקידו לבדוק את העבודה של האחרים. הוא לא שואל אותם מה עשו - הוא הולך ובודק בעצמו. במילים שלו: "'אמרתי שתיעדתי' זו לא הוכחה."</li>
-                <li class="is-ring"><b>מערכת שני המוחות</b> - משרד שני ב-OpenAI לצד המשרד בקלוד, מופרדים באבטחה. קפטן אדי שולח שאלה לשניהם ומגיש תשובה אחת מאוחדת.</li>
-                <li class="is-cone"><b>חדר הבקרה</b> - מסך אחד שמראה בדיוק מה כל סוכן עשה, מה הסתיים ומה עוד רץ.</li>
+                <li class="is-cube"><b>11 מחלקות</b> - משרד של יותר מ-20 סוכנים: ראש משרד, וכל מחלקה עושה משהו אחר.</li>
+                <li class="is-ring"><b>חמש גרסאות לכל רעיון</b> - כל רעיון יוצא אצלו בחמש גרסאות במקום באחת, וכל בוקר מחכה לו סיכום של מה נעשה ומה עוד פתוח.</li>
+                <li class="is-cone"><b>האפליקציה בחנות של אפל</b> - האפליקציה שבנה עלתה רשמית לחנות של אפל.</li>
               </ul>
             <figure class="proof-card__cf">
               <div class="coverflow" data-active="0" data-videos='[{"id": "1223170597", "h": "4116d42c2d", "poster": "assets/cf-1223170597.jpg", "cap": "שקלתי והחלטתי"}, {"id": "1223170645", "h": "381f27ebdc", "poster": "assets/cf-1223170645.jpg", "cap": "חד משמעית שווה"}, {"id": "1223170683", "h": "bd1d98a271", "poster": "assets/cf-1223170683.jpg", "cap": "לקחתי מלא קורסים"}]'><div class="cf-stage"></div></div>
               <div class="cf-nav"><div class="cf-dots"></div></div>
-              <figcaption>רון בין הבוגרים שמספרים</figcaption>
             </figure>
               <figure class="proof-card__wa">
                 <button class="proof-card__wa-btn" type="button" data-full="assets/wa-ron.jpg" aria-label="הגדלת ההודעה של רון אלון">
@@ -2564,6 +2589,73 @@ html.k3-on .k3-static{display:none}
           </div>
         </div>
       </article>
+      <article class="proof-card" style="--pc:#9ad0a4">
+        <div class="proof-card__inner">
+          <div class="proof-card__face proof-card__face--front">
+            <h3 class="proof-card__title">המשרד של מורן</h3>
+            <div class="proof-card__who">
+              <img class="proof-card__photo" src="assets/people/moran.jpg" alt="מורן טאובר">
+              <div>
+                <p class="proof-card__name">מורן טאובר</p>
+                <p class="proof-card__role">מטפלת ברפואה סינית, עורכת דין בעברה</p>
+              </div>
+            </div>
+            <div class="pc-qm" aria-label="ציטוטים של מורן"><div class="pc-qm__track"><div class="pc-qm__card"><p class="pc-qm__h">דבר שהוא בלתי נדלה</p><p class="pc-qm__q">אני לא רואה מתי יימאס לי מדבר שהוא בלתי נדלה.</p></div></div></div>
+            <p class="pc-sent">מורן בנתה לעסק שלה סוכנת פיננסים ומנהל תוכן ושיווק.</p>
+            <div class="pc-ba pc-ba--b"><span class="pc-ba__l">הגיעה אלינו כש...</span><p>"התלבטתי לגבי המחיר. בדיעבד הייתי אומרת לעצמי 'מה את, סתומה?'"</p></div>
+            <div class="pc-ba pc-ba--a"><span class="pc-ba__l">ויצאה עם...</span><p>"בניתי עכשיו בימים האחרונים שני סוכנים. אחד זה אווה, שאחראית על הפיננסים שלי, של העסק, ואחד זה צביקה, שהוא מנהל התוכן והשיווק שלי."</p></div>
+            <p class="pc-agents__h">מתוך הצוות שלה היום</p>
+            <ul class="pc-agents"><li style="--i:0"><img src="assets/k3-agent-purple.png" alt="" width="40" height="46" loading="lazy"><span>הסוכנת הפיננסית</span><small>מוצאת חשבוניות ובונה דוח הוצאות והכנסות</small></li><li style="--i:1"><img src="assets/k3-agent-blue.png" alt="" width="40" height="46" loading="lazy"><span>צביקה</span><small>מנהל התוכן והשיווק</small></li><li style="--i:2"><img src="assets/k3-agent-turquoise.png" alt="" width="40" height="46" loading="lazy"><span>כותב הפוסטים</span><small>כותב פוסטים לאינסטגרם בסגנון שלה, ומפרסם לבד</small></li></ul>
+            <button class="proof-card__flip" type="button">צפו בה מספרת</button>
+          </div>
+          <div class="proof-card__face proof-card__face--back" inert>
+            <p class="proof-card__backhead">מה עוד עובד אצל מורן</p>
+            <ul class="proof-card__list">
+                <li class="is-cube"><b>עבודת לילה</b> - סוכן שעבד 12 שעות לבד בזמן שהיא ישנה.</li>
+              </ul>
+              <figure class="proof-card__cf">
+                <div class="coverflow" data-active="0" data-videos='[{"id": "1234197070", "h": "5b5b9f5e83", "poster": "assets/cf-1234197070.jpg", "cap": "מורן · משנה חיים"}]'><div class="cf-stage"></div></div>
+                <div class="cf-nav"><div class="cf-dots"></div></div>
+              </figure>
+            <button class="proof-card__flip proof-card__flip--back" type="button">חזרה</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="proof-card" style="--pc:#f6b8a6">
+        <div class="proof-card__inner">
+          <div class="proof-card__face proof-card__face--front">
+            <h3 class="proof-card__title">המשרד של רננה</h3>
+            <div class="proof-card__who">
+              <img class="proof-card__photo" src="assets/people/renana.jpg" alt="רננה צברי">
+              <div>
+                <p class="proof-card__name">רננה צברי</p>
+                <p class="proof-card__role">משווקת קורסים לרופאי שיניים</p>
+              </div>
+            </div>
+            <div class="pc-qm" aria-label="ציטוטים של רננה"><div class="pc-qm__track"><div class="pc-qm__card"><p class="pc-qm__h">בניתי את הסוכן מיילו</p><p class="pc-qm__q">אז בניתי את הסוכן מיילו. הוא מרכז בכרטיסייה אחת את כל המיילים, ממיין שיווקי, אנשים אמיתיים, ממיין מה עניתי כבר ומה מצריך תשובה.</p></div><div class="pc-qm__card"><p class="pc-qm__h">לא לפחד מהטכני</p><p class="pc-qm__q">לקח לי קצת זמן לקלוט שיש לי את הקצב שלי. והכי חשוב - לא לפחד מהטכני.</p></div><div class="pc-qm__card"><p class="pc-qm__h">כמות הידע שקיבלתי עצומה</p><p class="pc-qm__q">כמות הידע שקיבלתי עצומה. קודם כל זה שינה לי את מה שאני חושבת שאני עושה, כבר בשלב ההכנה לקורס.</p></div></div></div>
+            <p class="pc-sent">רננה בנתה לעצמה משרד של סוכנים, מהמיילים ועד התקציבים.</p>
+            <div class="pc-ba pc-ba--b"><span class="pc-ba__l">הגיעה אלינו כש...</span><p>"יש לי מלא כתובות מייל (שלי ושל לקוחות) ולא הצלחתי להשתלט על זה מבחינת דחיפות, מבחינת תיעדוף."</p></div>
+            <div class="pc-ba pc-ba--a"><span class="pc-ba__l">ויצאה עם...</span><p>"והיום, אין משהו שאני לא אצליח לבנות. כל עוזר שאני יכולה לחשוב עליו, כל דבר קטן, בין בחיים הפרטיים ובין בחיים העסקיים שלי, אני יכולה לייעל."</p></div>
+            <p class="pc-agents__h">מתוך הצוות שלה היום</p>
+            <ul class="pc-agents"><li style="--i:0"><img src="assets/k3-agent-purple.png" alt="" width="40" height="46" loading="lazy"><span>מיילו</span><small>ממיין את כל המיילים בכרטיסייה אחת</small></li><li style="--i:1"><img src="assets/k3-agent-blue.png" alt="" width="40" height="46" loading="lazy"><span>סמי</span><small>מסכמת תמלולים</small></li><li style="--i:2"><img src="assets/k3-agent-turquoise.png" alt="" width="40" height="46" loading="lazy"><span>סוכנת התקציבים</span><small>בונה תקציבים ובודקת כדאיות עסקאות</small></li><li style="--i:3"><img src="assets/k3-agent-orange.png" alt="" width="40" height="46" loading="lazy"><span>סוכנת מטא</span><small>מתפעלת את מטא ומוצאת באגים</small></li><li style="--i:4"><img src="assets/k3-agent-red.png" alt="" width="40" height="46" loading="lazy"><span>פייפר</span><small>הופכת תהליך ידני חוזר לאוטומטי</small></li><li style="--i:5"><img src="assets/k3-agent-gold.png" alt="" width="40" height="46" loading="lazy"><span>היועץ האסטרטגי</span><small>ממליץ מה לבנות הלאה</small></li></ul>
+            <button class="proof-card__flip" type="button">צפו בה מספרת</button>
+          </div>
+          <div class="proof-card__face proof-card__face--back" inert>
+            <p class="proof-card__backhead">מה עוד עובד אצל רננה</p>
+            <ul class="proof-card__list">
+                <li class="is-ring"><b>"לא מצריך תשובה"</b> - במיילו, מייל שהוא רק לידיעה יורד מהרשימה בלחיצה אחת.</li>
+                <li class="is-cube"><b>שלוש עדשות</b> - היועץ האסטרטגי בודק כל המלצה בשלוש עדשות: התאמה אישית, היתכנות וערך.</li>
+              </ul>
+              <figure class="proof-card__cf">
+                <div class="coverflow" data-active="0" data-videos='[{"id": "1234076466", "h": "43c7f1c31a", "poster": "assets/cf-1234076466.jpg", "cap": "רננה · אם יש לכם כיוון"}]'><div class="cf-stage"></div></div>
+                <div class="cf-nav"><div class="cf-dots"></div></div>
+              </figure>
+            <button class="proof-card__flip proof-card__flip--back" type="button">חזרה</button>
+          </div>
+        </div>
+      </article>
+
       </div>
     </div>
   </div>
@@ -2594,13 +2686,14 @@ html.k3-on .k3-static{display:none}
     <div class="stay-grid">
       <div class="stay-item">
         <h3>מה מחזיק אותך במקום הקבוצה</h3>
-        <div class="hold-row"><span class="hold-row__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 20V11M10 20V5M16 20v-7M22 20H2"/></svg></span><div><h4>המבנה</h4><p>כשאין מפגש שמחכה לכם, מה שמחזיק זה המבנה: השיטה מובילה אתכם בצורה מובנית והדרגתית, והתרגולים שאחרי כל שלב הם מה שמוודא שאתם בונים סוכנים בפועל, ולא רק צוברים ידע תיאורטי - כי רק מתוך הבנייה מגיעה גם הלמידה וההבנה. עוברים שלב כשאתם מוכנים. רק אחרי שסיימתם לתרגל ולבנות.</p></div></div>
+        <div class="hold-row"><span class="hold-row__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 20V11M10 20V5M16 20v-7M22 20H2"/></svg></span><div><h4>המבנה</h4><p>כשאין מפגש שמחכה לכם, מה שמחזיק זה המבנה:</p><ul class="hold-pts"><li><b>השיטה מובילה אתכם</b> בצורה מובנית והדרגתית.</li><li><b>תרגול אחרי כל שלב</b> - שמוודא שאתם בונים סוכנים בפועל, ולא רק צוברים ידע תיאורטי. כי רק מתוך הבנייה מגיעה גם הלמידה וההבנה.</li><li><b>עוברים שלב כשאתם מוכנים</b> - רק אחרי שסיימתם לתרגל ולבנות.</li></ul></div></div>
         <div class="hold-row"><span class="hold-row__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c.8-4 3.2-6 6-6s5.2 2 6 6"/><circle cx="17.5" cy="9" r="2.5"/></svg></span><div><h4>שני שיעורים עם המנטור/ית</h4><p>תקפים לשנה, ונועדו לעזור לכם אם תתקעו.</p></div></div>
         <div class="hold-row"><span class="hold-row__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M4 21l1.6-4.4A8.5 8.5 0 1 1 8.4 19z"/></svg></span><div><h4>יוסף בוואטסאפ</h4><p>מכיר את כל החומר הנלמד, ויודע לענות ולכוון בכל שאלה והתייעצות.</p></div></div>
       </div>
       <div class="stay-item">
         <h3>מה שלומדים כאן לא מתיישן</h3>
-        <p>זה בדיוק מה שהשיטה באה למנוע. באִימפּרוּב אנחנו לא רודפים אחרי כלים, כי כלים זה דבר שמתחלף. מה שלא מתחלף זו הדרך לפרק בעיה ולבנות לה פתרון - וזה מה שתלמדו כאן. אנחנו מתמקדים ב-Claude Code, אבל מה שתלמדו יעבוד על כל כלי אחר בדיוק אותו דבר. היום ובעתיד.</p>
+        <p><b>זה בדיוק מה שהשיטה באה למנוע.</b></p>
+        <ul class="hold-pts"><li><b>לא רודפים אחרי כלים</b> - באִימפּרוּב אנחנו יודעים שכלים זה דבר שמתחלף.</li><li><b>לומדים את הדרך</b> לפרק בעיה ולבנות לה פתרון - וזה לא מתחלף.</li><li><b>מתמקדים ב-Claude Code</b>, אבל מה שתלמדו יעבוד על כל כלי אחר בדיוק אותו דבר. היום ובעתיד.</li></ul>
       </div>
     </div>
     <div class="proof-strip"><p class="proof-strip__label">מה תלמידים מספרים על השיטה</p><div class="tm-qm"><div class="tm-qm__row"><div class="tm-qm__track"><button type="button" class="tm-qm__card"><span class="tm-qm__h">סיימתי לרדוף אחרי כלים</span><span class="tm-qm__q"><span class="tm-qm__l">אחרי הקורס <span class="tm-hl">סיימתי את המרדף</span>. אני כבר לא מחפשת את הכלי הבא - יש לי כל מה שאני צריכה.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/yarden.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">ירדן מנשרי סיני</span><span class="tm-qm__role">ד&quot;ר לחקר המוח, יזמת</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">בונה סוכנים שלא קורסים</span><span class="tm-qm__q"><span class="tm-qm__l">היה לי חשוב להבין איך אני בונה סוכן A to Z - גם את המאחורי הקלעים, וגם איך אני מייצרת <span class="tm-hl">תשתית שהיא נכונה היום ושלא תקרוס</span> לי בעוד זמן ותשבור לי דברים שיצרתי.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/adidotan1.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">עדי דותן</span><span class="tm-qm__role">שכירה בהייטק</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">קיבלתי כלים לשנים קדימה</span><span class="tm-qm__q"><span class="tm-qm__l">יש לי היום כלים, שגם אם אני יוצא מחר בבוקר להשתמש בקלוד לצרכים שאולי אפילו היום אני לא מדמיין, דברים שאדע עליהם בעוד שנה, שנתיים, אולי עשור, אני בטוח ש<span class="tm-hl">זה יאפשר לי לבנות כמה סוכנים שאני רוצה, איך שאני רוצה.</span></span><span class="tm-qm__l">התשתית הבסיסית של העברת ידע ושל חידוד הידע, זה משהו שלא היה קיים אצלי, ו<span class="tm-hl">היום הוא מוטמע אצלי</span>.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ypm770.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">יעקב מיוחס</span><span class="tm-qm__role">עורך דין</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">מה שלמדתי נשאר רלוונטי</span><span class="tm-qm__q"><span class="tm-qm__l">והכי חשוב שגם <span class="tm-hl">אחרי שאני</span> כבר לא אהיה בקורס, ואני אעשה ב-100% מה שנקרא לעצמאות שלי, אני יודעת ש<span class="tm-hl">כל מה שלמדתי יישאר לי רלוונטי</span>. ושאני גם אוכל מזה לבוא ולהתפתח עם הדברים.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/renana.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">רננה צברי</span><span class="tm-qm__role">משווקת קורסים לרופאי שיניים</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">בזכות השיטה בניתי המון</span><span class="tm-qm__q"><span class="tm-qm__l">בזכות הקורס שלך, אני <span class="tm-hl">בניתי מלא דברים</span>. ואז אני מבינה, אם לא הייתי עובדת לפי השיטה שלך, זה לא היה עובד לי ככה, כמו שזה עובד ומהר.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ilana.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">אילנה וייס</span><span class="tm-qm__role">מטפלת בחרדות ומרצה</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">אני על הגל, לא רודף</span><span class="tm-qm__q"><span class="tm-qm__l">אחרי ארבעה שבועות יש לי שלושה סוכנים שבניתי. לראשונה אני מרגיש שאני <span class="tm-hl">על הגל ולא רודף</span>.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/dmarad.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">דניאל מראד</span><span class="tm-qm__role">בעל סוכנות שיווק דיגיטלי</span></span></span></button></div></div><div class="tm-qm__row tm-qm__row--rev"><div class="tm-qm__track"><button type="button" class="tm-qm__card"><span class="tm-qm__h">יודע לבנות כל סוכן</span><span class="tm-qm__q"><span class="tm-qm__l">אני לא בונה כלי בהכרח, או סוכן כזה או אחר, <span class="tm-hl">אלא אני בונה את עצמי</span>. כשאני בונה את עצמי בצורה טובה, כל סוכן שאני ארצה, אני פשוט אדע לעשות אותו.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ypm770.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">יעקב מיוחס</span><span class="tm-qm__role">עורך דין</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">גם כשנתקעת, מסתדרת לבד</span><span class="tm-qm__q"><span class="tm-qm__l">בתהחלה הייתי נתקעת מלא, ואחרי כמה פעמים שאני נתקעת ומנסה ומצליחה - נפל לי מין אסימון כזה:</span><span class="tm-qm__l">&quot;בוא&#x27;נה, גם אם אני נתקעת, <span class="tm-hl">אני יכולה להסתדר לבד</span>. אני וה-AI יכולים לפתור את הבעיה שיש לי עם ה-AI.&quot;</span><span class="tm-qm__l">&quot;בוא&#x27;נה, אני עצמאית. אני גם יכולה להיות <span class="tm-hl">עצמאית אחרי הקורס הזה</span>.&quot;</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/shahar.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">שחר דיק</span><span class="tm-qm__role">שיווק דיגיטלי וחדשנות</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">קלוד יכול יותר ממה שחשבתם</span><span class="tm-qm__q"><span class="tm-qm__l">עד שאתם לא לומדים את קלוד בצורה נכונה ולעומק, עם שיטות עבודה ממש מסודרות, <span class="tm-hl">אין לכם מושג עדיין</span> מה הוא יכול לעשות בשבילכם.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/yarden.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">ירדן מנשרי סיני</span><span class="tm-qm__role">ד&quot;ר לחקר המוח, יזמת</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">קיבלתי את הרישיון לנהיגה</span><span class="tm-qm__q"><span class="tm-qm__l">אני יודעת היום להתמודד עם קלוד. הגעתי לבעיות טכניות מטורפות, <span class="tm-hl">והצלחתי לפתור אותן</span>, ואני מרגישה שזהו, [...] קיבלתי את הרישיון לנהיגה.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/adidotan1.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">עדי דותן</span><span class="tm-qm__role">שכירה בהייטק</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">הסוכנים שבניתי עובדים פיקס</span><span class="tm-qm__q"><span class="tm-qm__l">הקפיצה הכי גדולה זה באמת לשבת ו<span class="tm-hl">לבנות סוכן בצורה מתודולוגית</span> ושהוא יעבוד. יש לי סוכנים מלפני הקורס שעבדו חצי כוח, והיו לי שני סוכנים שבניתי תוך כדי הקורס, והם, אגב, עובדים פיקס.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/batchen.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">בת חן לוי</span><span class="tm-qm__role">סמנכ&quot;לית פיתוח עסקי</span></span></span></button></div></div></div></div>
@@ -2695,6 +2788,8 @@ html.k3-on .k3-static{display:none}
 <section class="obj">
   <div class="wrap">
     <h2>מה שאתם בטח שואלים עכשיו</h2>
+    <p class="obj-lead">בחרו את השאלה שהכי מעסיקה אתכם, והתשובה תיפתח.</p>
+    <div class="obj-chips" aria-label="השאלות"><button type="button" class="obj-chip" data-i="0">אוציא מזה את הערך?</button><button type="button" class="obj-chip" data-i="1">ומה אם זה לא יתאים לי?</button><button type="button" class="obj-chip" data-i="2">אני עובד/ת עם כלי אחר</button><button type="button" class="obj-chip" data-i="3">אני לא טכנולוגי/ת</button><button type="button" class="obj-chip" data-i="4">יש מלא סרטונים ברשת</button></div>
 
     <div class="obj-grid">
       <div class="obj-item">
@@ -3171,7 +3266,7 @@ html.k3-on .k3-static{display:none}
       var open = more.hasAttribute('hidden');
       if (open) more.removeAttribute('hidden'); else more.setAttribute('hidden', '');
       moreBtn.setAttribute('aria-expanded', String(open));
-      moreBtn.textContent = open ? 'לסגור' : 'רוצים לראות עוד שני משרדים? של דולב ושל רון';
+      moreBtn.textContent = open ? 'לסגור' : 'רוצים לראות עוד ארבעה משרדים?';
     });
   }
 
@@ -4207,7 +4302,7 @@ html.k3-on .k3-static{display:none}
 <script id="key-video-quotes">
 /* ציטוט קצר מתחת לכל נגן, כמו בדף הטירונות (הערה 15). נוצר כאן ולא ב-HTML של הנגן - ר' design_cards.py. */
 (function () {
-  var VQ = {"1217933800": {"q": "אני כן יודעת לעשות, זו סתם פוביה שהייתה לי לפני זה", "ul": "זו סתם פוביה", "who": "בת חן לוי"}, "1223171023": {"q": "לא, קורס נוסף אני לא צריכה. קיבלתי את כל הכלים. אין לי צורך במשהו נוסף", "ul": "קיבלתי את כל הכלים", "who": "בת חן לוי"}, "1223170501": {"q": "שלהבת מבטיחה והיא באמת עושה את זה", "ul": "והיא באמת עושה את זה", "who": "בוגרים מספרים"}, "1223170559": {"q": "באמת לקחתי מלא קורסים בחיים שלי, אין מה להשוות את הרמה, אין מה להשוות את הקפיצה", "ul": "אין מה להשוות את הקפיצה", "who": "בוגרים מספרים"}, "1223170683": {"q": "נרשמתי לקורסים אחרים של קלוד קוד. זה עולם אחר לגמרי, לגמרי, לגמרי.", "ul": "זה עולם אחר לגמרי", "who": "בוגרים מספרים"}, "1234045834": {"q": "היום אני יודעת לבנות סוכנים שבאמת יודעים לקחת פעולה מקצה לקצה ולבצע אותה בשבילי בצורה מושלמת", "ul": "לקחת פעולה מקצה לקצה", "who": "ירדן מנשרי סיני"}, "1234046711": {"q": "למדתי פה איך לחשוב, לבנות דברים מאפס", "ul": "לבנות דברים מאפס", "who": "ירדן מנשרי סיני"}, "1223170597": {"q": "שווה את הכסף לא ב-100 אחוז, ב-200 אחוז. זה חיסכון מטורף בזמן, בכסף ובמלא דברים אחרים", "ul": "חיסכון מטורף בזמן", "who": "בוגרים מספרים"}, "1223170645": {"q": "איך לא היה לי את הקורס הזה לפני שנה כשהתחלתי? הייתי חוסכת לעצמי חודשים של עבודה.", "ul": "חודשים של עבודה", "who": "בוגרים מספרים"}, "1223170856": {"q": "אתם תקבלו פה איזושהי פריצת דרך והשראה לדברים שלא חלמתם שאפשר לעשות אותם, ובעצם אין מגבלות", "ul": "ובעצם אין מגבלות", "who": "חני הופמן"}, "1234076466": {"q": "אם יש לכם כיוון למה שאתם רוצים לבוא ולעשות, אתם תצליחו לעשות את זה בזכות הקורס", "ul": "אתם תצליחו לעשות את זה", "who": "רננה צברי"}, "1234197070": {"q": "זה משנה, משנה חיים ממש. אין גבול למה שאפשר לעשות. אני יכולה לבנות אימפריה", "ul": "אני יכולה לבנות אימפריה", "who": "מורן טאובר"}, "1217933716": {"q": "אני רק צריכה לחלום על משהו או לחשוב על מה אני רוצה לעשות ולבצע את זה", "ul": "רק צריכה לחלום על משהו", "who": "חני הופמן"}, "1223170899": {"q": "אני יודעת שכל מה שלמדתי יישאר לי רלוונטי ושאני גם אוכל מזה לבוא ולהתפתח", "ul": "יישאר לי רלוונטי", "who": "בוגרים מספרים"}, "1223365305": {"q": "זה לא ללמוד תיאוריה, זה ללמוד פרקטיקה במקום ולראות דברים עובדים", "ul": "ולראות דברים עובדים", "who": "מורן טאובר"}, "1223170818": {"q": "אין ספק שה-value ל-money זה ממש שווה. ממש. החזר על ההשקעה הוא באמת בקנה מידה מאוד גדול.", "ul": "החזר על ההשקעה", "who": "בוגרים מספרים"}, "1234045153": {"q": "למדתי פה לא את הכלי, למדתי פה את שיטות העבודה", "ul": "את שיטות העבודה", "who": "בוגרים מספרים"}};
+  var VQ = {"1217933800": {"q": "אני כן יודעת לעשות, זו סתם פוביה שהייתה לי לפני זה", "ul": "זו סתם פוביה", "who": "בת חן לוי"}, "1223171023": {"q": "לא, קורס נוסף אני לא צריכה. קיבלתי את כל הכלים. אין לי צורך במשהו נוסף", "ul": "קיבלתי את כל הכלים", "who": "בת חן לוי"}, "1223170501": {"q": "שלהבת מבטיחה והיא באמת עושה את זה", "ul": "והיא באמת עושה את זה", "who": "בוגרים מספרים"}, "1223170559": {"q": "באמת לקחתי מלא קורסים בחיים שלי, אין מה להשוות את הרמה, אין מה להשוות את הקפיצה", "ul": "אין מה להשוות את הקפיצה", "who": "בוגרים מספרים"}, "1223170683": {"q": "נרשמתי לקורסים אחרים של קלוד קוד. זה עולם אחר לגמרי, לגמרי, לגמרי.", "ul": "זה עולם אחר לגמרי", "who": "בוגרים מספרים"}, "1234043593": {"q": "ידעתי איך לבנות עוזר אישי נחמד, אבל זה לא באמת סוכן שיכול לעשות בשבילך את הפעולות מקצה לקצה.", "ul": "עוזר אישי נחמד", "who": "ירדן מנשרי סיני"}, "1234045834": {"q": "היום אני יודעת לבנות סוכנים שבאמת יודעים לקחת פעולה מקצה לקצה ולבצע אותה בשבילי בצורה מושלמת", "ul": "לקחת פעולה מקצה לקצה", "who": "ירדן מנשרי סיני"}, "1234046711": {"q": "למדתי פה איך לחשוב, לבנות דברים מאפס", "ul": "לבנות דברים מאפס", "who": "ירדן מנשרי סיני"}, "1223170597": {"q": "שווה את הכסף לא ב-100 אחוז, ב-200 אחוז. זה חיסכון מטורף בזמן, בכסף ובמלא דברים אחרים", "ul": "חיסכון מטורף בזמן", "who": "בוגרים מספרים"}, "1223170645": {"q": "איך לא היה לי את הקורס הזה לפני שנה כשהתחלתי? הייתי חוסכת לעצמי חודשים של עבודה.", "ul": "חודשים של עבודה", "who": "בוגרים מספרים"}, "1223170856": {"q": "אתם תקבלו פה איזושהי פריצת דרך והשראה לדברים שלא חלמתם שאפשר לעשות אותם, ובעצם אין מגבלות", "ul": "ובעצם אין מגבלות", "who": "חני הופמן"}, "1234076466": {"q": "אם יש לכם כיוון למה שאתם רוצים לבוא ולעשות, אתם תצליחו לעשות את זה בזכות הקורס", "ul": "אתם תצליחו לעשות את זה", "who": "רננה צברי"}, "1234197070": {"q": "זה משנה, משנה חיים ממש. אין גבול למה שאפשר לעשות. אני יכולה לבנות אימפריה", "ul": "אני יכולה לבנות אימפריה", "who": "מורן טאובר"}, "1217933716": {"q": "אני רק צריכה לחלום על משהו או לחשוב על מה אני רוצה לעשות ולבצע את זה", "ul": "רק צריכה לחלום על משהו", "who": "חני הופמן"}, "1223170899": {"q": "אני יודעת שכל מה שלמדתי יישאר לי רלוונטי ושאני גם אוכל מזה לבוא ולהתפתח", "ul": "יישאר לי רלוונטי", "who": "בוגרים מספרים"}, "1223365305": {"q": "זה לא ללמוד תיאוריה, זה ללמוד פרקטיקה במקום ולראות דברים עובדים", "ul": "ולראות דברים עובדים", "who": "מורן טאובר"}, "1223170818": {"q": "אין ספק שה-value ל-money זה ממש שווה. ממש. החזר על ההשקעה הוא באמת בקנה מידה מאוד גדול.", "ul": "החזר על ההשקעה", "who": "בוגרים מספרים"}, "1234045153": {"q": "למדתי פה לא את הכלי, למדתי פה את שיטות העבודה", "ul": "את שיטות העבודה", "who": "בוגרים מספרים"}};
   function mark(q, ul) {
     var t = document.createElement('p'); t.className = 'cf-quote__q';
     var i = ul ? q.indexOf(ul) : -1;
@@ -4230,8 +4325,8 @@ html.k3-on .k3-static{display:none}
         box.textContent = '';
         box.hidden = !v;
         if (!v) return;
+        // בלי שורת "מי מדבר" (שלהבת, 11-10-2026: "לא רלוונטי מי, אני לא צריכה את השורה הזאת... רק הציטוט מעניין")
         box.appendChild(mark(v.q, v.ul));
-        var w = document.createElement('p'); w.className = 'cf-quote__who'; w.textContent = v.who; box.appendChild(w);
       }
       show();
       new MutationObserver(show).observe(nav, { subtree: true, childList: true, attributes: true, attributeFilter: ['class'] });
@@ -4245,7 +4340,16 @@ html.k3-on .k3-static{display:none}
 /* רצועת הציטוטים בכרטיס רצה בלולאה: התוכן מוכפל פעם אחת, והאנימציה מזיזה חצי מהאורך */
 document.querySelectorAll('.pc-qm__track').forEach(function (t) {
   if (t.dataset.dup) return; t.dataset.dup = '1';
+  var n = t.children.length;
   Array.prototype.slice.call(t.children).forEach(function (c) { var d = c.cloneNode(true); d.setAttribute('aria-hidden', 'true'); t.appendChild(d); });
+  var band = t.parentNode;
+  if (window.tmMarquee && band) {
+    band.classList.add('is-mq');
+    var half = function () { return t.children[n] ? t.children[n].offsetLeft - t.children[0].offsetLeft : 0; };
+    var m = window.tmMarquee(band, t, { dir: 1, speed: 40, measure: half });
+    window.addEventListener('load', function () { m.remeasure(); });
+    if ('ResizeObserver' in window) new ResizeObserver(function () { m.remeasure(); }).observe(t);
+  }
 });
 </script>
 <script id="key-card-height">
@@ -4268,7 +4372,8 @@ document.querySelectorAll('.pc-qm__track').forEach(function (t) {
 (function () {
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var dw = (window.screen && window.screen.width) || window.innerWidth || 0;
-  var desk = !reduce && !(window.matchMedia && window.matchMedia('(pointer: coarse)').matches && dw <= 900);
+  // סבב 8 (הערה 24: "ברגע שזה נהיה קטן יותר... מחשב או iPad או דברים יותר קטנים - שתהיה האנימציה"): גם לפי רוחב החלון
+  var desk = !reduce && !(window.matchMedia && window.matchMedia('(pointer: coarse)').matches && dw <= 900) && window.innerWidth > 900;
   var sec = document.querySelector('.office-sec');
   if (sec && desk) sec.classList.add('office-sec--desk');
   if (reduce) [].forEach.call(document.querySelectorAll('video.office-sec__anim,video.road-anim'), function (v) { v.removeAttribute('autoplay'); v.pause(); v.controls = true; });
@@ -4283,6 +4388,26 @@ document.querySelectorAll('.pc-qm__track').forEach(function (t) {
     var vo = new IntersectionObserver(function (es) { es.forEach(function (e) { var v = e.target; if (!v.play) return; if (e.isIntersecting) { v.play().catch(function () {}); } else { v.pause(); } }); }, { rootMargin: '200px' });
     [].forEach.call(document.querySelectorAll('video.office-sec__anim,video.road-anim'), function (v) { vo.observe(v); });
   }
+  // סבב 8 (הערה 63): השאלות נפתחות בלחיצה
+  (function () {
+    var chips = [].slice.call(document.querySelectorAll('.obj-chip')), items = [].slice.call(document.querySelectorAll('.obj-grid > .obj-item'));
+    if (!chips.length || chips.length !== items.length) return;
+    document.documentElement.classList.add('obj-tabs-on');
+    var bar = chips[0].parentNode; bar.setAttribute('role', 'tablist');
+    chips.forEach(function (c, i) { c.setAttribute('role', 'tab'); c.id = 'obj-tab-' + i; c.setAttribute('aria-controls', 'obj-panel-' + i);
+      items[i].id = 'obj-panel-' + i; items[i].setAttribute('role', 'tabpanel'); items[i].setAttribute('aria-labelledby', c.id); });
+    function show(k, focus) {
+      chips.forEach(function (c, i) { var on = i === k; c.setAttribute('aria-selected', on ? 'true' : 'false'); c.tabIndex = on ? 0 : -1; items[i].classList.toggle('is-on', on); });
+      if (focus) chips[k].focus();
+      chips[k].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      window.dispatchEvent(new Event('resize'));  // הנגנים שבתשובה מודדים את עצמם מחדש אחרי שהיו מוסתרים
+    }
+    chips.forEach(function (c, i) {
+      c.addEventListener('click', function () { show(i); });
+      c.addEventListener('keydown', function (e) { var d = e.key === 'ArrowLeft' ? 1 : e.key === 'ArrowRight' ? -1 : 0; if (d) { e.preventDefault(); show((i + d + chips.length) % chips.length, true); } });
+    });
+    show(0);
+  })();
   var road = document.querySelector('.road');
   if (!road || !document.querySelector('canvas.k3')) return;
   var started = false;

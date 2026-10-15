@@ -2008,6 +2008,12 @@ html:not(.obj-tabs-on) .obj-lead{display:none}
 .hold-pts b{color:var(--navy)}
 .stay-item .hold-pts{margin-top:8px}
 .what .obj-item__wa{max-width:360px;margin:14px auto 0}
+/* הערה 65: הכותרת התחתונה עם הקישורים המשפטיים */
+.key-footer{background:var(--navy);color:rgba(255,255,255,.78);padding:28px 0 calc(72px + env(safe-area-inset-bottom,0px));text-align:center;font-size:14px}
+.key-footer__brand{margin:0 0 10px;font-weight:700;color:#fff}
+.key-footer__links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px}
+.key-footer__links a{color:rgba(255,255,255,.85);text-decoration:underline;text-underline-offset:3px}
+.key-footer__links a:hover{color:#fff}
 /* מה מחזיק אותך: שלוש שורות */
 .hold-row{display:grid;grid-template-columns:42px 1fr;gap:12px;align-items:start;margin-top:16px}
 .hold-row__ic{width:42px;height:42px;border-radius:12px;background:#E3F0FB;color:var(--blue);display:grid;place-items:center}
@@ -3012,6 +3018,19 @@ html:not(.obj-tabs-on) .obj-lead{display:none}
     <p class="door__switch">התחלתם במפתח והבנתם שאתם צריכים מישהו שידחוף אתכם? בתוך חודש מהיום שהתחלתם לבנות אפשר לעבור לטירונות, והסכום ששילמתם על המפתח יקוזז - משלמים רק את ההפרש.</p>
   </div>
 </section>
+
+<footer class="key-footer">
+  <div class="wrap">
+    <p class="key-footer__brand">המפתח למשרד ה-AI · אִימפּרוּב</p>
+    <div class="key-footer__links">
+      <a href="mailto:connect@aimprove.co.il">צור קשר</a>
+      <a href="https://aimprove.co.il/privacy-policy/">מדיניות פרטיות</a>
+      <a href="https://aimprove.co.il/terms-of-use/">תקנון</a>
+      <a href="https://aimprove.co.il/accessibility-statement/">הצהרת נגישות</a>
+    </div>
+  </div>
+</footer>
+
 
 <!-- מציג-תמונה גנרי. נפתח מכל אלמנט עם data-full. משמש את צילומי
      ההודעות בסקשן ההוכחה, שנחתכים בכרטיס עצמו ל-250px. -->
@@ -4399,11 +4418,12 @@ document.querySelectorAll('.pc-qm__track').forEach(function (t) {
     function show(k, focus) {
       chips.forEach(function (c, i) { var on = i === k; c.setAttribute('aria-selected', on ? 'true' : 'false'); c.tabIndex = on ? 0 : -1; items[i].classList.toggle('is-on', on); });
       if (focus) chips[k].focus();
-      chips[k].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      // רק גלילה אופקית של שורת הכפתורים, ורק אחרי לחיצה. scrollIntoView גלל גם את הדף כולו, וכבר בטעינה הקפיץ אותו לשאלות
+      if (focus !== undefined) { var c = chips[k]; bar.scrollLeft += (c.getBoundingClientRect().left + c.offsetWidth / 2) - (bar.getBoundingClientRect().left + bar.clientWidth / 2); }
       window.dispatchEvent(new Event('resize'));  // הנגנים שבתשובה מודדים את עצמם מחדש אחרי שהיו מוסתרים
     }
     chips.forEach(function (c, i) {
-      c.addEventListener('click', function () { show(i); });
+      c.addEventListener('click', function () { show(i, false); });
       c.addEventListener('keydown', function (e) { var d = e.key === 'ArrowLeft' ? 1 : e.key === 'ArrowRight' ? -1 : 0; if (d) { e.preventDefault(); show((i + d + chips.length) % chips.length, true); } });
     });
     show(0);
@@ -4519,5 +4539,37 @@ document.querySelectorAll('.pc-qm__track').forEach(function (t) {
   }
 })();
 </script>
+<!-- EqualWeb accessibility widget (כמו בדף הטירונות) -->
+<script>
+window.interdeal = {
+    get sitekey (){ return "d8fb855c9446038ba5ab104f5318c3ec"} ,
+    get domains(){
+        return {
+            "js": "https://cdn.equalweb.com/",
+            "acc": "https://access.equalweb.com/"
+        }
+    },
+    "Position": "left",
+    "Menulang": "HE",
+    "draggable": true,
+    "btnStyle": {
+        "vPosition": ["80%", "80%"],
+        "margin": ["0", "0"],
+        "scale": ["0.5", "0.5"],
+        "color": { "main": "#1c4bb6", "second": "#ffffff" },
+        "icon": { "outline": false, "outlineColor": "#ffffff", "type": 1, "shape": "circle" }
+    }
+};
+(function(doc, head, body){
+    var coreCall             = doc.createElement('script');
+    coreCall.src             = interdeal.domains.js + 'core/5.2.8/accessibility.js';
+    coreCall.defer           = true;
+    coreCall.integrity       = 'sha512-ka0NgF7zDksnhoZ5ZCKlm+t0F7KTih5lCfXwuzQDnrwu/EdKZSsJotoJvQPd0cuVmV63s0q2cgoUjeki688PuQ==';
+    coreCall.crossOrigin     = 'anonymous';
+    coreCall.setAttribute('data-cfasync', true );
+    body? body.appendChild(coreCall) : head.appendChild(coreCall);
+})(document, document.head, document.body);
+</script>
+<script src="https://r.aimprove.co.il/consent-banner.js" data-page="maftecha"></script>
 </body>
 </html>

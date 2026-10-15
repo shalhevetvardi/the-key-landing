@@ -2014,6 +2014,9 @@ html:not(.obj-tabs-on) .obj-lead{display:none}
 .key-footer__links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px}
 .key-footer__links a{color:rgba(255,255,255,.85);text-decoration:underline;text-underline-offset:3px}
 .key-footer__links a:hover{color:#fff}
+/* הערה 66: בטלפון ובטאבלט המשפט "זה משרד ה-AI שמריץ את אימפרוב..." יושב מתחת לתמונת המשרד ולא מתחת לכפתור.
+   רק סדר תצוגה - המשפט נשאר ילד של .art, ולכן קופסת .office והתוויות שבה לא זזות */
+@media (max-width:899px){.hero .art{display:flex;flex-direction:column}.hero .art .trustnote{order:2;margin:12px 0 0}.hero .art .office{margin-top:22px}}
 /* מה מחזיק אותך: שלוש שורות */
 .hold-row{display:grid;grid-template-columns:42px 1fr;gap:12px;align-items:start;margin-top:16px}
 .hold-row__ic{width:42px;height:42px;border-radius:12px;background:#E3F0FB;color:var(--blue);display:grid;place-items:center}

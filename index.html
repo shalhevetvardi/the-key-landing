@@ -1913,7 +1913,15 @@ html.rv-on .rv-fade.rv-in{opacity:1}
 /* המפה: בלי הדגשה של הפסקה הראשונה */
 .road-step > p:first-of-type,.road-step__body > p:first-child{font-size:clamp(15px,3.7vw,16.5px);font-weight:400;color:var(--body)}
 .k3{display:block}
-.k3-head{width:68px;height:68px}
+/* סבב 5 (הערה 59): "אם האנימציה לא עובדת, שתהיה גרסה סטטית". לכל ישות במפה יש תמונה (assets/k3-static-*.png, צולמו מהישויות
+   החיות ע"י k3-static.cjs). התמונה מוצגת עד שהישויות החיות מצוירות בפועל (html.k3-on), וחוזרת אם WebGL נופל. */
+html:not(.k3-on) canvas.k3{display:none}
+html.k3-on .k3-static{display:none}
+.k3-static{display:block;width:100%;height:auto}
+.k3-head{display:block;width:68px;height:68px}
+.k3-head canvas,.k3-head .k3-static{width:68px;height:68px}
+.k3-chain__art{width:118px}
+.k3-chain__art canvas,.k3-chain__art .k3-static{width:118px;height:176px}
 .road-step__head .road-step__num{vertical-align:middle}
 .k3-art{position:relative;width:100%;max-width:340px;margin:4px auto 14px;color:var(--navy)}
 .k3-art canvas{display:block;width:100%;height:auto;aspect-ratio:320/250}
@@ -1936,7 +1944,6 @@ html.rv-on .rv-fade.rv-in{opacity:1}
 .road{padding-bottom:44px}
 .opens{padding-top:44px}
 .k3-chain{display:grid;grid-template-columns:118px 1fr;gap:10px;align-items:center;background:#F3F5F9;border-radius:14px;padding:10px}
-.k3-chain canvas{width:118px;height:176px}
 .k3-chain ol{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .k3-chain li{font-size:14.5px;line-height:1.45;background:#fff;border-radius:10px;padding:8px 10px;border:1.5px solid transparent;color:var(--navy);transition:border-color .3s,box-shadow .3s}
 .k3-chain li.on{border-color:#E0A800;box-shadow:0 2px 10px rgba(224,168,0,.25)}
@@ -2109,7 +2116,7 @@ html.rv-on .rv-fade.rv-in{opacity:1}
        המשרד, כמו כרטיס ההתחברות ב-/login - לא סקשן נפרד עם ריבוע בתוכו. -->
     <div class="office-sec__panel">
     <h2>זה מה שאתם הולכים לבנות</h2>
-    <video class="office-sec__anim" src="assets/office-seq.mp4" poster="assets/office-seq.jpg" autoplay muted loop playsinline preload="metadata" aria-label="המשרד נבנה, ואחריו החיבורים בין המחלקות"></video>
+    <video class="office-sec__anim" src="assets/office-seq.mp4" poster="assets/office-seq-still.jpg" autoplay muted loop playsinline preload="metadata" aria-label="המשרד נבנה, ואחריו החיבורים בין המחלקות"></video>
     <p class="office-sec__lead">מחלקות, ובכל אחת סוכנים עם תפקיד מוגדר, עם ידע וסקילים משלהם.</p>
     <p class="office-sec__cap"><b>זה לא איור וזו לא הדגמה - זה משרד ה-AI האמיתי של שלהבת, צילום מסך מתוכו.</b> זה מה שמנהל את כל האופרציה של אִימפּרוּב: אופרציה שדורשת עשרות עובדים, בלי עובד אנושי אחד. כל קובייה פה היא סוכן שרץ היום - ובמשרד עצמו לוחצים על כל אחד מהם ורואים לאיזה ידע ויכולות הוא מחובר.</p>
 
@@ -2155,7 +2162,7 @@ html.rv-on .rv-fade.rv-in{opacity:1}
 
     <div class="road-grid">
       <div class="road-step">
-        <div class="road-step__head"><span class="road-step__num" aria-hidden="true">1</span><canvas class="k3 k3-head" data-kind="ring" width="84" height="84" aria-hidden="true"></canvas><span class="k3-tag"><svg class="k3-tag__arrow" viewBox="0 0 40 26" aria-hidden="true"><defs><marker id="k3ah1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs><path d="M36 12 C 28 24, 12 24, 4 12" marker-end="url(#k3ah1)"/></svg>תהליך אוטומטי</span>
+        <div class="road-step__head"><span class="road-step__num" aria-hidden="true">1</span><span class="k3-head"><img class="k3-static" src="assets/k3-static-ring.png" alt="" width="136" height="136"><canvas class="k3" data-kind="ring" width="84" height="84" aria-hidden="true"></canvas></span><span class="k3-tag"><svg class="k3-tag__arrow" viewBox="0 0 40 26" aria-hidden="true"><defs><marker id="k3ah1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs><path d="M36 12 C 28 24, 12 24, 4 12" marker-end="url(#k3ah1)"/></svg>תהליך אוטומטי</span>
         <h3>הדבר הראשון שרץ בלעדיכם</h3></div>
         <div class="road-step__body"><p>נתחיל מלבנות סוכן אוטומטי שעושה את העבודה הכי שחורה שלכם במקומכם. משהו שקורה מעצמו, כל יום, בלי שנגעתם בו.</p>
         <p>לאחר שתראו כמה קל לבנות סוכן כזה, תמשיכו לבנות עוד עשרות כאלה - עד שנוריד מכם את כל העבודה המשעממת והרוטינית.</p>
@@ -2176,7 +2183,7 @@ html.rv-on .rv-fade.rv-in{opacity:1}
         <h3>סוכן מורכב שחושב כמוכם</h3></div>
         <div class="road-step__body"><p>לא בוט שעונה תשובות מוכנות. <br />סוכן עם שם, אופי ומוח. שמכיר את הידע שלכם ופועל לפי הלוגיקה שלכם.</p>
         <p>בקיצור, יודע לעשות דברים שעד היום דרשו את המוח שלכם.</p>
-          <figure class="k3-art" aria-label="סוכן, סקיל ומסמך ידע"><canvas class="k3" data-kind="agent-plus" width="320" height="250" aria-hidden="true"></canvas><svg class="k3-art__arrows" aria-hidden="true"><defs><marker id="k3ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs></svg><span class="k3-art__l" data-at="agent">סוכן</span><span class="k3-art__l" data-at="know">מסמך ידע</span><span class="k3-art__l" data-at="skill">סקיל</span></figure>
+          <figure class="k3-art" aria-label="סוכן, סקיל ומסמך ידע"><img class="k3-static" src="assets/k3-static-stage2.png" alt="" width="640" height="500"><canvas class="k3" data-kind="agent-plus" width="320" height="250" aria-hidden="true"></canvas><svg class="k3-art__arrows" aria-hidden="true"><defs><marker id="k3ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs></svg><span class="k3-art__l" data-at="agent">סוכן</span><span class="k3-art__l" data-at="know">מסמך ידע</span><span class="k3-art__l" data-at="skill">סקיל</span></figure>
           <div class="road-ex">
             <p class="road-ex__label">לדוגמה</p>
             <ul>
@@ -2197,11 +2204,11 @@ html.rv-on .rv-fade.rv-in{opacity:1}
         <div class="road-step__body"><p>במקום כמה סוכנים נפרדים - שרשרת שעובדת מקצה לקצה.<br /><br />נתחיל לחבר את הסוכנים אחד לשני, ולבנות שרשראות של עבודה מורכבות ויעילות יותר.</p>
           <div class="road-ex">
             <p class="road-ex__label">לדוגמה</p>
-            <div class="k3-chain" data-col="blue"><canvas class="k3" data-kind="chain" width="118" height="176" aria-hidden="true"></canvas><ol><li>מסכם שיחת מכירה</li><li>מוציא מהסיכום הצעת מחיר</li><li>שולח ללקוח את המייל</li></ol></div>
+            <div class="k3-chain" data-col="blue"><div class="k3-chain__art"><img class="k3-static" src="assets/k3-static-chain-blue.png" alt="" width="236" height="352"><canvas class="k3" data-kind="chain" width="118" height="176" aria-hidden="true"></canvas></div><ol><li>מסכם שיחת מכירה</li><li>מוציא מהסיכום הצעת מחיר</li><li>שולח ללקוח את המייל</li></ol></div>
           </div>
           <div class="road-ex">
             <p class="road-ex__label road-ex__label--who"><img src="assets/people/dolev.jpg" alt="" loading="lazy"><span>ועוד דוגמה - <b>דולב, בעל סוכנות פרסום, בנה את זה</b></span></p>
-            <div class="k3-chain" data-col="orange"><canvas class="k3" data-kind="chain" width="118" height="176" aria-hidden="true"></canvas><ol><li>מחפש משפיענים בתחום</li><li>מחפש עסקים שמתאימים להם</li><li>מקשר ביניהם</li></ol></div>
+            <div class="k3-chain" data-col="orange"><div class="k3-chain__art"><img class="k3-static" src="assets/k3-static-chain-orange.png" alt="" width="236" height="352"><canvas class="k3" data-kind="chain" width="118" height="176" aria-hidden="true"></canvas></div><ol><li>מחפש משפיענים בתחום</li><li>מחפש עסקים שמתאימים להם</li><li>מקשר ביניהם</li></ol></div>
             <p class="road-ex__out">ודולב גוזר את הקופון על השידוך.</p>
           </div></div>
       </div>
@@ -2212,7 +2219,7 @@ html.rv-on .rv-fade.rv-in{opacity:1}
         <div class="road-step__head"><span class="road-step__num" aria-hidden="true">4</span>
         <h3>משרד שלם שעובד</h3></div>
         <div class="road-step__body"><p>מחלקות, תפקידים וידע משותף. אתם מנהלים מלמעלה במקום לעשות בעצמכם.</p>
-          <video class="road-anim" src="assets/office-seq.mp4" poster="assets/office-seq.jpg" autoplay muted loop playsinline preload="none" aria-label="המשרד נבנה, ואחריו החיבורים"></video>
+          <video class="road-anim" src="assets/office-seq.mp4" poster="assets/office-seq-still.jpg" autoplay muted loop playsinline preload="none" aria-label="המשרד נבנה, ואחריו החיבורים"></video>
           <div class="road-ex">
             <p class="road-ex__label">כמו אצל שלהבת</p>
             <p>משרד AI עם <b>6 מחלקות</b>, שמייצר לאִימפּרוּב <b>רבע מיליון ₪ בחודש</b> - בלי שהיא צריכה להעסיק עובדים כלל.</p>
@@ -2283,7 +2290,7 @@ html.rv-on .rv-fade.rv-in{opacity:1}
     </div>
     <div class="proof-strip"><p class="proof-strip__label">תלמידים מספרים איך זה ללמוד כאן</p><div class="tm-qm"><div class="tm-qm__row"><div class="tm-qm__track"><button type="button" class="tm-qm__card"><span class="tm-qm__h">החומר בקורס מגובש לחלוטין</span><span class="tm-qm__q"><span class="tm-qm__l">אם עוברים על כל החומר שלך אחד אחרי השני - לא ממש צריך מישהו פרונטלי רק לשאלות. את לגמרי יכולה למכור קורס דיגיטלי. <span class="tm-hl">זה מגובש לחלוטין</span>.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/batchen.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">בת חן לוי</span><span class="tm-qm__role">סמנכ&quot;לית פיתוח עסקי</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">חוסכת זמן של לימוד לבד</span><span class="tm-qm__q"><span class="tm-qm__l">זה חושף אותנו למידע ש<span class="tm-hl">לבד היה לוקח לי זמן</span> להגיע אליו, ולפעמים לא בטוח שעובדים נכון - והזמן שווה כסף. החומר מסודר ומושקע</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/anat.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">ענת מנור</span><span class="tm-qm__role">סמנכ&quot;לית פיתוח עסקי ושיווק</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">קורס ממוקד שמקיף הכול</span><span class="tm-qm__q"><span class="tm-qm__l">הקורס מדהים - ממוקד, <span class="tm-hl">בלי מיליון שיעורים מיותרים</span> ומשיכת זמן, אבל מקיף את הכל. והכלים שלך משפרים משמעותית את כל התהליכים.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ilana.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">אילנה וייס</span><span class="tm-qm__role">מטפלת בחרדות ומרצה</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">למדתי בשעות העבודה</span><span class="tm-qm__q"><span class="tm-qm__l">עשיתי את זה תוך כדי העבודה הרגילה שלי, זה היה מאוד אינטנסיבי. אבל לקחתי החלטה: אני מתייחסת לזה <span class="tm-hl">כדבר עסקי לחלוטין, בשעות העבודה</span>.</span></span><span class="tm-qm__who"><span class="tm-qm__av tm-qm__av--4" aria-hidden="true">ס</span><span class="tm-qm__id"><span class="tm-qm__name">ספיר אלה</span><span class="tm-qm__role">מנהלת רכש תוכן לטלוויזיה</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">לומדים פרקטיקה, לא תיאוריה</span><span class="tm-qm__q"><span class="tm-qm__l">זה לא לבזבז את הזמן, זה לא ללמוד תיאוריה, זה ללמוד פרקטיקה במקום ולראות <span class="tm-hl">דברים עובדים כאן ועכשיו</span>. [...] זה לבנות דברים כאן ועכשיו.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/moran.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">מורן טאובר</span><span class="tm-qm__role">מטפלת ברפואה סינית ועו״ד בעברה</span></span></span></button></div></div><div class="tm-qm__row tm-qm__row--rev"><div class="tm-qm__track"><button type="button" class="tm-qm__card"><span class="tm-qm__h">קל ליישם ולהבין ולהפנים</span><span class="tm-qm__q"><span class="tm-qm__l">את מעבירה את התוכן ואת הידע שיש לך, המטורף, בראש בצורה שלאנשים קל ליישם ולהבין ולהפנים, מה שלא קרה לי במקומות אחרים.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/lital.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">ליטל יעקובוביץ דראי</span><span class="tm-qm__role">עו״ד ושופטת</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">זה עושה סדר בבלגן</span><span class="tm-qm__q"><span class="tm-qm__l">אי אפשר להסביר. זה <span class="tm-hl">עושה סדר בבלגן</span>. זה נותן שקט בראש. זה נותן את ההבנה איך לבנות את זה נכון.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ron.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">רון אלון</span><span class="tm-qm__role">יזם ומפתח אפליקציות</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">הקורס חיבר לי קצוות</span><span class="tm-qm__q"><span class="tm-qm__l">היה לי ידע לפני, אני כבר כמעט שנתיים בתחום.</span><span class="tm-qm__l">אבל הידע שלי היה מפוזר - <span class="tm-hl">בלאגן בראש</span>.</span><span class="tm-qm__l">שלהבת בקורס נותנת כלים <span class="tm-hl">לעשות סדר</span>, להבין איך דברים עובדים נכון ואיך צריך לבנות.</span><span class="tm-qm__l">וזה פשוט סידר לי את הכל, <span class="tm-hl">חיבר לי קצוות</span>.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ron.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">רון אלון</span><span class="tm-qm__role">יזם ומפתח אפליקציות</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">לומדים לייעל תהליכים בעסק</span><span class="tm-qm__q"><span class="tm-qm__l">זה שזה <span class="tm-hl">מאוד business oriented</span>. זה מאוד מיועד לאיך אני מביאה את ה-AI בתהליכים עסקיים ומייעלת אותם בתהליך העסקי שאני עובדת בו. [...] זה הבינגו שהייתי צריכה וזה גם לא נמרח חצי שנה.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/shahar.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">שחר דיק</span><span class="tm-qm__role">שיווק דיגיטלי וחדשנות</span></span></span></button></div></div></div></div>
 
-    <div class="mid-cta"><a class="btn" href="#price">לראות כמה זה עולה</a></div>
+    <div class="mid-cta"><a class="btn" href="#price">אני רוצה להתחיל לבנות</a></div>
   </div>
 </section>
 
@@ -2592,7 +2599,7 @@ html.rv-on .rv-fade.rv-in{opacity:1}
       </div>
     </div>
     <div class="proof-strip"><p class="proof-strip__label">מה תלמידים מספרים על השיטה</p><div class="tm-qm"><div class="tm-qm__row"><div class="tm-qm__track"><button type="button" class="tm-qm__card"><span class="tm-qm__h">סיימתי לרדוף אחרי כלים</span><span class="tm-qm__q"><span class="tm-qm__l">אחרי הקורס <span class="tm-hl">סיימתי את המרדף</span>. אני כבר לא מחפשת את הכלי הבא - יש לי כל מה שאני צריכה.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/yarden.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">ירדן מנשרי סיני</span><span class="tm-qm__role">ד&quot;ר לחקר המוח, יזמת</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">בונה סוכנים שלא קורסים</span><span class="tm-qm__q"><span class="tm-qm__l">היה לי חשוב להבין איך אני בונה סוכן A to Z - גם את המאחורי הקלעים, וגם איך אני מייצרת <span class="tm-hl">תשתית שהיא נכונה היום ושלא תקרוס</span> לי בעוד זמן ותשבור לי דברים שיצרתי.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/adidotan1.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">עדי דותן</span><span class="tm-qm__role">שכירה בהייטק</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">קיבלתי כלים לשנים קדימה</span><span class="tm-qm__q"><span class="tm-qm__l">יש לי היום כלים, שגם אם אני יוצא מחר בבוקר להשתמש בקלוד לצרכים שאולי אפילו היום אני לא מדמיין, דברים שאדע עליהם בעוד שנה, שנתיים, אולי עשור, אני בטוח ש<span class="tm-hl">זה יאפשר לי לבנות כמה סוכנים שאני רוצה, איך שאני רוצה.</span></span><span class="tm-qm__l">התשתית הבסיסית של העברת ידע ושל חידוד הידע, זה משהו שלא היה קיים אצלי, ו<span class="tm-hl">היום הוא מוטמע אצלי</span>.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ypm770.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">יעקב מיוחס</span><span class="tm-qm__role">עורך דין</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">מה שלמדתי נשאר רלוונטי</span><span class="tm-qm__q"><span class="tm-qm__l">והכי חשוב שגם <span class="tm-hl">אחרי שאני</span> כבר לא אהיה בקורס, ואני אעשה ב-100% מה שנקרא לעצמאות שלי, אני יודעת ש<span class="tm-hl">כל מה שלמדתי יישאר לי רלוונטי</span>. ושאני גם אוכל מזה לבוא ולהתפתח עם הדברים.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/renana.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">רננה צברי</span><span class="tm-qm__role">משווקת קורסים לרופאי שיניים</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">בזכות השיטה בניתי המון</span><span class="tm-qm__q"><span class="tm-qm__l">בזכות הקורס שלך, אני <span class="tm-hl">בניתי מלא דברים</span>. ואז אני מבינה, אם לא הייתי עובדת לפי השיטה שלך, זה לא היה עובד לי ככה, כמו שזה עובד ומהר.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ilana.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">אילנה וייס</span><span class="tm-qm__role">מטפלת בחרדות ומרצה</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">אני על הגל, לא רודף</span><span class="tm-qm__q"><span class="tm-qm__l">אחרי ארבעה שבועות יש לי שלושה סוכנים שבניתי. לראשונה אני מרגיש שאני <span class="tm-hl">על הגל ולא רודף</span>.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/dmarad.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">דניאל מראד</span><span class="tm-qm__role">בעל סוכנות שיווק דיגיטלי</span></span></span></button></div></div><div class="tm-qm__row tm-qm__row--rev"><div class="tm-qm__track"><button type="button" class="tm-qm__card"><span class="tm-qm__h">יודע לבנות כל סוכן</span><span class="tm-qm__q"><span class="tm-qm__l">אני לא בונה כלי בהכרח, או סוכן כזה או אחר, <span class="tm-hl">אלא אני בונה את עצמי</span>. כשאני בונה את עצמי בצורה טובה, כל סוכן שאני ארצה, אני פשוט אדע לעשות אותו.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/ypm770.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">יעקב מיוחס</span><span class="tm-qm__role">עורך דין</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">גם כשנתקעת, מסתדרת לבד</span><span class="tm-qm__q"><span class="tm-qm__l">בתהחלה הייתי נתקעת מלא, ואחרי כמה פעמים שאני נתקעת ומנסה ומצליחה - נפל לי מין אסימון כזה:</span><span class="tm-qm__l">&quot;בוא&#x27;נה, גם אם אני נתקעת, <span class="tm-hl">אני יכולה להסתדר לבד</span>. אני וה-AI יכולים לפתור את הבעיה שיש לי עם ה-AI.&quot;</span><span class="tm-qm__l">&quot;בוא&#x27;נה, אני עצמאית. אני גם יכולה להיות <span class="tm-hl">עצמאית אחרי הקורס הזה</span>.&quot;</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/shahar.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">שחר דיק</span><span class="tm-qm__role">שיווק דיגיטלי וחדשנות</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">קלוד יכול יותר ממה שחשבתם</span><span class="tm-qm__q"><span class="tm-qm__l">עד שאתם לא לומדים את קלוד בצורה נכונה ולעומק, עם שיטות עבודה ממש מסודרות, <span class="tm-hl">אין לכם מושג עדיין</span> מה הוא יכול לעשות בשבילכם.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/yarden.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">ירדן מנשרי סיני</span><span class="tm-qm__role">ד&quot;ר לחקר המוח, יזמת</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">קיבלתי את הרישיון לנהיגה</span><span class="tm-qm__q"><span class="tm-qm__l">אני יודעת היום להתמודד עם קלוד. הגעתי לבעיות טכניות מטורפות, <span class="tm-hl">והצלחתי לפתור אותן</span>, ואני מרגישה שזהו, [...] קיבלתי את הרישיון לנהיגה.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/adidotan1.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">עדי דותן</span><span class="tm-qm__role">שכירה בהייטק</span></span></span></button><button type="button" class="tm-qm__card"><span class="tm-qm__h">הסוכנים שבניתי עובדים פיקס</span><span class="tm-qm__q"><span class="tm-qm__l">הקפיצה הכי גדולה זה באמת לשבת ו<span class="tm-hl">לבנות סוכן בצורה מתודולוגית</span> ושהוא יעבוד. יש לי סוכנים מלפני הקורס שעבדו חצי כוח, והיו לי שני סוכנים שבניתי תוך כדי הקורס, והם, אגב, עובדים פיקס.</span></span><span class="tm-qm__who"><img class="tm-qm__av" src="assets/people/batchen.jpg" alt="" loading="lazy"><span class="tm-qm__id"><span class="tm-qm__name">בת חן לוי</span><span class="tm-qm__role">סמנכ&quot;לית פיתוח עסקי</span></span></span></button></div></div></div></div>
-    <div class="mid-cta"><a class="btn" href="#price">אני רוצה להתחיל</a></div>
+    <div class="mid-cta"><a class="btn" href="#price">להתחיל עכשיו</a></div>
   </div>
 </section>
 
@@ -4259,11 +4266,17 @@ document.querySelectorAll('.pc-qm__track').forEach(function (t) {
   var desk = !reduce && !(window.matchMedia && window.matchMedia('(pointer: coarse)').matches && dw <= 900);
   var sec = document.querySelector('.office-sec');
   if (sec && desk) sec.classList.add('office-sec--desk');
-  if (reduce) [].forEach.call(document.querySelectorAll('.office-sec__anim,.road-anim'), function (v) { v.removeAttribute('autoplay'); v.pause(); v.controls = true; });
+  if (reduce) [].forEach.call(document.querySelectorAll('video.office-sec__anim,video.road-anim'), function (v) { v.removeAttribute('autoplay'); v.pause(); v.controls = true; });
+  // סבב 5 (הערה 59): וידאו שלא נטען מתחלף בתמונה הסטטית שלו (office-seq-still.jpg: המשרד הבנוי, פריים 5.3 שניות מהאנימציה)
+  [].forEach.call(document.querySelectorAll('.office-sec__anim,.road-anim'), function (v) {
+    function still() { if (!v.parentNode) return; var im = document.createElement('img'); im.src = v.getAttribute('poster'); im.alt = v.getAttribute('aria-label') || ''; im.className = v.className; v.parentNode.replaceChild(im, v); }
+    v.addEventListener('error', still);
+    if (v.error) still();
+  });
   // וידאו רץ רק כשהוא על המסך
   if ('IntersectionObserver' in window && !reduce) {
-    var vo = new IntersectionObserver(function (es) { es.forEach(function (e) { var v = e.target; if (e.isIntersecting) { v.play().catch(function () {}); } else { v.pause(); } }); }, { rootMargin: '200px' });
-    [].forEach.call(document.querySelectorAll('.office-sec__anim,.road-anim'), function (v) { vo.observe(v); });
+    var vo = new IntersectionObserver(function (es) { es.forEach(function (e) { var v = e.target; if (!v.play) return; if (e.isIntersecting) { v.play().catch(function () {}); } else { v.pause(); } }); }, { rootMargin: '200px' });
+    [].forEach.call(document.querySelectorAll('video.office-sec__anim,video.road-anim'), function (v) { vo.observe(v); });
   }
   var road = document.querySelector('.road');
   if (!road || !document.querySelector('canvas.k3')) return;
@@ -4281,6 +4294,12 @@ document.querySelectorAll('.pc-qm__track').forEach(function (t) {
 
   function draw() {
     var T = window.THREE; if (!T) return;
+    try { var gl = document.createElement('canvas').getContext('webgl'); if (!gl) return; } catch (e) { return; }
+    var root = document.documentElement; root.classList.add('k3-on');
+    [].forEach.call(document.querySelectorAll('canvas.k3'), function (cv) { cv.addEventListener('webglcontextlost', function () { root.classList.remove('k3-on'); }); });
+    try { drawAll(T); } catch (e) { root.classList.remove('k3-on'); }
+  }
+  function drawAll(T) {
     var PAL = { blue: { top: '#3198E7', light: '#7AA4E3', dark: '#3471BC', mid: '#34B5C4' }, orange: { top: '#F99221', light: '#FEAE54', dark: '#C46D12' },
       purple: { top: '#6837C4', light: '#8C55CF', dark: '#4324A5' }, turq: { top: '#3CB3B9', light: '#62BEC1', dark: '#32A5AE' },
       gold: { top: '#FFD747', light: '#FFF194', dark: '#D0B330' } };

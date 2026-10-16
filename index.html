@@ -2031,6 +2031,9 @@ html:not(.obj-tabs-on) .obj-lead{display:none}
    הסקריפט key-launch-js מוסיף ל-html את is-launched וזה מתהפך. ר' ההערה שם. */
 html:not(.is-launched) [data-post]{display:none !important}
 html.is-launched [data-pre]{display:none !important}
+/* אחרי שהסבב נסגר (אזל או עברה שעת הסגירה): הכפתורים לתשלום יורדים, ו-data-closed עולה. */
+html:not(.is-closed) [data-closed]{display:none !important}
+html.is-closed [data-post]{display:none !important}
 
 .launch-bar{background:var(--gold);color:var(--navy)}
 .launch-bar__in{max-width:var(--maxw);margin:0 auto;padding:10px 22px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 14px;text-align:center}
@@ -2098,13 +2101,19 @@ html.is-launched [data-pre]{display:none !important}
      אחרי ההשקה: כפתור למסך ההטבה. ר' key-launch-js בסוף הדף. -->
 <div class="launch-bar" role="region" aria-label="ההשקה">
   <div class="launch-bar__in" data-pre>
-    <p class="launch-bar__t">ההשקה במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span></p>
+    <!-- הנוסח של שלהבת, 16-10-2026, כתוב כמו שהוא. ⚠️ התאריך והשעה כאן כתובים ביד:
+         אם LAUNCH_AT או MAFTECHA_CLOSE_AT משתנים, לשנות גם את השורה הזו. -->
+    <p class="launch-bar__t">ההרשמה נפתחת במוצאי שבת, 17.10, בשעה 21:00, ופתוחה 72 שעות בלבד</p>
     <p class="launch-bar__t launch-bar__cd" data-cd-mini aria-hidden="true"></p>
     <button class="btn" type="button" data-launch-open>להירשם להשקה</button>
   </div>
   <div class="launch-bar__in" data-post>
     <p class="launch-bar__t">ההרשמה פתוחה, ומספר המקומות מוגבל.</p>
     <a class="btn" href="מסך-ההטבה.html">לראות את ההטבה ולהתחיל</a>
+  </div>
+  <div class="launch-bar__in" data-closed>
+    <p class="launch-bar__t">ההרשמה לסבב הראשון נסגרה.</p>
+    <button class="btn" type="button" data-next-open>להירשם לסבב הבא</button>
   </div>
 </div>
 
@@ -3000,6 +3009,11 @@ html.is-launched [data-pre]{display:none !important}
         <a class="btn price__cta" href="מסך-ההטבה.html">לראות את ההטבה ולהתחיל</a>
         <p class="price__calm">לחיצה לא מחייבת - קודם רואים את ההטבה.</p>
         </div>
+        <div class="launch" data-closed>
+          <p class="launch__kicker">ההרשמה לסבב הראשון נסגרה</p>
+          <p class="launch__limit">הסבב הבא עוד לא נקבע. מי שנרשם עכשיו מקבל הודעה בוואטסאפ ובמייל ראשון, כשהוא נפתח.</p>
+          <button class="btn price__cta" type="button" data-next-open>להירשם לסבב הבא</button>
+        </div>
       </div>
     </div>
   </div>
@@ -3115,6 +3129,10 @@ html.is-launched [data-pre]{display:none !important}
     <p class="final__price">5,900 ₪, ובקישור מטה מחכה לכם הטבת הרשמה, ואז ניתן לחלק עד 12 תשלומים.</p>
     <a class="btn" href="מסך-ההטבה.html">אני רוצה להתחיל</a>
     <p class="final__calm">לחיצה לא מחייבת. ההטבה נשמרת לכם 24 שעות מרגע שלוקחים אותה.</p>
+    </div>
+    <div data-closed>
+      <p>ההרשמה לסבב הראשון נסגרה. הסבב הבא עוד לא נקבע, ומי שנרשם עכשיו מקבל הודעה ראשון כשהוא נפתח.</p>
+      <button class="btn" type="button" data-next-open>להירשם לסבב הבא</button>
     </div>
   </div>
 </section>
@@ -4758,11 +4776,16 @@ window.interdeal = {
   var SIGNUP_URL = 'https://r.aimprove.co.il/api/maftecha-launch';
   var PRE_LABEL  = 'להירשם להשקה';
   var STORE_KEY  = 'maftecha_launch_signup';
+  var STATUS_URL = 'https://r.aimprove.co.il/api/maftecha-status';
+  var NEXT_LABEL = 'להירשם לסבב הבא';
+  var NEXT_STORE_KEY = 'maftecha_next_signup';
 
   var q = location.search || '';
   var at = Date.parse(LAUNCH_AT);
   var preview = /[?&]launch=after(&|$)/.test(q);
-  if (preview) at = Date.now() - 1000;
+  /* ?launch=closed: הדף כמו אחרי שהסבב נסגר, לבדיקה. */
+  var previewClosed = /[?&]launch=closed(&|$)/.test(q);
+  if (preview || previewClosed) at = Date.now() - 1000;
   else if (/[?&]launch=in10(&|$)/.test(q)) at = Date.now() + 10000;
 
   /* שיוך מקישור אישי של מנטור/ית (?r=slug), כמו במסך ההטבה, שמפנה לכאן עד ההשקה. */
@@ -4798,10 +4821,38 @@ window.interdeal = {
   var ctas = all('a.btn[href="#price"]');
   ctas.forEach(function (a) { a.setAttribute('data-label', a.textContent); });
 
+  /* ── הסבב נסגר (16-10-2026): אזל במלאי בחנות, או עברה שעת הסגירה ──
+     מי שמחליט הוא השרת (/api/maftecha-status, אותה בדיקה ש-/api/claim עושה),
+     ולא הדף: כך שעת הסגירה כתובה במקום אחד (MAFTECHA_CLOSE_AT ב-aimprove-redirector).
+     השאלה נשאלת רק אחרי ההשקה, ושוב כל דקה כל עוד הדף פתוח, כי המקומות יכולים
+     להיגמר בזמן שמישהו קורא. שרת שלא עונה = נשארים פתוחים: החנות עצמה לא
+     מוכרת מעבר למלאי. */
+  var isClosed = false;
   function applyState() {
     var on = isLaunched();
     root.classList.toggle('is-launched', on);
-    ctas.forEach(function (a) { a.textContent = on ? a.getAttribute('data-label') : PRE_LABEL; });
+    root.classList.toggle('is-closed', isClosed);
+    ctas.forEach(function (a) {
+      a.textContent = isClosed ? NEXT_LABEL : (on ? a.getAttribute('data-label') : PRE_LABEL);
+    });
+  }
+  var statusTimer = null;
+  function checkStatus() {
+    if (isClosed || !isLaunched()) return;
+    if (previewClosed) { setClosed(); return; }
+    try {
+      fetch(STATUS_URL).then(function (r) { return r.json(); }).then(function (d) {
+        if (d && d.ok && d.open === false) setClosed();
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  function setClosed() {
+    isClosed = true;
+    if (statusTimer) { clearInterval(statusTimer); statusTimer = null; }
+    applyState();
+    /* ?next=1 (מהכפתור במסך ההטבה): פותחים מיד את טופס הסבב הבא. אחרי סיום
+       הסקריפט, כי בטעינה הטופס עוד לא מאותחל כשזה נקרא. */
+    if (/[?&]next=1(&|$)/.test(q)) setTimeout(function () { if (dlg) openDialog('next'); }, 0);
   }
 
   function pad(n) { return (n < 10 ? '0' : '') + n; }
@@ -4815,6 +4866,7 @@ window.interdeal = {
     if (ms <= 0) {
       applyState();
       if (timer) { clearInterval(timer); timer = null; }
+      if (!statusTimer && !isClosed) { checkStatus(); statusTimer = setInterval(checkStatus, 60000); }
       return;
     }
     var s = Math.floor(ms / 1000);
@@ -4849,14 +4901,37 @@ window.interdeal = {
   var lastFocus = null;
 
   function registeredHere() {
-    try { return !!localStorage.getItem(STORE_KEY); } catch (e) { return false; }
+    try { return !!localStorage.getItem(storeKey()); } catch (e) { return false; }
   }
   function show(mode) {
     formWrap.hidden = mode !== 'form';
     done.hidden = mode === 'form';
     againLine.hidden = mode !== 'again';
   }
-  function openDialog() {
+  /* מצב "לסבב הבא": אותו טופס, עם כותרת, הסבר, נוסח הסכמה ותשובה משלו.
+     הטקסטים המקוריים נשמרים, כדי שאפשר יהיה לחזור למצב ההשקה. */
+  var mode = 'launch';
+  var NEXT_TEXT = {
+    '#lw-title': 'הרשמה לסבב הבא',
+    '.lw__sub': 'ההרשמה לסבב הראשון נסגרה. הסבב הבא עוד לא נקבע, ומי שנרשם כאן מקבל הודעה בוואטסאפ ובמייל ראשון, כשהוא נפתח.',
+    'label[for="lw-consent"]': 'אני מאשר/ת לקבל ממכם הודעה בוואטסאפ ובמייל כשנפתח הסבב הבא, וגם עדכונים ודיוור על התוכנית. אפשר להסיר בכל רגע.',
+    '#lw-form .lw__submit': 'תודיעו לי כשהסבב הבא נפתח',
+    '.lw__done h2': 'נרשמת לסבב הבא',
+    '.lw__done p:not(.lw__again)': 'כשהסבב הבא ייפתח, נשלח לך הודעה בוואטסאפ ובמייל עם הקישור.'
+  };
+  var origHtml = {};
+  function setMode(m) {
+    mode = m;
+    Object.keys(NEXT_TEXT).forEach(function (sel) {
+      var el = dlg.querySelector(sel);
+      if (!el) return;
+      if (!(sel in origHtml)) origHtml[sel] = el.innerHTML;
+      if (m === 'next') el.textContent = NEXT_TEXT[sel]; else el.innerHTML = origHtml[sel];
+    });
+  }
+  function storeKey() { return mode === 'next' ? NEXT_STORE_KEY : STORE_KEY; }
+  function openDialog(m) {
+    setMode(m === 'next' ? 'next' : 'launch');
     show(registeredHere() ? 'again' : 'form');
     lastFocus = document.activeElement;
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
@@ -4881,9 +4956,14 @@ window.interdeal = {
       var n = dlg.querySelector('#lw-name'); if (n) n.focus();
       return;
     }
+    if (isClosed && t.closest('[data-next-open], a.btn[href="#price"]')) {
+      e.preventDefault();
+      openDialog('next');
+      return;
+    }
     if (t.closest('[data-launch-open], a.btn[href="#price"]') && !isLaunched()) {
       e.preventDefault();
-      openDialog();
+      openDialog('launch');
     }
   });
 
@@ -4944,7 +5024,7 @@ window.interdeal = {
     fetch(SIGNUP_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name, email: email, phone: phone, gender: g, consent: true, ref: ref })
+      body: JSON.stringify({ name: name, email: email, phone: phone, gender: g, consent: true, ref: ref, list: mode })
     }).then(function (res) {
       return res.json().catch(function () { return {}; }).then(function (data) {
         if (!res.ok || !data.ok) {
@@ -4956,7 +5036,7 @@ window.interdeal = {
         return data;
       });
     }).then(function (data) {
-      try { localStorage.setItem(STORE_KEY, String(Date.now())); } catch (e2) {}
+      try { localStorage.setItem(storeKey(), String(Date.now())); } catch (e2) {}
       show(data.alreadyRegistered ? 'again' : 'done');
       var h = done.querySelector('h2'); if (h) h.focus();
     }).catch(function (err) {

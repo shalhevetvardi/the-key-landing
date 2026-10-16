@@ -2034,6 +2034,10 @@ html.is-launched [data-pre]{display:none !important}
 /* אחרי שהסבב נסגר (אזל או עברה שעת הסגירה): הכפתורים לתשלום יורדים, ו-data-closed עולה. */
 html:not(.is-closed) [data-closed]{display:none !important}
 html.is-closed [data-post]{display:none !important}
+/* הקישור האישי (?k=...): שורות שמופיעות רק למי שנכנס דרכו, אחרי הפתיחה. */
+html:not(.is-personal) [data-personal-only]{display:none !important}
+/* בטלפון השורה הזו בשורה משלה, כדי ש"ההרשמה נסגרת עוד" יישאר צמוד לשעון שלו. */
+@media (max-width:899px){.launch-bar [data-personal-only]{flex-basis:100%}}
 
 .launch-bar{background:var(--gold);color:var(--navy)}
 .launch-bar__in{max-width:var(--maxw);margin:0 auto;padding:10px 22px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 14px;text-align:center}
@@ -2122,6 +2126,7 @@ html.is-closed [data-post]{display:none !important}
     <button class="btn" type="button" data-launch-open>להירשם להשקה</button>
   </div>
   <div class="launch-bar__in" data-post>
+    <p class="launch-bar__t" data-personal-only>ההטבה של 1,000 ₪ שמורה לך.</p>
     <p class="launch-bar__t" data-close-label hidden>ההרשמה נסגרת עוד</p>
     <div class="bar-cd" data-bar-cd="close" aria-hidden="true" hidden><span class="bar-cd__u bar-cd__u--d"><b data-bu="d">--</b><small>ימים</small></span><i class="bar-cd__sep bar-cd__sep--d">:</i><span class="bar-cd__u"><b data-bu="h">--</b><small>שעות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="m">--</b><small>דקות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="s">--</b><small>שניות</small></span></div>
     <p class="launch-bar__t" data-post-fallback>ההרשמה פתוחה, ומספר המקומות מוגבל.</p>
@@ -3017,14 +3022,14 @@ html.is-closed [data-post]{display:none !important}
           <span class="cd__u"><b class="cd__n" data-u="m">--</b><span class="cd__l">דקות</span></span>
           <span class="cd__u"><b class="cd__n" data-u="s">--</b><span class="cd__l">שניות</span></span>
         </div>
-          <p class="launch__limit">מספר המקומות בהשקה מוגבל. מי שנרשם עכשיו מקבל הודעה בוואטסאפ ובמייל ברגע שנפתח.</p>
+          <p class="launch__limit">מספר המקומות בהשקה מוגבל. מי שנרשם עכשיו מקבל הטבה של 1,000 ₪, ובשעת הפתיחה קישור אישי ישר לתשלום.</p>
           <button class="btn price__cta" type="button" data-launch-open>להירשם להשקה</button>
           <p class="price__calm">ההרשמה לא מחייבת לקנות.</p>
         </div>
         <div data-post>
-        <p class="price__benefit">רוצים הטבה של 1,000 ₪?<br />היא <b>מחכה לכם בפנים</b>, ונשמרת לכם למשך <b>24 שעות</b> מרגע שנכנסתם.</p>
+        <p class="price__benefit" data-personal-html="&lt;b&gt;הטבה של 1,000 ₪ שמורה לך.&lt;/b&gt; היא נכנסת לבד בתשלום, ונשמרת לך 24 שעות מרגע הלחיצה.">רוצים הטבה של 1,000 ₪?<br />היא <b>מחכה לכם בפנים</b>, ונשמרת לכם למשך <b>24 שעות</b> מרגע שנכנסתם.</p>
         <a class="btn price__cta" href="מסך-ההטבה.html">לראות את ההטבה ולהתחיל</a>
-        <p class="price__calm">לחיצה לא מחייבת - קודם רואים את ההטבה.</p>
+        <p class="price__calm" data-personal-html="אפשר לחלק עד 12 תשלומים.">לחיצה לא מחייבת - קודם רואים את ההטבה.</p>
         </div>
         <div class="launch" data-closed>
           <p class="launch__kicker">ההרשמה לסבב הראשון נסגרה</p>
@@ -3131,7 +3136,7 @@ html.is-closed [data-post]{display:none !important}
   <div class="wrap">
     <h2>מתי מתחילים?</h2>
     <div data-pre>
-      <p>במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>. מספר המקומות מוגבל, ומי שנרשם מראש מקבל הודעה ראשון.</p>
+      <p>במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>. מספר המקומות מוגבל, ומי שנרשם מראש מקבל הטבה של 1,000 ₪ וקישור אישי ישר לתשלום.</p>
       <div class="cd" data-cd role="timer" aria-hidden="true">
           <span class="cd__u cd__u--d"><b class="cd__n" data-u="d">-</b><span class="cd__l">ימים</span></span>
           <span class="cd__u"><b class="cd__n" data-u="h">--</b><span class="cd__l">שעות</span></span>
@@ -3143,9 +3148,9 @@ html.is-closed [data-post]{display:none !important}
     </div>
     <div data-post>
     <p>נרשמים, נכנסים לאזור האישי, ומתחילים מהשיעור הראשון - מיד.</p>
-    <p class="final__price">5,900 ₪, ובקישור מטה מחכה לכם הטבת הרשמה, ואז ניתן לחלק עד 12 תשלומים.</p>
+    <p class="final__price" data-personal-html="ההטבה של 1,000 ₪ שמורה לך, ונכנסת לבד בתשלום. אפשר לחלק עד 12 תשלומים.">5,900 ₪, ובקישור מטה מחכה לכם הטבת הרשמה, ואז ניתן לחלק עד 12 תשלומים.</p>
     <a class="btn" href="מסך-ההטבה.html">אני רוצה להתחיל</a>
-    <p class="final__calm">לחיצה לא מחייבת. ההטבה נשמרת לכם 24 שעות מרגע שלוקחים אותה.</p>
+    <p class="final__calm" data-personal-html="ההטבה נשמרת לך 24 שעות מרגע הלחיצה.">לחיצה לא מחייבת. ההטבה נשמרת לכם 24 שעות מרגע שלוקחים אותה.</p>
     </div>
     <div data-closed>
       <p>ההרשמה לסבב הראשון נסגרה. הסבב הבא עוד לא נקבע, ומי שנרשם עכשיו מקבל הודעה ראשון כשהוא נפתח.</p>
@@ -4728,7 +4733,7 @@ window.interdeal = {
     <button class="lw__x" type="button" data-lw-close>סגירה</button>
     <div class="lw__form-wrap">
       <h2 id="lw-title">הרשמה להשקה</h2>
-      <p class="lw__sub">ההרשמה נפתחת במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>, ומספר המקומות מוגבל. ברגע שנפתח נשלח לך הודעה בוואטסאפ ובמייל, עם הקישור להרשמה.</p>
+      <p class="lw__sub">ההרשמה נפתחת במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>, ומספר המקומות מוגבל. מי שנרשם עכשיו מקבל הטבה של 1,000 ₪, ובשעת הפתיחה נשלח לו בוואטסאפ ובמייל קישור אישי לדף, שממנו ממשיכים ישר לתשלום עם ההנחה.</p>
       <form id="lw-form" novalidate>
         <div class="lw__f" id="lw-f-name">
           <label for="lw-name">איך קוראים לך?</label>
@@ -4755,17 +4760,17 @@ window.interdeal = {
         </div>
         <div class="lw__consent" id="lw-f-consent">
           <input type="checkbox" id="lw-consent" />
-          <label for="lw-consent">אני מאשר/ת לקבל ממכם הודעה בוואטסאפ ובמייל ברגע שההרשמה נפתחת, וגם עדכונים ודיוור על התוכנית. אפשר להסיר בכל רגע.</label>
+          <label for="lw-consent">אני מאשר/ת לקבל מאִימפּרוּב עדכונים, הצעות ודיוור במייל ובוואטסאפ. אפשר להסיר בכל רגע.</label>
         </div>
         <p class="lw__e" style="margin-inline-start:30px">בלי האישור הזה אי אפשר לשלוח לך את ההודעה על ההשקה.</p>
-        <button class="lw__submit" type="submit">תודיעו לי ברגע שנפתח</button>
+        <button class="lw__submit" type="submit">לשמור לי את ההטבה</button>
         <p class="lw__err" id="lw-err" role="alert"></p>
-        <p class="lw__fine">הפרטים משמשים להודעה על ההשקה ולעדכונים על התוכנית. <a href="https://aimprove.co.il/privacy-policy/" target="_blank" rel="noopener">מדיניות הפרטיות</a></p>
+        <p class="lw__fine">הפרטים משמשים לשליחת ההטבה, להודעה על ההשקה ולעדכונים מאִימפּרוּב. <a href="https://aimprove.co.il/privacy-policy/" target="_blank" rel="noopener">מדיניות הפרטיות</a></p>
       </form>
     </div>
     <div class="lw__done" hidden>
-      <h2 tabindex="-1">נרשמת להשקה</h2>
-      <p>ברגע שההרשמה נפתחת, במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>, נשלח לך הודעה בוואטסאפ ובמייל עם הקישור.</p>
+      <h2 tabindex="-1">ההטבה שמורה לך</h2>
+      <p>ברגע שההרשמה נפתחת, במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>, נשלח לך בוואטסאפ ובמייל קישור אישי לדף. ממנו ממשיכים ישר לתשלום עם הנחה של 1,000 ₪, בלי למלא פרטים שוב.</p>
       <p class="lw__again" hidden>הפרטים שלך כבר שמורים אצלנו. <a href="#" data-lw-again>לרשום פרטים אחרים</a></p>
       <button class="lw__submit" type="button" data-lw-close>חזרה לדף</button>
     </div>
@@ -4806,6 +4811,21 @@ window.interdeal = {
   else if (/[?&]launch=in10(&|$)/.test(q)) at = Date.now() + 10000;
 
   /* שיוך מקישור אישי של מנטור/ית (?r=slug), כמו במסך ההטבה, שמפנה לכאן עד ההשקה. */
+  /* ── הקישור האישי (?k=..., 16-10-2026, לבקשת שלהבת) ──
+     מי שנרשם מראש מקבל בשעת הפתיחה קישור לדף עם מפתח אישי. אחרי הפתיחה, כל כפתור
+     בדף לוקח את ההטבה על שמו (/api/maftecha-redeem, aimprove-redirector) ומעביר
+     ישר לקופה, בלי טופס. המפתח נשמר במכשיר, כדי שגם חזרה לדף בלי הקישור תמשיך
+     במצב הזה. מפתח שהשרת לא מכיר = חוזרים למצב הרגיל ולמסך ההטבה. */
+  var REDEEM_URL = 'https://r.aimprove.co.il/api/maftecha-redeem';
+  var KEY_STORE = 'maftecha_key_token';
+  var PERSONAL_LABEL = 'להמשיך לתשלום עם ההטבה';
+  var personalKey = '';
+  try {
+    var kq = new URLSearchParams(q).get('k') || '';
+    if (/^[A-Za-z0-9_-]{16,64}$/.test(kq)) { personalKey = kq; localStorage.setItem(KEY_STORE, kq); }
+    else personalKey = localStorage.getItem(KEY_STORE) || '';
+  } catch (e) {}
+
   var ref = '';
   try {
     ref = (new URLSearchParams(q).get('r') || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
@@ -4836,6 +4856,10 @@ window.interdeal = {
   });
 
   var ctas = all('a.btn[href="#price"]');
+  var buyLinks = all('a[href^="מסך-ההטבה.html"]');
+  buyLinks.forEach(function (a) { a.setAttribute('data-label', a.textContent); });
+  var personalTexts = all('[data-personal-html]');
+  personalTexts.forEach(function (el) { el.setAttribute('data-orig-html', el.innerHTML); });
   ctas.forEach(function (a) { a.setAttribute('data-label', a.textContent); });
 
   /* ── הסבב נסגר (16-10-2026): אזל במלאי בחנות, או עברה שעת הסגירה ──
@@ -4850,8 +4874,14 @@ window.interdeal = {
     var on = isLaunched();
     root.classList.toggle('is-launched', on);
     root.classList.toggle('is-closed', isClosed);
+    var personal = !!personalKey && on && !isClosed;
+    root.classList.toggle('is-personal', personal);
     ctas.forEach(function (a) {
-      a.textContent = isClosed ? NEXT_LABEL : (on ? a.getAttribute('data-label') : PRE_LABEL);
+      a.textContent = isClosed ? NEXT_LABEL : (on ? (personal ? PERSONAL_LABEL : a.getAttribute('data-label')) : PRE_LABEL);
+    });
+    buyLinks.forEach(function (a) { a.textContent = personal ? PERSONAL_LABEL : a.getAttribute('data-label'); });
+    personalTexts.forEach(function (el) {
+      el.innerHTML = personal ? el.getAttribute('data-personal-html') : el.getAttribute('data-orig-html');
     });
   }
   var statusTimer = null;
@@ -4976,7 +5006,7 @@ window.interdeal = {
   var NEXT_TEXT = {
     '#lw-title': 'הרשמה לסבב הבא',
     '.lw__sub': 'ההרשמה לסבב הראשון נסגרה. הסבב הבא עוד לא נקבע, ומי שנרשם כאן מקבל הודעה בוואטסאפ ובמייל ראשון, כשהוא נפתח.',
-    'label[for="lw-consent"]': 'אני מאשר/ת לקבל ממכם הודעה בוואטסאפ ובמייל כשנפתח הסבב הבא, וגם עדכונים ודיוור על התוכנית. אפשר להסיר בכל רגע.',
+    'label[for="lw-consent"]': 'אני מאשר/ת לקבל מאִימפּרוּב עדכונים, הצעות ודיוור במייל ובוואטסאפ. אפשר להסיר בכל רגע.',
     '#lw-form .lw__submit': 'תודיעו לי כשהסבב הבא נפתח',
     '.lw__done h2': 'נרשמת לסבב הבא',
     '.lw__done p:not(.lw__again)': 'כשהסבב הבא ייפתח, נשלח לך הודעה בוואטסאפ ובמייל עם הקישור.'
@@ -5023,11 +5053,47 @@ window.interdeal = {
       openDialog('next');
       return;
     }
+    var buy = t.closest('a.btn[href="#price"], a[href^="מסך-ההטבה.html"]');
+    if (buy && personalKey && isLaunched() && !isClosed) {
+      e.preventDefault();
+      redeemAndGo(buy);
+      return;
+    }
     if (t.closest('[data-launch-open], a.btn[href="#price"]') && !isLaunched()) {
       e.preventDefault();
       openDialog('launch');
     }
   });
+
+  /* לחיצה במצב אישי: ההטבה נלקחת בשרת, ומשם ישר לקופה. כל תקלה מחזירה למסלול
+     הרגיל (מסך ההטבה), כדי שאף אחד לא יישאר תקוע מול כפתור שלא עובד. */
+  var redeeming = false;
+  function regularBenefit() { location.href = 'מסך-ההטבה.html' + (preview ? '?launch=after' : ''); }
+  function redeemAndGo(el) {
+    if (redeeming) return;
+    redeeming = true;
+    var label = el.textContent;
+    el.textContent = 'מעבירים לתשלום...';
+    function reset() { redeeming = false; el.textContent = label; }
+    fetch(REDEEM_URL, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: personalKey })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; });
+    }).then(function (d) {
+      if (d && d.ok && d.checkoutUrl) { location.href = d.checkoutUrl; return; }
+      reset();
+      var code = d && d.error;
+      if (code === 'sold-out' || code === 'closed') { setClosed(); return; }
+      if (code === 'not-open') return;
+      if (code === 'bad-token') {
+        personalKey = '';
+        try { localStorage.removeItem(KEY_STORE); } catch (e2) {}
+        applyState();
+      }
+      regularBenefit();
+    }).catch(function () { reset(); regularBenefit(); });
+  }
 
   function bad(id, on) {
     var el = document.getElementById(id);

@@ -20,7 +20,7 @@
 (function () {
   var LAUNCH_AT = '2026-10-17T21:00:00+03:00';
   try {
-    if (/[?&]launch=after(&|$)/.test(location.search)) return;
+    if (/[?&]launch=(after|closed)(&|$)/.test(location.search)) return;
     if (Date.now() < Date.parse(LAUNCH_AT)) location.replace('index.html' + location.search + '#price');
   } catch (e) {}
 })();
@@ -159,6 +159,13 @@ input[aria-invalid="true"]{border-color:#ff8a8a;background:rgba(255,120,120,.09)
 .done{display:none}
 body.is-done form,body.is-done .rule,body.is-done .lead{display:none}
 body.is-done .done{display:block}
+/* הסבב נסגר (אזל או עברה שעת הסגירה, 16-10-2026): אין כאן מה לתפוס. */
+.closed{display:none}
+body.is-closed .gift,body.is-closed h1,body.is-closed .lead,body.is-closed .rule,body.is-closed form,body.is-closed .done,body.is-closed .ref{display:none}
+body.is-closed .closed{display:block}
+.closed h2{margin:0 0 10px;font-weight:900;color:#111;font-size:clamp(21px,5vw,27px);line-height:1.3}
+.closed p{margin:0 0 14px;color:#333;font-size:15.5px;line-height:1.65}
+a.submit{display:block;text-align:center;text-decoration:none}
 .done h2{margin:0 0 10px;font-weight:900;color:var(--gold);font-size:clamp(21px,5vw,27px);line-height:1.3}
 .done p{margin:0 0 14px;font-weight:400;color:rgba(255,255,255,.85);font-size:15.5px;line-height:1.65}
 .done .deadline{font-weight:800;color:#fff}
@@ -315,6 +322,12 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
         <p class="after-pay">ההטבה בתוקף עד <span class="deadline" id="deadline">-</span>. אפשר גם לחזור בתוך החלון הזה - ההנחה תחכה.</p>
       </div>
 
+      <div class="closed" role="status">
+        <h2>ההרשמה לסבב הראשון נסגרה</h2>
+        <p>כל המקומות בסבב הזה נתפסו, או שההרשמה הסתיימה. הסבב הבא עוד לא נקבע, ומי שנרשם לרשימת ההמתנה מקבל הודעה בוואטסאפ ובמייל ראשון, כשהוא נפתח.</p>
+        <a class="submit" href="index.html?next=1#price">להירשם לסבב הבא</a>
+      </div>
+
       <a class="back" href="index.html">חזרה לעמוד התוכנית</a>
     </div>
   </div>
@@ -352,6 +365,19 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
   var form = document.getElementById('claim');
   var WINDOW_HOURS = 24;
   var CLAIM_URL = 'https://r.aimprove.co.il/api/claim';
+  var STATUS_URL = 'https://r.aimprove.co.il/api/maftecha-status';
+  /* הסבב נסגר (אזל או עברה שעת הסגירה): במקום הטופס, הפניה לרשימת ההמתנה לסבב הבא.
+     שואלים את השרת בטעינה; שרת שלא עונה = הטופס נשאר, ו-/api/claim עצמו יסרב אם צריך.
+     ?launch=closed מציג את המצב הזה לבדיקה. */
+  function showClosed() { document.body.classList.add('is-closed'); window.scrollTo(0, 0); }
+  if (/[?&]launch=closed(&|$)/.test(location.search)) showClosed();
+  else {
+    try {
+      fetch(STATUS_URL).then(function (r) { return r.json(); }).then(function (d) {
+        if (d && d.ok && d.open === false) showClosed();
+      }).catch(function () {});
+    } catch (e) {}
+  }
   var checkoutUrl = '';
 
   /* שיוך מלינק אישי של מנטורית (?r=slug). סעיף 4: הלינק נוחת **ישר
@@ -486,6 +512,9 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
       } else if (code === 'consent-required') {
         document.getElementById('f-consent').classList.add('is-bad');
         document.getElementById('consent-err').style.display = 'block';
+      } else if (code === 'sold-out' || code === 'closed') {
+        /* הסבב נסגר בין הטעינה לשליחה. הפרטים נשמרו בשרת, ולא הונפק קוד. */
+        showClosed();
       } else if (code === 'product-not-live') {
         /* ⚠️ הפרטים כן נשמרו בשלב הזה בשרת - זו לא נקודת "נכשל", ולכן
            לא לומר "לא הצלחנו". ר' ההערה על productIsLive ב-Worker. */

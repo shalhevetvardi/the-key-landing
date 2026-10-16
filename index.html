@@ -2038,7 +2038,16 @@ html.is-closed [data-post]{display:none !important}
 .launch-bar{background:var(--gold);color:var(--navy)}
 .launch-bar__in{max-width:var(--maxw);margin:0 auto;padding:10px 22px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 14px;text-align:center}
 .launch-bar__t{margin:0;font-weight:700;font-size:clamp(14px,3.7vw,16px);line-height:1.4}
-.launch-bar__cd{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+/* השעון בבאנר: ספרות קבועות בתוך ריבועים, בלי אנימציה, ותווית קטנה מתחת לכל אחד. */
+.launch-bar [hidden]{display:none !important}
+.bar-cd{display:inline-flex;align-items:flex-start;gap:3px}
+.bar-cd__u{display:flex;flex-direction:column;align-items:center}
+.bar-cd__u b{display:block;min-width:38px;padding:6px 4px 5px;border-radius:8px;background:var(--navy);color:#fff;font-weight:800;font-size:clamp(17px,4.6vw,21px);line-height:1;text-align:center;font-variant-numeric:tabular-nums}
+.bar-cd__u small{margin-top:3px;font-size:10.5px;font-weight:600;line-height:1;color:var(--navy)}
+.bar-cd__sep{font-style:normal;font-weight:800;font-size:17px;line-height:1;padding-top:7px;color:var(--navy)}
+.bar-cd--nodays .bar-cd__u--d,.bar-cd--nodays .bar-cd__sep--d{display:none}
+.bar-seats{margin:0;padding:6px 13px;border-radius:50px;background:#fff;color:var(--navy);font-weight:700;font-size:14px;line-height:1.2;white-space:nowrap;box-shadow:0 1px 0 rgba(20,9,59,.08)}
+.bar-seats b{font-weight:900}
 .launch-bar .btn{font-size:14px;padding:8px 18px;background:var(--navy);color:var(--gold);box-shadow:none}
 .launch-bar .btn:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
 
@@ -2100,15 +2109,21 @@ html.is-closed [data-post]{display:none !important}
 <!-- באנר ההשקה (16-10-2026). עד ההשקה: ספירה לאחור וכפתור שפותח את טופס ההרשמה.
      אחרי ההשקה: כפתור למסך ההטבה. ר' key-launch-js בסוף הדף. -->
 <div class="launch-bar" role="region" aria-label="ההשקה">
+  <!-- הבאנר (16-10-2026, לבקשת שלהבת: "ההרשמה נפתחת עוד", ואז ישר שעון, ולידו
+       "X מקומות נותרו"). השעון סופר ל-LAUNCH_AT, ואחרי הפתיחה לשעת הסגירה שהשרת
+       מחזיר (closeAt). מספר המקומות הוא המלאי בחנות (remaining). ר' key-launch-js. -->
   <div class="launch-bar__in" data-pre>
-    <!-- הנוסח של שלהבת, 16-10-2026, כתוב כמו שהוא. ⚠️ התאריך והשעה כאן כתובים ביד:
-         אם LAUNCH_AT או MAFTECHA_CLOSE_AT משתנים, לשנות גם את השורה הזו. -->
-    <p class="launch-bar__t">ההרשמה נפתחת במוצאי שבת, 17.10, בשעה 21:00, ופתוחה 72 שעות בלבד</p>
-    <p class="launch-bar__t launch-bar__cd" data-cd-mini aria-hidden="true"></p>
+    <p class="launch-bar__t">ההרשמה נפתחת עוד</p>
+    <div class="bar-cd" data-bar-cd="launch" aria-hidden="true"><span class="bar-cd__u bar-cd__u--d"><b data-bu="d">--</b><small>ימים</small></span><i class="bar-cd__sep bar-cd__sep--d">:</i><span class="bar-cd__u"><b data-bu="h">--</b><small>שעות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="m">--</b><small>דקות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="s">--</b><small>שניות</small></span></div>
+    <p class="sr-only">ההרשמה נפתחת במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>.</p>
+    <p class="bar-seats" data-seats hidden></p>
     <button class="btn" type="button" data-launch-open>להירשם להשקה</button>
   </div>
   <div class="launch-bar__in" data-post>
-    <p class="launch-bar__t">ההרשמה פתוחה, ומספר המקומות מוגבל.</p>
+    <p class="launch-bar__t" data-close-label hidden>ההרשמה נסגרת עוד</p>
+    <div class="bar-cd" data-bar-cd="close" aria-hidden="true" hidden><span class="bar-cd__u bar-cd__u--d"><b data-bu="d">--</b><small>ימים</small></span><i class="bar-cd__sep bar-cd__sep--d">:</i><span class="bar-cd__u"><b data-bu="h">--</b><small>שעות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="m">--</b><small>דקות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="s">--</b><small>שניות</small></span></div>
+    <p class="launch-bar__t" data-post-fallback>ההרשמה פתוחה, ומספר המקומות מוגבל.</p>
+    <p class="bar-seats" data-seats hidden></p>
     <a class="btn" href="מסך-ההטבה.html">לראות את ההטבה ולהתחיל</a>
   </div>
   <div class="launch-bar__in" data-closed>
@@ -4824,8 +4839,9 @@ window.interdeal = {
   /* ── הסבב נסגר (16-10-2026): אזל במלאי בחנות, או עברה שעת הסגירה ──
      מי שמחליט הוא השרת (/api/maftecha-status, אותה בדיקה ש-/api/claim עושה),
      ולא הדף: כך שעת הסגירה כתובה במקום אחד (MAFTECHA_CLOSE_AT ב-aimprove-redirector).
-     השאלה נשאלת רק אחרי ההשקה, ושוב כל דקה כל עוד הדף פתוח, כי המקומות יכולים
-     להיגמר בזמן שמישהו קורא. שרת שלא עונה = נשארים פתוחים: החנות עצמה לא
+     השאלה נשאלת בטעינה (גם לפני ההשקה, בשביל מספר המקומות), ומהפתיחה שוב כל דקה
+     כל עוד הדף פתוח, כי המקומות יכולים להיגמר בזמן שמישהו קורא. "נסגר" חל רק אחרי
+     הפתיחה. שרת שלא עונה = נשארים פתוחים: החנות עצמה לא
      מוכרת מעבר למלאי. */
   var isClosed = false;
   function applyState() {
@@ -4837,12 +4853,24 @@ window.interdeal = {
     });
   }
   var statusTimer = null;
-  function checkStatus() {
-    if (isClosed || !isLaunched()) return;
-    if (previewClosed) { setClosed(); return; }
+  /* מהשרת: שעת הסגירה (closeAt) ומספר המקומות שנותרו (remaining). בלי closeAt
+     הבאנר אחרי הפתיחה מציג משפט במקום שעון; בלי remaining לא מוצג מספר בכלל,
+     ולא מספר משוער. */
+  var closeAt = NaN;
+  var remaining = null;
+  var loadedBeforeLaunch = !isLaunched();
+  function fetchStatus() {
+    if (isClosed) return;
+    if (previewClosed) { if (isLaunched()) setClosed(); return; }
     try {
       fetch(STATUS_URL).then(function (r) { return r.json(); }).then(function (d) {
-        if (d && d.ok && d.open === false) setClosed();
+        if (!d || !d.ok) return;
+        var c = Date.parse(d.closeAt || '');
+        closeAt = isNaN(c) ? NaN : c;
+        remaining = typeof d.remaining === 'number' ? d.remaining : null;
+        renderSeats();
+        tick();
+        if (isLaunched() && d.open === false) setClosed();
       }).catch(function () {});
     } catch (e) {}
   }
@@ -4855,37 +4883,69 @@ window.interdeal = {
     if (/[?&]next=1(&|$)/.test(q)) setTimeout(function () { if (dlg) openDialog('next'); }, 0);
   }
 
+  /* "X מקומות נותרו" (16-10-2026, לבקשת שלהבת), לפני הפתיחה ואחריה. */
+  var seats = all('[data-seats]');
+  function renderSeats() {
+    var show = typeof remaining === 'number' && remaining > 0;
+    seats.forEach(function (el) {
+      el.hidden = !show;
+      if (show) el.innerHTML = remaining === 1 ? 'נותר <b>מקום אחד</b>' : '<b>' + remaining + '</b> מקומות נותרו';
+    });
+  }
+
   function pad(n) { return (n < 10 ? '0' : '') + n; }
-  function daysWord(d) { return d === 1 ? 'יום' : d === 2 ? 'יומיים' : d + ' ימים'; }
+  function parts(ms) {
+    var s = Math.max(0, Math.floor(ms / 1000));
+    return { d: Math.floor(s / 86400), h: Math.floor((s % 86400) / 3600), m: Math.floor((s % 3600) / 60), s: s % 60 };
+  }
+  function paintBar(el, p) {
+    el.querySelector('[data-bu="d"]').textContent = pad(p.d);
+    el.querySelector('[data-bu="h"]').textContent = pad(p.h);
+    el.querySelector('[data-bu="m"]').textContent = pad(p.m);
+    el.querySelector('[data-bu="s"]').textContent = pad(p.s);
+    el.classList.toggle('bar-cd--nodays', p.d === 0);
+  }
   var boxes = all('[data-cd]');
-  var minis = all('[data-cd-mini]');
+  var barLaunch = all('[data-bar-cd="launch"]');
+  var barClose = all('[data-bar-cd="close"]');
+  var closeLabels = all('[data-close-label]');
+  var postFallback = all('[data-post-fallback]');
   var timer = null;
+  var launchSeen = false;
 
   function tick() {
-    var ms = at - Date.now();
-    if (ms <= 0) {
-      applyState();
-      if (timer) { clearInterval(timer); timer = null; }
-      if (!statusTimer && !isClosed) { checkStatus(); statusTimer = setInterval(checkStatus, 60000); }
+    var now = Date.now();
+    if (now >= at) {
+      if (!launchSeen) {
+        launchSeen = true;
+        applyState();
+        /* ההשקה קרתה כשהדף פתוח: שואלים מיד מה המצב. ואחר כך כל דקה. */
+        if (loadedBeforeLaunch) fetchStatus();
+        if (!statusTimer && !isClosed) statusTimer = setInterval(fetchStatus, 60000);
+      }
+      var hasClose = !isNaN(closeAt) && closeAt > now;
+      closeLabels.concat(barClose).forEach(function (el) { el.hidden = !hasClose; });
+      postFallback.forEach(function (el) { el.hidden = hasClose; });
+      if (hasClose) barClose.forEach(function (el) { paintBar(el, parts(closeAt - now)); });
+      if (isClosed && timer) { clearInterval(timer); timer = null; }
       return;
     }
-    var s = Math.floor(ms / 1000);
-    var d = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600);
-    var m = Math.floor((s % 3600) / 60), sec = s % 60;
+    var p = parts(at - now);
     boxes.forEach(function (b) {
-      b.querySelector('[data-u="d"]').textContent = d;
-      b.querySelector('[data-u="h"]').textContent = pad(h);
-      b.querySelector('[data-u="m"]').textContent = pad(m);
-      b.querySelector('[data-u="s"]').textContent = pad(sec);
-      b.classList.toggle('cd--nodays', d === 0);
+      b.querySelector('[data-u="d"]').textContent = p.d;
+      b.querySelector('[data-u="h"]').textContent = pad(p.h);
+      b.querySelector('[data-u="m"]').textContent = pad(p.m);
+      b.querySelector('[data-u="s"]').textContent = pad(p.s);
+      b.classList.toggle('cd--nodays', p.d === 0);
     });
-    var hms = pad(h) + ':' + pad(m) + ':' + pad(sec);
-    minis.forEach(function (el) { el.textContent = 'עוד ' + (d ? daysWord(d) + ' ו-' : '') + hms; });
+    barLaunch.forEach(function (el) { paintBar(el, p); });
   }
 
   applyState();
   tick();
-  if (!isLaunched()) timer = setInterval(tick, 1000);
+  timer = setInterval(tick, 1000);
+  /* גם לפני ההשקה: בשביל מספר המקומות שנותרו. */
+  fetchStatus();
   /* לשונית שחזרה מהרקע: הדפדפן מאט טיימרים ברקע, ולכן מעדכנים מיד. */
   document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === 'visible') tick();

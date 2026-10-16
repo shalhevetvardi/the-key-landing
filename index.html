@@ -2040,7 +2040,9 @@ html.is-closed [data-post]{display:none !important}
 .launch-bar__t{margin:0;font-weight:700;font-size:clamp(14px,3.7vw,16px);line-height:1.4}
 /* השעון בבאנר: ספרות קבועות בתוך ריבועים, בלי אנימציה, ותווית קטנה מתחת לכל אחד. */
 .launch-bar [hidden]{display:none !important}
-.bar-cd{display:inline-flex;align-items:flex-start;gap:3px}
+/* שעון כמו שעון: הספרות משמאל לימין גם בעברית (כמו 21:00), ולכן הימים משמאל
+   והשניות מימין. הדף עצמו RTL, ולכן הכיוון נקבע כאן במפורש. */
+.bar-cd{display:inline-flex;align-items:flex-start;gap:3px;direction:ltr;unicode-bidi:isolate}
 .bar-cd__u{display:flex;flex-direction:column;align-items:center}
 .bar-cd__u b{display:block;min-width:38px;padding:6px 4px 5px;border-radius:8px;background:var(--navy);color:#fff;font-weight:800;font-size:clamp(17px,4.6vw,21px);line-height:1;text-align:center;font-variant-numeric:tabular-nums}
 .bar-cd__u small{margin-top:3px;font-size:10.5px;font-weight:600;line-height:1;color:var(--navy)}
@@ -2051,7 +2053,7 @@ html.is-closed [data-post]{display:none !important}
 .launch-bar .btn{font-size:14px;padding:8px 18px;background:var(--navy);color:var(--gold);box-shadow:none}
 .launch-bar .btn:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
 
-.cd{display:flex;justify-content:center;gap:8px;margin:14px 0 4px}
+.cd{display:flex;justify-content:center;gap:8px;margin:14px 0 4px;direction:ltr;unicode-bidi:isolate}
 .cd__u{min-width:60px;padding:10px 6px 8px;border-radius:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)}
 .cd--nodays .cd__u--d{display:none}
 .cd__n{display:block;font-weight:900;font-size:clamp(24px,6.4vw,30px);line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}

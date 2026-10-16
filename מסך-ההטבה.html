@@ -8,6 +8,21 @@
 <link rel="apple-touch-icon" href="assets/cat-icon-180.png" />
 <title>ההטבה שלך · המפתח · אִימפּרוּב</title>
 <meta name="robots" content="noindex" />
+<script>
+/* ── עד ההשקה אין כאן מה לתפוס (16-10-2026) ──
+   לפני ההשקה המוצר בטיוטה, ותפיסה נענית ב-product-not-live. לכן מי שמגיע לכאן
+   לפני הזמן (קישור ישן, קישור אישי של מנטור/ית) עובר לדף הראשי, לספירה לאחור
+   ולטופס ההרשמה, עם אותם פרמטרים (כולל ?r= של המנטור/ית, שהטופס שם שומר).
+   ⛔ השעה זהה ל-LAUNCH_AT בסקריפט key-launch-js ב-index.html. לשנות בשניהם.
+   ?launch=after מדלג על ההפניה, לבדיקה. */
+(function () {
+  var LAUNCH_AT = '2026-10-17T19:45:00+03:00';
+  try {
+    if (/[?&]launch=after(&|$)/.test(location.search)) return;
+    if (Date.now() < Date.parse(LAUNCH_AT)) location.replace('index.html' + location.search + '#price');
+  } catch (e) {}
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />

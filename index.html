@@ -2024,8 +2024,89 @@ html:not(.obj-tabs-on) .obj-lead{display:none}
 .hold-row h4{margin:0 0 4px;font-size:clamp(16px,3.9vw,17.5px);font-weight:800;color:var(--navy)}
 .hold-row p{margin:0}
 </style>
+
+<style id="key-launch-css">
+/* ---------- ההשקה: ספירה לאחור והרשמה מראש (16-10-2026) ----------
+   עד ההשקה מה שמסומן data-pre מוצג ומה שמסומן data-post מוסתר; ברגע ההשקה
+   הסקריפט key-launch-js מוסיף ל-html את is-launched וזה מתהפך. ר' ההערה שם. */
+html:not(.is-launched) [data-post]{display:none !important}
+html.is-launched [data-pre]{display:none !important}
+
+.launch-bar{background:var(--gold);color:var(--navy)}
+.launch-bar__in{max-width:var(--maxw);margin:0 auto;padding:10px 22px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 14px;text-align:center}
+.launch-bar__t{margin:0;font-weight:700;font-size:clamp(14px,3.7vw,16px);line-height:1.4}
+.launch-bar__cd{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.launch-bar .btn{font-size:14px;padding:8px 18px;background:var(--navy);color:var(--gold);box-shadow:none}
+.launch-bar .btn:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+
+.cd{display:flex;justify-content:center;gap:8px;margin:14px 0 4px}
+.cd__u{min-width:60px;padding:10px 6px 8px;border-radius:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)}
+.cd--nodays .cd__u--d{display:none}
+.cd__n{display:block;font-weight:900;font-size:clamp(24px,6.4vw,30px);line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}
+.cd__l{display:block;margin-top:5px;font-size:12px;font-weight:500;color:rgba(255,255,255,.78)}
+.final .cd{margin:0 0 24px}
+.final .cd__u{background:rgba(20,9,59,.07);border-color:rgba(20,9,59,.18)}
+.final .cd__n{color:var(--navy)}
+.final .cd__l{color:rgba(20,9,59,.72)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.launch{margin:14px 0 0;padding-top:14px;border-top:1px solid rgba(255,255,255,.14)}
+.launch__kicker{margin:0;font-weight:700;color:#fff;font-size:15.5px;line-height:1.5}
+.launch__date{margin:2px 0 0;font-weight:800;color:var(--gold);font-size:clamp(18px,4.6vw,21px);line-height:1.35}
+.launch__limit{margin:10px 0 0;font-weight:500;color:rgba(255,255,255,.86);font-size:13.5px;line-height:1.6}
+
+.lw{border:0;padding:0;margin:auto;border-radius:20px;width:min(460px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;background:#fff;color:#222;box-shadow:0 24px 60px rgba(6,24,60,.35);font-family:inherit;direction:rtl}
+.lw::backdrop{background:rgba(10,8,40,.62)}
+.lw__body{position:relative;padding:26px 22px 22px}
+.lw__x{position:absolute;top:12px;inset-inline-end:12px;font-family:inherit;font-weight:600;font-size:13px;border:1px solid #D5D9E2;border-radius:50px;background:#fff;color:#333;padding:6px 12px;cursor:pointer}
+.lw__x:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.lw h2{margin:0 0 8px;padding-inline-end:76px;font-weight:800;font-size:clamp(21px,5.4vw,25px);line-height:1.25;color:var(--navy)}
+.lw h2:focus{outline:none}
+.lw__sub{margin:0 0 18px;font-size:15px;line-height:1.6;color:#333}
+.lw__f{margin:0 0 14px}
+.lw label,.lw .lw__q{display:block;margin:0 0 6px;font-weight:600;font-size:14px;color:#222}
+.lw input[type=text],.lw input[type=email],.lw input[type=tel]{width:100%;font-family:inherit;font-size:16px;padding:12px 14px;border:1px solid #B9BEC9;border-radius:12px;background:#fff;color:#111}
+.lw input::placeholder{color:#8A8F9A}
+.lw input:focus{outline:2px solid var(--navy);outline-offset:1px;border-color:transparent}
+.lw input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
+.lw__e{display:none;margin:6px 0 0;font-size:13px;font-weight:500;color:#B3261E}
+.lw__f.is-bad .lw__e,.lw__consent.is-bad + .lw__e{display:block}
+.lw__pills{display:flex;gap:10px;flex-wrap:wrap}
+.lw .lw__pill{display:flex;align-items:center;gap:8px;margin:0;padding:9px 16px;border:1px solid #B9BEC9;border-radius:50px;cursor:pointer;font-weight:600;font-size:15px}
+.lw__pill input{width:18px;height:18px;margin:0;accent-color:var(--navy)}
+.lw__pill:has(input:checked){border-color:var(--navy);background:#FFF8DB}
+.lw__pill:has(input:focus-visible){outline:2px solid var(--navy);outline-offset:2px}
+.lw__f.is-bad .lw__pill{border-color:#C62828}
+.lw__consent{display:flex;gap:11px;align-items:flex-start;margin:16px 0 0}
+.lw__consent input{margin:3px 0 0;width:19px;height:19px;flex:0 0 auto;accent-color:var(--navy)}
+.lw .lw__consent label{margin:0;font-weight:400;font-size:14px;line-height:1.55;color:#333}
+.lw__consent.is-bad label{color:#B3261E}
+.lw__submit{display:block;margin:20px 0 0;width:100%;font-family:inherit;font-weight:800;font-size:17px;border:0;border-radius:50px;padding:15px 22px;background:var(--gold);color:var(--navy);cursor:pointer;box-shadow:0 10px 24px -12px rgba(20,9,59,.45)}
+.lw__submit[disabled]{opacity:.6;cursor:wait}
+.lw__submit:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+.lw__err{display:none;margin:14px 0 0;padding:12px 14px;border-radius:12px;background:#FDECEC;border:1px solid #F3B8B8;color:#8C1D18;font-size:14px;line-height:1.55}
+.lw__err.is-on{display:block}
+.lw__fine{margin:14px 0 0;font-size:12.5px;color:#555;line-height:1.55}
+.lw__fine a,.lw__again a{color:var(--blue)}
+.lw__done p{margin:0 0 12px;font-size:15.5px;line-height:1.65;color:#333}
+.lw__again{font-size:14px !important}
+</style>
 </head>
 <body>
+
+<!-- באנר ההשקה (16-10-2026). עד ההשקה: ספירה לאחור וכפתור שפותח את טופס ההרשמה.
+     אחרי ההשקה: כפתור למסך ההטבה. ר' key-launch-js בסוף הדף. -->
+<div class="launch-bar" role="region" aria-label="ההשקה">
+  <div class="launch-bar__in" data-pre>
+    <p class="launch-bar__t">ההשקה במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span></p>
+    <p class="launch-bar__t launch-bar__cd" data-cd-mini aria-hidden="true"></p>
+    <button class="btn" type="button" data-launch-open>להירשם להשקה</button>
+  </div>
+  <div class="launch-bar__in" data-post>
+    <p class="launch-bar__t">ההרשמה פתוחה, ומספר המקומות מוגבל.</p>
+    <a class="btn" href="מסך-ההטבה.html">לראות את ההטבה ולהתחיל</a>
+  </div>
+</div>
 
 <section class="hero">
   <div class="wrap hero-grid">
@@ -2899,9 +2980,26 @@ html:not(.obj-tabs-on) .obj-lead{display:none}
         <p class="price__num">5,900 ₪</p>
         <p class="price__pay">עד <b>12 תשלומים</b></p>
         <p class="price__anchor">כולל את חומרי התוכנית המלאים, ובמתנה: שני שיעורים אישיים עם המנטור/ית</p>
+        <!-- עד ההשקה (16-10-2026): ספירה לאחור והרשמה במקום הכפתור למסך ההטבה. -->
+        <div class="launch" data-pre>
+          <p class="launch__kicker">ההרשמה נפתחת במוצאי שבת</p>
+          <p class="launch__date" data-launch-when></p>
+          <p class="sr-only">ההרשמה נפתחת במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>.</p>
+          <div class="cd" data-cd role="timer" aria-hidden="true">
+          <span class="cd__u cd__u--d"><b class="cd__n" data-u="d">-</b><span class="cd__l">ימים</span></span>
+          <span class="cd__u"><b class="cd__n" data-u="h">--</b><span class="cd__l">שעות</span></span>
+          <span class="cd__u"><b class="cd__n" data-u="m">--</b><span class="cd__l">דקות</span></span>
+          <span class="cd__u"><b class="cd__n" data-u="s">--</b><span class="cd__l">שניות</span></span>
+        </div>
+          <p class="launch__limit">מספר המקומות בהשקה מוגבל. מי שנרשם עכשיו מקבל הודעה בוואטסאפ ובמייל ברגע שנפתח.</p>
+          <button class="btn price__cta" type="button" data-launch-open>להירשם להשקה</button>
+          <p class="price__calm">ההרשמה לא מחייבת לקנות.</p>
+        </div>
+        <div data-post>
         <p class="price__benefit">רוצים הטבה של 1,000 ₪?<br />היא <b>מחכה לכם בפנים</b>, ונשמרת לכם למשך <b>24 שעות</b> מרגע שנכנסתם.</p>
         <a class="btn price__cta" href="מסך-ההטבה.html">לראות את ההטבה ולהתחיל</a>
         <p class="price__calm">לחיצה לא מחייבת - קודם רואים את ההטבה.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -3001,10 +3099,23 @@ html:not(.obj-tabs-on) .obj-lead{display:none}
 <section class="final">
   <div class="wrap">
     <h2>מתי מתחילים?</h2>
+    <div data-pre>
+      <p>במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>. מספר המקומות מוגבל, ומי שנרשם מראש מקבל הודעה ראשון.</p>
+      <div class="cd" data-cd role="timer" aria-hidden="true">
+          <span class="cd__u cd__u--d"><b class="cd__n" data-u="d">-</b><span class="cd__l">ימים</span></span>
+          <span class="cd__u"><b class="cd__n" data-u="h">--</b><span class="cd__l">שעות</span></span>
+          <span class="cd__u"><b class="cd__n" data-u="m">--</b><span class="cd__l">דקות</span></span>
+          <span class="cd__u"><b class="cd__n" data-u="s">--</b><span class="cd__l">שניות</span></span>
+        </div>
+      <button class="btn" type="button" data-launch-open>להירשם להשקה</button>
+      <p class="final__calm">ההרשמה לא מחייבת לקנות.</p>
+    </div>
+    <div data-post>
     <p>נרשמים, נכנסים לאזור האישי, ומתחילים מהשיעור הראשון - מיד.</p>
     <p class="final__price">5,900 ₪, ובקישור מטה מחכה לכם הטבת הרשמה, ואז ניתן לחלק עד 12 תשלומים.</p>
     <a class="btn" href="מסך-ההטבה.html">אני רוצה להתחיל</a>
     <p class="final__calm">לחיצה לא מחייבת. ההטבה נשמרת לכם 24 שעות מרגע שלוקחים אותה.</p>
+    </div>
   </div>
 </section>
 
@@ -4572,6 +4683,300 @@ window.interdeal = {
     coreCall.setAttribute('data-cfasync', true );
     body? body.appendChild(coreCall) : head.appendChild(coreCall);
 })(document, document.head, document.body);
+</script>
+<!-- טופס ההרשמה להשקה (16-10-2026). נפתח מכל כפתור בדף עד ההשקה, ונשמר בטבלת
+     הלידים דרך POST /api/maftecha-launch. ⚠️ גרסת נוסח ההסכמה (CONSENT_VERSION
+     ב-aimprove-redirector, src/maftecha-launch.ts) חייבת להשתנות בכל שינוי של
+     הטקסט ליד הצ'קבוקס. -->
+<dialog class="lw" id="launch-dialog" aria-labelledby="lw-title">
+  <div class="lw__body">
+    <button class="lw__x" type="button" data-lw-close>סגירה</button>
+    <div class="lw__form-wrap">
+      <h2 id="lw-title">הרשמה להשקה</h2>
+      <p class="lw__sub">ההרשמה נפתחת במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>, ומספר המקומות מוגבל. ברגע שנפתח נשלח לך הודעה בוואטסאפ ובמייל, עם הקישור להרשמה.</p>
+      <form id="lw-form" novalidate>
+        <div class="lw__f" id="lw-f-name">
+          <label for="lw-name">איך קוראים לך?</label>
+          <input type="text" id="lw-name" autocomplete="name" placeholder="שם מלא" />
+          <p class="lw__e">צריך שם, כדי שנדע למי לכתוב.</p>
+        </div>
+        <div class="lw__f" id="lw-f-email">
+          <label for="lw-email">אימייל</label>
+          <input type="email" id="lw-email" autocomplete="email" inputmode="email" placeholder="you@example.com" />
+          <p class="lw__e">כתובת אימייל תקינה, בבקשה.</p>
+        </div>
+        <div class="lw__f" id="lw-f-phone">
+          <label for="lw-phone">מספר וואטסאפ</label>
+          <input type="tel" id="lw-phone" autocomplete="tel" inputmode="tel" placeholder="050-0000000" />
+          <p class="lw__e">מספר טלפון ישראלי תקין, בבקשה. אליו תגיע ההודעה בוואטסאפ.</p>
+        </div>
+        <div class="lw__f" id="lw-f-gender">
+          <p class="lw__q" id="lw-gender-q">באיזו לשון פנייה נוח לכם שנפנה אליכם?</p>
+          <div class="lw__pills" role="radiogroup" aria-labelledby="lw-gender-q">
+            <label class="lw__pill"><input type="radio" name="lw-gender" value="זכר" /><span>זכר</span></label>
+            <label class="lw__pill"><input type="radio" name="lw-gender" value="נקבה" /><span>נקבה</span></label>
+          </div>
+          <p class="lw__e">צריך לבחור, ככה נדע איך לכתוב לך.</p>
+        </div>
+        <div class="lw__consent" id="lw-f-consent">
+          <input type="checkbox" id="lw-consent" />
+          <label for="lw-consent">אני מאשר/ת לקבל ממכם הודעה בוואטסאפ ובמייל ברגע שההרשמה נפתחת, וגם עדכונים ודיוור על התוכנית. אפשר להסיר בכל רגע.</label>
+        </div>
+        <p class="lw__e" style="margin-inline-start:30px">בלי האישור הזה אי אפשר לשלוח לך את ההודעה על ההשקה.</p>
+        <button class="lw__submit" type="submit">תודיעו לי ברגע שנפתח</button>
+        <p class="lw__err" id="lw-err" role="alert"></p>
+        <p class="lw__fine">הפרטים משמשים להודעה על ההשקה ולעדכונים על התוכנית. <a href="https://aimprove.co.il/privacy-policy/" target="_blank" rel="noopener">מדיניות הפרטיות</a></p>
+      </form>
+    </div>
+    <div class="lw__done" hidden>
+      <h2 tabindex="-1">נרשמת להשקה</h2>
+      <p>ברגע שההרשמה נפתחת, במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>, נשלח לך הודעה בוואטסאפ ובמייל עם הקישור.</p>
+      <p class="lw__again" hidden>הפרטים שלך כבר שמורים אצלנו. <a href="#" data-lw-again>לרשום פרטים אחרים</a></p>
+      <button class="lw__submit" type="button" data-lw-close>חזרה לדף</button>
+    </div>
+  </div>
+</dialog>
+
+<script id="key-launch-js">
+/* ── ההשקה: ספירה לאחור והרשמה מראש (16-10-2026, לבקשת שלהבת) ──
+   עד ההשקה אין בדף תשלום. כל כפתור בדף (וגם הכפתורים שמובילים ל-#price) פותח
+   את טופס ההרשמה, שנשמר בטבלת הלידים דרך POST /api/maftecha-launch
+   (aimprove-redirector, src/maftecha-launch.ts). ברגע ההשקה הדף מתחלף לבד,
+   גם בלי רענון: מה שמסומן data-pre נעלם, מה שמסומן data-post (הכפתורים
+   למסך ההטבה, כמו שהיו) חוזר, וגם הכיתובים המקוריים של הכפתורים.
+
+   ⛔ שעת ההשקה כתובה בשני מקומות: כאן, ובראש מסך-ההטבה.html, שמפנה לכאן עד
+   ההשקה. לשנות בשניהם.
+   ⚠️ ההחלפה תלויה בשעון של המכשיר. מי שהשעון שלו מקדים יראה את הכפתורים
+   למסך ההטבה כמה דקות מוקדם, ולכן המוצר חייב להיות פתוח לקנייה עוד לפני השעה.
+
+   בדיקה בלי לחכות: ?launch=after מציג את הדף כמו אחרי ההשקה, ו-?launch=in10
+   מזיז את ההשקה לעוד 10 שניות, כדי לראות את ההחלפה עצמה. */
+(function () {
+  'use strict';
+  var LAUNCH_AT  = '2026-10-17T19:45:00+03:00';
+  var SIGNUP_URL = 'https://r.aimprove.co.il/api/maftecha-launch';
+  var PRE_LABEL  = 'להירשם להשקה';
+  var STORE_KEY  = 'maftecha_launch_signup';
+
+  var q = location.search || '';
+  var at = Date.parse(LAUNCH_AT);
+  var preview = /[?&]launch=after(&|$)/.test(q);
+  if (preview) at = Date.now() - 1000;
+  else if (/[?&]launch=in10(&|$)/.test(q)) at = Date.now() + 10000;
+
+  /* שיוך מקישור אישי של מנטור/ית (?r=slug), כמו במסך ההטבה, שמפנה לכאן עד ההשקה. */
+  var ref = '';
+  try {
+    ref = (new URLSearchParams(q).get('r') || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
+  } catch (e) {}
+
+  var root = document.documentElement;
+  function isLaunched() { return Date.now() >= at; }
+  function all(sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); }
+
+  /* "17.10 בשעה 19:45" בשעון ישראל, בלי קשר לאזור הזמן של המכשיר. */
+  function whenText(ts) {
+    try {
+      var p = {};
+      new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Jerusalem', day: 'numeric', month: 'numeric',
+        hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+      }).formatToParts(new Date(ts)).forEach(function (x) { p[x.type] = x.value; });
+      return p.day + '.' + p.month + ' בשעה ' + p.hour + ':' + p.minute;
+    } catch (e) { return ''; }
+  }
+  var when = whenText(at);
+  all('[data-launch-when]').forEach(function (el) { el.textContent = when; });
+  if (!when) all('[data-launch-when-sep]').forEach(function (el) { el.textContent = ''; });
+
+  /* בתצוגת ?launch=after גם מסך ההטבה צריך לדעת, אחרת הוא מחזיר לכאן. */
+  if (preview) all('a[href="מסך-ההטבה.html"]').forEach(function (a) {
+    a.setAttribute('href', 'מסך-ההטבה.html?launch=after');
+  });
+
+  var ctas = all('a.btn[href="#price"]');
+  ctas.forEach(function (a) { a.setAttribute('data-label', a.textContent); });
+
+  function applyState() {
+    var on = isLaunched();
+    root.classList.toggle('is-launched', on);
+    ctas.forEach(function (a) { a.textContent = on ? a.getAttribute('data-label') : PRE_LABEL; });
+  }
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function daysWord(d) { return d === 1 ? 'יום' : d === 2 ? 'יומיים' : d + ' ימים'; }
+  var boxes = all('[data-cd]');
+  var minis = all('[data-cd-mini]');
+  var timer = null;
+
+  function tick() {
+    var ms = at - Date.now();
+    if (ms <= 0) {
+      applyState();
+      if (timer) { clearInterval(timer); timer = null; }
+      return;
+    }
+    var s = Math.floor(ms / 1000);
+    var d = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600);
+    var m = Math.floor((s % 3600) / 60), sec = s % 60;
+    boxes.forEach(function (b) {
+      b.querySelector('[data-u="d"]').textContent = d;
+      b.querySelector('[data-u="h"]').textContent = pad(h);
+      b.querySelector('[data-u="m"]').textContent = pad(m);
+      b.querySelector('[data-u="s"]').textContent = pad(sec);
+      b.classList.toggle('cd--nodays', d === 0);
+    });
+    var hms = pad(h) + ':' + pad(m) + ':' + pad(sec);
+    minis.forEach(function (el) { el.textContent = 'עוד ' + (d ? daysWord(d) + ' ו-' : '') + hms; });
+  }
+
+  applyState();
+  tick();
+  if (!isLaunched()) timer = setInterval(tick, 1000);
+  /* לשונית שחזרה מהרקע: הדפדפן מאט טיימרים ברקע, ולכן מעדכנים מיד. */
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') tick();
+  });
+
+  /* ── הטופס ── */
+  var dlg = document.getElementById('launch-dialog');
+  var form = document.getElementById('lw-form');
+  if (!dlg || !form) return;
+  var formWrap = dlg.querySelector('.lw__form-wrap');
+  var done = dlg.querySelector('.lw__done');
+  var againLine = dlg.querySelector('.lw__again');
+  var lastFocus = null;
+
+  function registeredHere() {
+    try { return !!localStorage.getItem(STORE_KEY); } catch (e) { return false; }
+  }
+  function show(mode) {
+    formWrap.hidden = mode !== 'form';
+    done.hidden = mode === 'form';
+    againLine.hidden = mode !== 'again';
+  }
+  function openDialog() {
+    show(registeredHere() ? 'again' : 'form');
+    lastFocus = document.activeElement;
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    var first = done.hidden ? dlg.querySelector('#lw-name') : done.querySelector('h2');
+    if (first) first.focus();
+  }
+  function closeDialog() {
+    if (dlg.close) dlg.close(); else dlg.removeAttribute('open');
+  }
+  dlg.addEventListener('close', function () {
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  });
+  /* לחיצה על הרקע הכהה סוגרת. התוכן ממלא את החלון כולו, ולכן רק הרקע הוא dlg עצמו. */
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) closeDialog(); });
+
+  document.addEventListener('click', function (e) {
+    var t = e.target && e.target.closest ? e.target : null;
+    if (!t) return;
+    if (t.closest('[data-lw-close]')) { e.preventDefault(); closeDialog(); return; }
+    if (t.closest('[data-lw-again]')) {
+      e.preventDefault(); show('form');
+      var n = dlg.querySelector('#lw-name'); if (n) n.focus();
+      return;
+    }
+    if (t.closest('[data-launch-open], a.btn[href="#price"]') && !isLaunched()) {
+      e.preventDefault();
+      openDialog();
+    }
+  });
+
+  function bad(id, on) {
+    var el = document.getElementById(id);
+    el.classList.toggle('is-bad', !!on);
+    var input = el.querySelector('input[type=text],input[type=email],input[type=tel]');
+    if (input) input.setAttribute('aria-invalid', on ? 'true' : 'false');
+  }
+  /* סלחני בכוונה, כמו במסך ההטבה: חסימת מספר תקין גרועה מקליטת מספר שגוי. */
+  function phoneOk(v) {
+    var d = String(v).replace(/[\s\-().]/g, '');
+    if (/^\+?972\d{8,9}$/.test(d)) return true;
+    return /^0\d{8,9}$/.test(d);
+  }
+  function emailOk(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim()); }
+  function gender() {
+    var c = form.querySelector('input[name="lw-gender"]:checked');
+    return c ? c.value : '';
+  }
+  function showErr(text) {
+    var el = document.getElementById('lw-err');
+    el.textContent = text || '';
+    el.classList.toggle('is-on', !!text);
+  }
+  all('input[name="lw-gender"]').forEach(function (r) {
+    r.addEventListener('change', function () { bad('lw-f-gender', false); });
+  });
+
+  var FIELD_ERROR = { 'bad-name': 'lw-f-name', 'bad-email': 'lw-f-email', 'bad-phone': 'lw-f-phone', 'bad-gender': 'lw-f-gender' };
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    showErr('');
+    var name = document.getElementById('lw-name').value.trim();
+    var email = document.getElementById('lw-email').value.trim();
+    var phone = document.getElementById('lw-phone').value.trim();
+    var consent = document.getElementById('lw-consent').checked;
+    var g = gender();
+
+    var okName = name.length >= 2, okMail = emailOk(email), okPhone = phoneOk(phone);
+    bad('lw-f-name', !okName);
+    bad('lw-f-email', !okMail);
+    bad('lw-f-phone', !okPhone);
+    bad('lw-f-gender', !g);
+    document.getElementById('lw-f-consent').classList.toggle('is-bad', !consent);
+    if (!okName || !okMail || !okPhone || !g || !consent) {
+      var first = form.querySelector('.lw__f.is-bad input') || (!consent ? document.getElementById('lw-consent') : null);
+      if (first) first.focus();
+      return;
+    }
+
+    var btn = form.querySelector('.lw__submit');
+    var label = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'שומרים...';
+
+    fetch(SIGNUP_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, email: email, phone: phone, gender: g, consent: true, ref: ref })
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (!res.ok || !data.ok) {
+          var err = new Error((data && data.error) || ('http-' + res.status));
+          err.status = res.status;
+          err.code = data && data.error;
+          throw err;
+        }
+        return data;
+      });
+    }).then(function (data) {
+      try { localStorage.setItem(STORE_KEY, String(Date.now())); } catch (e2) {}
+      show(data.alreadyRegistered ? 'again' : 'done');
+      var h = done.querySelector('h2'); if (h) h.focus();
+    }).catch(function (err) {
+      var code = err && err.code;
+      if (FIELD_ERROR[code]) {
+        bad(FIELD_ERROR[code], true);
+        showErr('נראה שמשהו בפרטים לא עבר. אפשר לבדוק ולנסות שוב?');
+      } else if (code === 'consent-required') {
+        document.getElementById('lw-f-consent').classList.add('is-bad');
+      } else if (err && err.status === 429) {
+        showErr('היו כאן הרבה ניסיונות ברצף. אפשר לנסות שוב בעוד דקה.');
+      } else {
+        showErr('לא הצלחנו לשמור את ההרשמה. אפשר לנסות שוב? אם זה חוזר, כתבו לנו ל-connect@aimprove.co.il.');
+      }
+    }).then(function () {
+      btn.disabled = false;
+      btn.textContent = label;
+    });
+  });
+})();
 </script>
 <script src="https://r.aimprove.co.il/consent-banner.js" data-page="maftecha"></script>
 </body>

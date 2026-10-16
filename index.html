@@ -4754,7 +4754,7 @@ window.interdeal = {
    מזיז את ההשקה לעוד 10 שניות, כדי לראות את ההחלפה עצמה. */
 (function () {
   'use strict';
-  var LAUNCH_AT  = '2026-10-17T19:45:00+03:00';
+  var LAUNCH_AT  = '2026-10-17T21:00:00+03:00';
   var SIGNUP_URL = 'https://r.aimprove.co.il/api/maftecha-launch';
   var PRE_LABEL  = 'להירשם להשקה';
   var STORE_KEY  = 'maftecha_launch_signup';
@@ -4775,7 +4775,7 @@ window.interdeal = {
   function isLaunched() { return Date.now() >= at; }
   function all(sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); }
 
-  /* "17.10 בשעה 19:45" בשעון ישראל, בלי קשר לאזור הזמן של המכשיר. */
+  /* "17.10 בשעה 21:00" בשעון ישראל, בלי קשר לאזור הזמן של המכשיר. */
   function whenText(ts) {
     try {
       var p = {};

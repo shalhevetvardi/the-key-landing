@@ -18,7 +18,7 @@
    ⛔ השעה זהה ל-LAUNCH_AT בסקריפט key-launch-js ב-index.html. לשנות בשניהם.
    ?launch=after מדלג על ההפניה, לבדיקה. */
 (function () {
-  var LAUNCH_AT = '2026-10-17T19:45:00+03:00';
+  var LAUNCH_AT = '2026-10-17T21:00:00+03:00';
   try {
     if (/[?&]launch=after(&|$)/.test(location.search)) return;
     if (Date.now() < Date.parse(LAUNCH_AT)) location.replace('index.html' + location.search + '#price');

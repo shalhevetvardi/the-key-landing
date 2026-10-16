@@ -2039,10 +2039,11 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
 /* תגית ההטבה בראש הדף, למי שנכנס מהקישור האישי. זהב כהדגשה קטנה, לא כמשטח. */
 .hero-perk{display:inline-block;margin:0 0 16px;padding:6px 14px;border-radius:50px;background:var(--gold);color:var(--navy);font-weight:700;font-size:14px;line-height:1.3}
 
-/* נייבי, וזהב רק בספרות: זהב הוא צבע הדגשה של המותג, לא רקע (עדי, 16-10-2026). */
-.launch-bar{background:var(--navy);color:#fff}
+/* אדום (בקשת שלהבת, 16-10-2026): צבע שאין בשום מקום אחר בדף, ולכן הבאנר בולט כהתראה
+   ולא נבלע בכחול של ראש הדף. לבן על #C81E35: ניגודיות 5.5:1. */
+.launch-bar{background:#C81E35;color:#fff}
 .launch-bar__in{max-width:var(--maxw);margin:0 auto;padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 16px;text-align:center}
-.launch-bar__t{margin:0;font-weight:500;font-size:14px;line-height:1.3;color:rgba(255,255,255,.85)}
+.launch-bar__t{margin:0;font-weight:600;font-size:14px;line-height:1.3;color:#fff}
 /* בטלפון התווית מעל, ושעון ומקומות בשורה אחת מתחתיה. */
 @media (max-width:599px){.launch-bar__in > .launch-bar__t{flex-basis:100%}}
 /* השעון בבאנר: ספרות קבועות בתוך ריבועים, בלי אנימציה, ותווית קטנה מתחת לכל אחד. */
@@ -2051,12 +2052,14 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
    והשניות מימין. הדף עצמו RTL, ולכן הכיוון נקבע כאן במפורש. */
 .bar-cd{display:inline-flex;align-items:flex-start;gap:3px;direction:ltr;unicode-bidi:isolate}
 .bar-cd__u{display:flex;flex-direction:column;align-items:center}
-.bar-cd__u b{display:block;min-width:34px;padding:5px 4px 4px;border-radius:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);color:var(--gold);font-weight:800;font-size:clamp(16px,4.3vw,19px);line-height:1;text-align:center;font-variant-numeric:tabular-nums}
-.bar-cd__u small{margin-top:3px;font-size:10px;font-weight:500;line-height:1;color:rgba(255,255,255,.62)}
-.bar-cd__sep{font-style:normal;font-weight:700;font-size:16px;line-height:1;padding-top:6px;color:rgba(255,255,255,.45)}
+.bar-cd__u b,.bar-seats b{display:block;min-width:34px;padding:5px 4px 4px;border-radius:8px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.28);color:#fff;font-weight:800;font-size:clamp(16px,4.3vw,19px);line-height:1;text-align:center;font-variant-numeric:tabular-nums}
+.bar-cd__u small,.bar-seats small{margin-top:3px;font-size:10px;font-weight:500;line-height:1;color:rgba(255,255,255,.85)}
+.bar-cd__sep{font-style:normal;font-weight:700;font-size:16px;line-height:1;padding-top:6px;color:rgba(255,255,255,.7)}
 .bar-cd--nodays .bar-cd__u--d,.bar-cd--nodays .bar-cd__sep--d{display:none}
-.bar-seats{margin:0;padding:5px 12px;border-radius:50px;border:1px solid rgba(255,215,71,.5);color:#fff;font-weight:500;font-size:13px;line-height:1.2;white-space:nowrap}
-.bar-seats b{color:var(--gold);font-weight:800}
+/* המקומות באותה שפה כמו השעון (ריבוע ותווית מתחת), ולא כתגית עגולה - בקשת שלהבת. */
+/* ריבוע לבן עם מספר אדום: אותה צורה כמו השעון, אבל ברור שזה נתון אחר ולא עוד יחידת זמן. */
+.bar-seats{display:flex;flex-direction:column;align-items:center;margin:0 8px}
+.bar-seats b{background:#fff;color:#C81E35;border-color:#fff;min-width:40px;font-weight:800;font-size:clamp(16px,4.3vw,19px);line-height:1;text-align:center;font-variant-numeric:tabular-nums}
 
 .cd{display:flex;justify-content:center;gap:8px;margin:14px 0 4px;direction:ltr;unicode-bidi:isolate}
 .cd__u{min-width:60px;padding:10px 6px 8px;border-radius:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)}
@@ -2124,13 +2127,13 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
     <p class="launch-bar__t">ההרשמה נפתחת עוד</p>
     <div class="bar-cd" data-bar-cd="launch" aria-hidden="true"><span class="bar-cd__u bar-cd__u--d"><b data-bu="d">--</b><small>ימים</small></span><i class="bar-cd__sep bar-cd__sep--d">:</i><span class="bar-cd__u"><b data-bu="h">--</b><small>שעות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="m">--</b><small>דקות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="s">--</b><small>שניות</small></span></div>
     <p class="sr-only">ההרשמה נפתחת במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>.</p>
-    <p class="bar-seats" data-seats hidden></p>
+    <div class="bar-seats" data-seats hidden></div>
   </div>
   <div class="launch-bar__in" data-post>
     <p class="launch-bar__t" data-close-label hidden>ההרשמה נסגרת עוד</p>
     <div class="bar-cd" data-bar-cd="close" aria-hidden="true" hidden><span class="bar-cd__u bar-cd__u--d"><b data-bu="d">--</b><small>ימים</small></span><i class="bar-cd__sep bar-cd__sep--d">:</i><span class="bar-cd__u"><b data-bu="h">--</b><small>שעות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="m">--</b><small>דקות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="s">--</b><small>שניות</small></span></div>
     <p class="launch-bar__t" data-post-fallback>ההרשמה פתוחה, ומספר המקומות מוגבל.</p>
-    <p class="bar-seats" data-seats hidden></p>
+    <div class="bar-seats" data-seats hidden></div>
   </div>
   <div class="launch-bar__in" data-closed>
     <p class="launch-bar__t">ההרשמה לסבב הראשון נסגרה.</p>
@@ -4921,7 +4924,7 @@ window.interdeal = {
     var show = typeof remaining === 'number' && remaining > 0;
     seats.forEach(function (el) {
       el.hidden = !show;
-      if (show) el.innerHTML = remaining === 1 ? 'נותר <b>מקום אחד</b>' : '<b>' + remaining + '</b> מקומות נותרו';
+      if (show) el.innerHTML = '<b>' + remaining + '</b><small>' + (remaining === 1 ? 'מקום נותר' : 'מקומות נותרו') + '</small>';
     });
   }
 

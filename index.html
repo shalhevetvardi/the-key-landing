@@ -3718,6 +3718,9 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
            ורק אחרי ההשקה בלי קישור אישי הוא גולל לחלק המחיר. לכן הסוג נקבע כאן לפי
            מה שהכפתור עושה ברגע הלחיצה: 'signup' = נפתח טופס ההרשמה (להשקה או לסבב
            הבא), 'buy' = מעבר למסך ההטבה או לקופה, 'start' = גלילה לחלק המחיר.
+           ומאותו יום, אחר הצהריים (שלהבת: "הם צריכים לקרוא קצת"), הכפתורים לאורך הדף
+           גוללים לחלק המחיר גם לפני ההשקה ואחרי הסגירה, ורק הכפתור שבתיבת המחיר ובסוף
+           הדף פותח את הטופס. לכן כפתור כזה הוא 'buy' עם קישור אישי, ואחרת 'start'.
            'signup' ו-'buy' חייבים להיות ב-EV_KINDS ב-Worker (aimprove-redirector),
            אחרת הם נזרקים בשקט. */
         else {
@@ -3725,7 +3728,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
           var launched = rc.contains('is-launched'), closed = rc.contains('is-closed');
           if (t.closest('[data-launch-open], [data-next-open]')) kind = 'signup';
           else if (t.closest('a.btn[href="#price"]')) {
-            kind = (closed || !launched) ? 'signup' : (rc.contains('is-personal') ? 'buy' : 'start');
+            kind = (launched && !closed && rc.contains('is-personal')) ? 'buy' : 'start';
           }
           else if (t.closest('a[href^="מסך-ההטבה.html"]')) kind = 'buy';
         }
@@ -5133,7 +5136,10 @@ window.interdeal = {
       var n = dlg.querySelector('#lw-name'); if (n) n.focus();
       return;
     }
-    if (isClosed && t.closest('[data-next-open], a.btn[href="#price"]')) {
+    /* הכפתורים לאורך הדף (a.btn[href="#price"]) גוללים לחלק המחיר ולא פותחים את הטופס,
+       גם לפני ההשקה ואחרי הסגירה (שלהבת, 17-10-2026: "הם צריכים לקרוא קצת"). הטופס
+       נפתח רק מהכפתור שבתיבת המחיר ומזה שבסוף הדף. */
+    if (isClosed && t.closest('[data-next-open]')) {
       e.preventDefault();
       openDialog('next');
       return;
@@ -5144,11 +5150,37 @@ window.interdeal = {
       redeemAndGo(buy);
       return;
     }
-    if (t.closest('[data-launch-open], a.btn[href="#price"]') && !isLaunched()) {
+    if (t.closest('[data-launch-open]') && !isLaunched()) {
       e.preventDefault();
       openDialog('launch');
+      return;
+    }
+    if (t.closest('a.btn[href="#price"]')) {
+      e.preventDefault();
+      goToPrice();
     }
   });
+
+  /* גלילה לחלק המחיר. קפיצה רגילה לעוגן לא מספיקה: תמונות שמעל החלק נטענות רק אחרי
+     הקפיצה ודוחפות אותו למטה, ונמדד (17-10-2026, טלפון) שהמבקר נחת על ההמלצות,
+     כ-500 פיקסלים מעל "מה נכנס פנימה". לכן מיישרים שוב כל עוד הדף זז, עד שתי שניות,
+     ומפסיקים ברגע שהמבקר נוגע, גולל או לוחץ על מקש. */
+  function goToPrice() {
+    var el = document.getElementById('price');
+    if (!el) return;
+    try { history.replaceState(null, '', '#price'); } catch (err) {}
+    el.scrollIntoView();
+    var stop = false, n = 0;
+    function cancel() { stop = true; }
+    ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (ev) {
+      window.addEventListener(ev, cancel, { once: true, passive: true });
+    });
+    var iv = setInterval(function () {
+      n++;
+      if (stop || n > 13) { clearInterval(iv); return; }
+      if (Math.abs(el.getBoundingClientRect().top) > 2) el.scrollIntoView();
+    }, 150);
+  }
 
   /* לחיצה במצב אישי: ההטבה נלקחת בשרת, ומשם ישר לקופה. כל תקלה מחזירה למסלול
      הרגיל (מסך ההטבה), כדי שאף אחד לא יישאר תקוע מול כפתור שלא עובד. */

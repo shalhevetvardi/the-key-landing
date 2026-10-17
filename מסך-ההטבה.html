@@ -15,7 +15,8 @@
    ולטופס ההרשמה, עם אותם פרמטרים (כולל ?r= של המנטור/ית, שהטופס שם שומר).
    ⚠️ זו הפניה בדפדפן בלבד. הקופה עצמה לא נסגרת בה: המוצר 11113 בחנות מפורסם,
    בלי מגבלת כמות, ומי שיש לו קישור ישיר לקופה יכול לקנות (נמדד 16-10-2026 ב-Store API).
-   ⛔ השעה זהה ל-LAUNCH_AT בסקריפט key-launch-js ב-index.html. לשנות בשניהם.
+   ⛔ השעה כאן היא גיבוי בלבד (17-10-2026): הסקריפט הראשי שואל את השרת מה שעת הפתיחה של
+   הסבב הנוכחי (טבלת "סבבי המפתח" בדשבורד של נועם), ומפנה לדף הראשי אם הסבב עוד לא נפתח.
    ?launch=after מדלג על ההפניה, לבדיקה. */
 (function () {
   var LAUNCH_AT = '2026-10-17T21:00:00+03:00';
@@ -323,7 +324,7 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
       </div>
 
       <div class="closed" role="status">
-        <h2>ההרשמה לסבב הראשון נסגרה</h2>
+        <h2>ההרשמה לסבב <span data-round-ord>הראשון</span> נסגרה</h2>
         <p>כל המקומות בסבב הזה נתפסו, או שההרשמה הסתיימה. הסבב הבא עוד לא נקבע, ומי שנרשם לרשימת ההמתנה מקבל הודעה בוואטסאפ ובמייל ראשון, כשהוא נפתח.</p>
         <a class="submit" href="index.html?next=1#price">להירשם לסבב הבא</a>
       </div>
@@ -375,6 +376,15 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
     try {
       fetch(STATUS_URL).then(function (r) { return r.json(); }).then(function (d) {
         if (d && d.ok && d.open === false) showClosed();
+        /* הסבב הנוכחי עוד לא נפתח (סבב שנקבע אחרי סבב 1): לדף הראשי, כמו ההפניה שבראש הדף. */
+        var o = d && d.ok ? Date.parse(d.openAt || '') : NaN;
+        if (!isNaN(o) && Date.now() < o && !/[?&]launch=(after|closed)(&|$)/.test(location.search)) {
+          location.replace('index.html' + location.search + '#price');
+          return;
+        }
+        var ORD = ['', 'הראשון', 'השני', 'השלישי', 'הרביעי', 'החמישי', 'השישי', 'השביעי', 'השמיני', 'התשיעי', 'העשירי'];
+        var ord = d && d.round && ORD[d.round.n];
+        if (ord) Array.prototype.forEach.call(document.querySelectorAll('[data-round-ord]'), function (el) { el.textContent = ord; });
       }).catch(function () {});
     } catch (e) {}
   }

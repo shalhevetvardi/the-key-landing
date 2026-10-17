@@ -5010,9 +5010,14 @@ window.interdeal = {
   var KEY_STORE = 'maftecha_key_token';
   var PERSONAL_LABEL = 'להמשיך לתשלום עם ההטבה';
   var personalKey = '';
+  /* 17-10-2026 (שלהבת, ערב הפתיחה): "הקוד צריך להוביל ישר לדף התשלום עם ההנחה בפנים". מי שנכנס עם הקישור האישי
+     (?k= בכתובת, לא מפתח שנשמר במכשיר) מועבר לבד לקופה, בלי ללחוץ על כפתור: אחרי שמצב ההרשמה נבדק (סבב סגור =
+     נשארים בדף), ופעם אחת בכל ביקור (sessionStorage), כדי ש"חזרה" מהקופה תציג את הדף ולא תזרוק שוב. */
+  var fromLink = false;
+  var AUTO_GO_STORE = 'maftecha_autogo_done';
   try {
     var kq = new URLSearchParams(q).get('k') || '';
-    if (/^[A-Za-z0-9_-]{16,64}$/.test(kq)) { personalKey = kq; localStorage.setItem(KEY_STORE, kq); }
+    if (/^[A-Za-z0-9_-]{16,64}$/.test(kq)) { personalKey = kq; fromLink = true; localStorage.setItem(KEY_STORE, kq); }
     else personalKey = localStorage.getItem(KEY_STORE) || '';
   } catch (e) {}
 
@@ -5109,8 +5114,17 @@ window.interdeal = {
         renderSeats();
         tick();
         if (isLaunched() && d.open === false) setClosed();
-      }).catch(function () {});
+        maybeAutoGo();
+      }).catch(function () { maybeAutoGo(); });
     } catch (e) {}
+  }
+  var autoGoTried = false;
+  function maybeAutoGo() {
+    if (autoGoTried || !fromLink || !personalKey || isClosed || !isLaunched()) return;
+    autoGoTried = true;
+    try { if (sessionStorage.getItem(AUTO_GO_STORE)) return; sessionStorage.setItem(AUTO_GO_STORE, '1'); } catch (e) {}
+    var el = document.querySelector('a.btn[href="#price"], a[href^="מסך-ההטבה.html"]');
+    if (el) redeemAndGo(el);
   }
   function setClosed() {
     isClosed = true;

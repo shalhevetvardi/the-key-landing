@@ -126,6 +126,8 @@ input:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:transp
 input[aria-invalid="true"]{border-color:#ff8a8a;background:rgba(255,120,120,.09)}
 .err{display:none;margin:6px 0 0;font-weight:500;font-size:13px;color:#ffb0b0}
 .field.is-bad .err{display:block}
+.mail-hint{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--gold)}
+.mail-hint .mail-fix{font:inherit;font-weight:700;color:inherit;background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
 
 /* ⛔ **לא מסומן כברירת מחדל, ולא להפוך את זה ל-opt-out.** ההטבה מותנית
    בסימון פעיל, וזו גם דרישת חוק הספאם: היעדר סימון אינו הסכמה. */
@@ -199,6 +201,7 @@ input::placeholder{color:#8A8F9A}
 input:focus{outline-color:var(--navy)}
 input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
 .err{color:#B3261E}
+.mail-hint{color:var(--navy)}
 .consent input{accent-color:var(--navy)}
 .consent label{color:#333}
 .consent.is-bad label{color:#B3261E}
@@ -276,6 +279,7 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
           <label for="email">אימייל</label>
           <input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="you@example.com" />
           <p class="err">כתובת אימייל תקינה, בבקשה - לשם נשלח הקוד.</p>
+          <p class="mail-hint" id="email-hint" role="status" hidden></p>
         </div>
 
         <div class="field" id="f-phone">
@@ -421,6 +425,61 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
     return /^0\d{8,9}$/.test(d);
   }
   function emailOk(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim()); }
+
+  /* אזהרה על שגיאת כתיב בסוף כתובת המייל (17-10-2026, הכרעת שלהבת אחרי הזמנה 11623).
+     אותה רשימה ואותו כלל כמו בקופה (sales-automation, docs/wp-snippets/checkout-key-access-details.php)
+     וכמו looks_like_typo_domain בצינור, שעוצר רישום של כתובת כזו: עריכה אחת לכל היותר מספק מוכר.
+     אזהרה ולא חסימה, כי דומיין עסקי שאינו ברשימה אינו טעות. */
+  var MAIL_KNOWN = ['gmail.com', 'walla.co.il', 'walla.com', 'outlook.com', 'hotmail.com', 'yahoo.com', 'icloud.com'];
+  var MAIL_TYPOS = { 'gmial.com': 'gmail.com', 'gmal.com': 'gmail.com', 'gamil.com': 'gmail.com', 'gnail.com': 'gmail.com',
+    'gmailc.om': 'gmail.com', 'hotmial.com': 'hotmail.com', 'outlok.com': 'outlook.com' };
+  function mailOneEdit(a, b) {
+    if (a === b) return true;
+    if (Math.abs(a.length - b.length) > 1) return false;
+    if (a.length > b.length) { var t = a; a = b; b = t; }
+    var i = 0, j = 0, edits = 0;
+    while (i < a.length && j < b.length) {
+      if (a[i] === b[j]) { i++; j++; continue; }
+      if (++edits > 1) return false;
+      j++;
+      if (a.length === b.length) i++;
+    }
+    return true;
+  }
+  function mailSuggest(email) {
+    email = String(email || '').trim();
+    var at = email.lastIndexOf('@');
+    if (at < 1) return '';
+    var domain = email.slice(at + 1).toLowerCase();
+    if (!domain || MAIL_KNOWN.indexOf(domain) !== -1) return '';
+    var fix = MAIL_TYPOS[domain] || '';
+    for (var k = 0; !fix && k < MAIL_KNOWN.length; k++) if (mailOneEdit(domain, MAIL_KNOWN[k])) fix = MAIL_KNOWN[k];
+    return fix ? email.slice(0, at + 1) + fix : '';
+  }
+  function mailTypoHint(input, hint, onFix) {
+    function check() {
+      var fix = mailSuggest(input.value);
+      hint.textContent = '';
+      hint.hidden = !fix;
+      if (!fix) return;
+      hint.appendChild(document.createTextNode('התכוונת ל-'));
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'mail-fix';
+      b.textContent = fix;
+      b.addEventListener('click', function () {
+        input.value = fix; hint.hidden = true; hint.textContent = '';
+        if (onFix) onFix();
+        input.focus();
+      });
+      hint.appendChild(b);
+      hint.appendChild(document.createTextNode('?'));
+    }
+    input.addEventListener('blur', check);
+    input.addEventListener('input', function () { if (!hint.hidden && !mailSuggest(input.value)) { hint.hidden = true; } });
+    return check;
+  }
+  mailTypoHint(document.getElementById('email'), document.getElementById('email-hint'));
 
   function submitClaim(payload) {
     return fetch(CLAIM_URL, {

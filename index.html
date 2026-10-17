@@ -2126,7 +2126,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
   <div class="launch-bar__in" data-pre>
     <p class="launch-bar__t">ההרשמה נפתחת עוד</p>
     <div class="bar-cd" data-bar-cd="launch" aria-hidden="true"><span class="bar-cd__u bar-cd__u--d"><b data-bu="d">--</b><small>ימים</small></span><i class="bar-cd__sep bar-cd__sep--d">:</i><span class="bar-cd__u"><b data-bu="h">--</b><small>שעות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="m">--</b><small>דקות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="s">--</b><small>שניות</small></span></div>
-    <p class="sr-only">ההרשמה נפתחת במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>.</p>
+    <p class="sr-only">ההרשמה נפתחת <span data-launch-day>במוצאי שבת</span><span data-launch-when-sep>, </span><span data-launch-when></span>.</p>
     <div class="bar-seats" data-seats hidden></div>
   </div>
   <div class="launch-bar__in" data-post>
@@ -2136,7 +2136,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
     <div class="bar-seats" data-seats hidden></div>
   </div>
   <div class="launch-bar__in" data-closed>
-    <p class="launch-bar__t">ההרשמה לסבב הראשון נסגרה.</p>
+    <p class="launch-bar__t">ההרשמה לסבב <span data-round-ord>הראשון</span> נסגרה.</p>
   </div>
 </div>
 
@@ -3016,9 +3016,9 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
         <p class="price__anchor">כולל את חומרי התוכנית המלאים, ובמתנה: שני שיעורים אישיים עם המנטור/ית</p>
         <!-- עד ההשקה (16-10-2026): ספירה לאחור והרשמה במקום הכפתור למסך ההטבה. -->
         <div class="launch" data-pre>
-          <p class="launch__kicker">ההרשמה נפתחת במוצאי שבת</p>
+          <p class="launch__kicker">ההרשמה נפתחת <span data-launch-day>במוצאי שבת</span></p>
           <p class="launch__date" data-launch-when></p>
-          <p class="sr-only">ההרשמה נפתחת במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>.</p>
+          <p class="sr-only">ההרשמה נפתחת <span data-launch-day>במוצאי שבת</span><span data-launch-when-sep>, </span><span data-launch-when></span>.</p>
           <div class="cd" data-cd role="timer" aria-hidden="true">
           <span class="cd__u cd__u--d"><b class="cd__n" data-u="d">-</b><span class="cd__l">ימים</span></span>
           <span class="cd__u"><b class="cd__n" data-u="h">--</b><span class="cd__l">שעות</span></span>
@@ -3035,7 +3035,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
         <p class="price__calm" data-personal-html="אפשר לחלק עד 12 תשלומים.">לחיצה לא מחייבת - קודם רואים את ההטבה.</p>
         </div>
         <div class="launch" data-closed>
-          <p class="launch__kicker">ההרשמה לסבב הראשון נסגרה</p>
+          <p class="launch__kicker">ההרשמה לסבב <span data-round-ord>הראשון</span> נסגרה</p>
           <p class="launch__limit">הסבב הבא עוד לא נקבע. מי שנרשם עכשיו מקבל הודעה בוואטסאפ ובמייל ראשון, כשהוא נפתח.</p>
           <button class="btn price__cta" type="button" data-next-open>להירשם לסבב הבא</button>
         </div>
@@ -3139,7 +3139,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
   <div class="wrap">
     <h2>מתי מתחילים?</h2>
     <div data-pre>
-      <p>במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>. מספר המקומות מוגבל, ומי שנרשם מראש מקבל הטבה של 1,000 ₪ וקישור אישי ישר לתשלום.</p>
+      <p><span data-launch-day>במוצאי שבת</span><span data-launch-when-sep>, </span><span data-launch-when></span>. מספר המקומות מוגבל, ומי שנרשם מראש מקבל הטבה של 1,000 ₪ וקישור אישי ישר לתשלום.</p>
       <div class="cd" data-cd role="timer" aria-hidden="true">
           <span class="cd__u cd__u--d"><b class="cd__n" data-u="d">-</b><span class="cd__l">ימים</span></span>
           <span class="cd__u"><b class="cd__n" data-u="h">--</b><span class="cd__l">שעות</span></span>
@@ -3156,7 +3156,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
     <p class="final__calm" data-personal-html="ההטבה נשמרת לך עד שההרשמה נסגרת.">לחיצה לא מחייבת. ההטבה נשמרת לכם עד שההרשמה נסגרת.</p>
     </div>
     <div data-closed>
-      <p>ההרשמה לסבב הראשון נסגרה. הסבב הבא עוד לא נקבע, ומי שנרשם עכשיו מקבל הודעה ראשון כשהוא נפתח.</p>
+      <p>ההרשמה לסבב <span data-round-ord>הראשון</span> נסגרה. הסבב הבא עוד לא נקבע, ומי שנרשם עכשיו מקבל הודעה ראשון כשהוא נפתח.</p>
       <button class="btn" type="button" data-next-open>להירשם לסבב הבא</button>
     </div>
   </div>
@@ -4771,7 +4771,7 @@ window.interdeal = {
     <button class="lw__x" type="button" data-lw-close>סגירה</button>
     <div class="lw__form-wrap">
       <h2 id="lw-title">הרשמה להשקה</h2>
-      <p class="lw__sub">ההרשמה נפתחת במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>, ומספר המקומות מוגבל. מי שנרשם עכשיו מקבל הטבה של 1,000 ₪, ובשעת הפתיחה נשלח לו בוואטסאפ ובמייל קישור אישי לדף, שממנו ממשיכים ישר לתשלום עם ההנחה.</p>
+      <p class="lw__sub">ההרשמה נפתחת <span data-launch-day>במוצאי שבת</span><span data-launch-when-sep>, </span><span data-launch-when></span>, ומספר המקומות מוגבל. מי שנרשם עכשיו מקבל הטבה של 1,000 ₪, ובשעת הפתיחה נשלח לו בוואטסאפ ובמייל קישור אישי לדף, שממנו ממשיכים ישר לתשלום עם ההנחה.</p>
       <form id="lw-form" novalidate>
         <div class="lw__f" id="lw-f-name">
           <label for="lw-name">איך קוראים לך?</label>
@@ -4808,13 +4808,17 @@ window.interdeal = {
     </div>
     <div class="lw__done" hidden>
       <h2 tabindex="-1">ההטבה שמורה לך</h2>
-      <p>ברגע שההרשמה נפתחת, במוצאי שבת<span data-launch-when-sep>, </span><span data-launch-when></span>, נשלח לך בוואטסאפ ובמייל קישור אישי לדף. ממנו ממשיכים ישר לתשלום עם הנחה של 1,000 ₪, בלי למלא פרטים שוב.</p>
+      <p>ברגע שההרשמה נפתחת, <span data-launch-day>במוצאי שבת</span><span data-launch-when-sep>, </span><span data-launch-when></span>, נשלח לך בוואטסאפ ובמייל קישור אישי לדף. ממנו ממשיכים ישר לתשלום עם הנחה של 1,000 ₪, בלי למלא פרטים שוב.</p>
       <p class="lw__again" hidden>הפרטים שלך כבר שמורים אצלנו. <a href="#" data-lw-again>לרשום פרטים אחרים</a></p>
       <button class="lw__submit" type="button" data-lw-close>חזרה לדף</button>
     </div>
   </div>
 </dialog>
 
+<!-- הסבב הנוכחי (מספר, פתיחה, סגירה, מקומות) מטבלת "סבבי המפתח", שנקבעת בדשבורד של נועם
+      (17-10-2026). נטען לפני הסקריפט הראשי כדי שהדף יוצג מיד לפי הסבב הנכון. כשלא נטען, הסקריפט
+      נשאר עם השעה שכתובה בו. -->
+<script src="https://r.aimprove.co.il/api/maftecha-round.js"></script>
 <script id="key-launch-js">
 /* ── ההשקה: ספירה לאחור והרשמה מראש (16-10-2026, לבקשת שלהבת) ──
    עד ההשקה אין בדף תשלום. כל כפתור בדף (וגם הכפתורים שמובילים ל-#price) פותח
@@ -4832,7 +4836,9 @@ window.interdeal = {
    מזיז את ההשקה לעוד 10 שניות, כדי לראות את ההחלפה עצמה. */
 (function () {
   'use strict';
-  var LAUNCH_AT  = '2026-10-17T21:00:00+03:00';
+  /* שעת הפתיחה מהסבב הנוכחי (window.MAFTECHA_ROUND, ר' למעלה), והשעה כאן רק גיבוי. */
+  var ROUND = window.MAFTECHA_ROUND || null;
+  var LAUNCH_AT  = (ROUND && ROUND.openAt) || '2026-10-17T21:00:00+03:00';
   var SIGNUP_URL = 'https://r.aimprove.co.il/api/maftecha-launch';
   var PRE_LABEL  = 'להירשם להשקה';
   var STORE_KEY  = 'maftecha_launch_signup';
@@ -4887,6 +4893,22 @@ window.interdeal = {
   var when = whenText(at);
   all('[data-launch-when]').forEach(function (el) { el.textContent = when; });
   if (!when) all('[data-launch-when-sep]').forEach(function (el) { el.textContent = ''; });
+  /* היום והסבב בנוסח (17-10-2026): "במוצאי שבת", "ביום שלישי"; "לסבב הראשון", "לסבב השני". */
+  var ORD = ['', 'הראשון', 'השני', 'השלישי', 'הרביעי', 'החמישי', 'השישי', 'השביעי', 'השמיני', 'התשיעי', 'העשירי'];
+  var roundOrd = (ROUND && ORD[ROUND.n]) || 'הראשון';
+  function dayText(ts) {
+    try {
+      var p = {};
+      new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Jerusalem', weekday: 'short', hour: '2-digit', hourCycle: 'h23' })
+        .formatToParts(new Date(ts)).forEach(function (x) { p[x.type] = x.value; });
+      var names = { Sun: 'ראשון', Mon: 'שני', Tue: 'שלישי', Wed: 'רביעי', Thu: 'חמישי', Fri: 'שישי' };
+      if (p.weekday === 'Sat') return Number(p.hour) >= 17 ? 'במוצאי שבת' : 'בשבת';
+      return names[p.weekday] ? 'ביום ' + names[p.weekday] : '';
+    } catch (e) { return ''; }
+  }
+  var day = dayText(at);
+  if (day) all('[data-launch-day]').forEach(function (el) { el.textContent = day; });
+  all('[data-round-ord]').forEach(function (el) { el.textContent = roundOrd; });
 
   /* בתצוגת ?launch=after גם מסך ההטבה צריך לדעת, אחרת הוא מחזיר לכאן. */
   if (preview) all('a[href="מסך-ההטבה.html"]').forEach(function (a) {
@@ -5043,7 +5065,7 @@ window.interdeal = {
   var mode = 'launch';
   var NEXT_TEXT = {
     '#lw-title': 'הרשמה לסבב הבא',
-    '.lw__sub': 'ההרשמה לסבב הראשון נסגרה. הסבב הבא עוד לא נקבע, ומי שנרשם כאן מקבל הודעה בוואטסאפ ובמייל ראשון, כשהוא נפתח.',
+    '.lw__sub': 'ההרשמה לסבב ' + roundOrd + ' נסגרה. הסבב הבא עוד לא נקבע, ומי שנרשם כאן מקבל הודעה בוואטסאפ ובמייל ראשון, כשהוא נפתח.',
     'label[for="lw-consent"]': 'אני מאשר/ת לקבל מאִימפּרוּב עדכונים, הצעות ודיוור במייל ובוואטסאפ. אפשר להסיר בכל רגע.',
     '#lw-form .lw__submit': 'תודיעו לי כשהסבב הבא נפתח',
     '.lw__done h2': 'נרשמת לסבב הבא',

@@ -3610,6 +3610,16 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
       return r.top < h * 0.6 && r.bottom > 0;
     }
 
+    /* המחיר נספר כשתיבת המחיר נכנסת למסך (85% העליונים), ולא לפי הסף של 60% שלמעלה.
+       המספר עצמו יושב בראש התיבה, ומעליה רשימה ארוכה של "מה נכנס פנימה". עם סף 60%,
+       מי שקפץ לחלק המחיר בכפתור ראה את הרשימה ולא נספר, ולכן עד 17-10-2026 רק 29 מתוך
+       88 שלחצו על כפתור כזה נספרו כמי שהגיעו למחיר. */
+    function seenPrice(el) {
+      var r = el.getBoundingClientRect();
+      var h = window.innerHeight || document.documentElement.clientHeight || 0;
+      if (!h) return false;
+      return r.top < h * 0.85 && r.bottom > 0;
+    }
     var ticking = false;
     function measure() {
       ticking = false;
@@ -3617,7 +3627,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
         for (var i = 0; i < watched.length; i++) {
           if (watched[i].idx > depthIdx && seen(watched[i].el)) depthIdx = watched[i].idx;
         }
-        if (priceEl && !sent.price && seen(priceEl)) sendOnce('price', 'price');
+        if (priceEl && !sent.price && seenPrice(priceEl)) sendOnce('price', 'price');
       } catch (e) {}
     }
     /* setTimeout ולא requestAnimationFrame - rAF מושהה לחלוטין בלשונית
@@ -3655,7 +3665,24 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
         var kind = '';
         if (t.closest('.door a, a[href^="https://agent-course.aimprove.co.il"]')) kind = 'tironot';
         else if (t.closest('.office__hint'))  kind = 'office';
-        else if (t.closest('.btn'))          kind = 'start';
+        /* 17-10-2026: עד אז כל כפתור נספר 'start'. אבל אותו כפתור סגול עושה דברים
+           שונים לפי מצב הדף, שסקריפט ההשקה (למטה) מסמן במחלקות על <html>: לפני
+           ההשקה ואחרי הסגירה הוא פותח את טופס ההרשמה, עם קישור אישי הוא מוביל לקופה,
+           ורק אחרי ההשקה בלי קישור אישי הוא גולל לחלק המחיר. לכן הסוג נקבע כאן לפי
+           מה שהכפתור עושה ברגע הלחיצה: 'signup' = נפתח טופס ההרשמה (להשקה או לסבב
+           הבא), 'buy' = מעבר למסך ההטבה או לקופה, 'start' = גלילה לחלק המחיר.
+           'signup' ו-'buy' חייבים להיות ב-EV_KINDS ב-Worker (aimprove-redirector),
+           אחרת הם נזרקים בשקט. */
+        else {
+          var rc = document.documentElement.classList;
+          var launched = rc.contains('is-launched'), closed = rc.contains('is-closed');
+          if (t.closest('[data-launch-open], [data-next-open]')) kind = 'signup';
+          else if (t.closest('a.btn[href="#price"]')) {
+            kind = (closed || !launched) ? 'signup' : (rc.contains('is-personal') ? 'buy' : 'start');
+          }
+          else if (t.closest('a[href^="מסך-ההטבה.html"]')) kind = 'buy';
+        }
+        if (!kind && t.closest('.btn'))      kind = 'start';
         if (!kind) return;
         sendOnce('cta_' + kind, 'cta', { k: kind });
       } catch (e) {}
@@ -3672,16 +3699,24 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
       try {
         var v = e.target;
         if (!v || v.tagName !== 'VIDEO') return;
-        var src = (v.querySelector('source') || {}).src || '';
+        /* 17-10-2026: סרטון שמתנגן לבד (המשרד המונפש, autoplay בלי קול בלולאה) אינו
+           צפייה. עד אז הוא נספר כ-'video' עם v='unknown' בכל פעם שנכנס למסך. */
+        if (v.autoplay || (v.muted && v.loop)) return;
+        var src = (v.querySelector('source') || {}).src || v.currentSrc || '';
         var id = src.split('/').pop().replace('.mp4', '') || 'unknown';
         sendOnce('video_' + id, 'cta', { k: 'video', v: id });
       } catch (e2) {}
     }, true);
 
     /* ── 4. end - העומק שהושג וכמה זמן. פעם אחת, במה שקורה קודם. ── */
+    /* עד 17-10-2026 העומק נשלח פעם אחת, ביציאה הראשונה מהלשונית. בטלפון זו לרוב
+       קפיצה קצרה לוואטסאפ, ומי שחזר והמשיך לגלול נרשם כמי שעצר בפתיחה. עכשיו
+       הוא נשלח שוב בכל יציאה שבה המבקר הגיע רחוק יותר, ולכן לביקור יכולות להיות
+       כמה שורות end, וקוראים מהן את העמוקה ביותר. */
+    var endIdx = -2;
     function finish() {
-      if (sent.end) return;
-      sent.end = 1;
+      if (depthIdx <= endIdx) return;
+      endIdx = depthIdx;
       var name = (depthIdx >= 0 && SECTIONS[depthIdx]) ? SECTIONS[depthIdx][0] : 'hero';
       var secs = Math.round((Date.now() - t0) / 1000);
       if (!isFinite(secs) || secs < 0) secs = 0;

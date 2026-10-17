@@ -276,6 +276,17 @@ body{
 .what{background:var(--navy);padding:88px 0}
 .what .wrap{max-width:980px}
 .what h2{margin:0 0 26px;font-weight:800;color:#fff;line-height:1.25;font-size:clamp(26px,5.6vw,42px)}
+/* סרטון ההסבר "מה מקבלים במפתח" (17-10-2026, הכרעה 96) ורשימת הפרקים שמתחתיו.
+   הפרקים קיימים גם בתוך הנגן של Vimeo, אבל בטלפון התפריט שלהם קטן, ולכן הם מופיעים גם כאן. */
+.kv{margin:0 0 30px}
+.kv__frame{position:relative;width:100%;aspect-ratio:1662/1080;border-radius:18px;overflow:hidden;background:#0b0524;box-shadow:0 14px 40px rgba(0,0,0,.35)}
+.kv__frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.kv__label{margin:16px 0 10px;font-size:14px;font-weight:700;color:var(--gold)}
+.kv__chapters{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.kv__chapters button{font-family:inherit;font-size:14px;line-height:1.3;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:8px 14px;cursor:pointer;display:inline-flex;gap:8px;align-items:center;text-align:right}
+.kv__chapters button:hover,.kv__chapters button:focus-visible{background:rgba(255,255,255,.18)}
+.kv__chapters button.is-on{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.kv__chapters time{font-variant-numeric:tabular-nums;font-weight:700;opacity:.85}
 .what__def{margin:0 0 18px;font-weight:700;color:var(--gold);font-size:clamp(19px,4.6vw,25px);line-height:1.5}
 .what__body{margin:0 0 14px;font-weight:400;color:rgba(255,255,255,.82);font-size:clamp(16.5px,4vw,19px);line-height:1.7}
 .what__body:last-of-type{margin-bottom:0}
@@ -2215,6 +2226,22 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
 <section class="what">
   <div class="wrap">
     <h2>מה בדיוק קונים כאן?</h2>
+    <div class="kv">
+      <div class="kv__frame">
+        <iframe id="kv-player" src="https://player.vimeo.com/video/1236807754?h=0b3f8b2ce3&amp;title=0&amp;byline=0&amp;portrait=0&amp;dnt=1" title="מה מקבלים במפתח - סרטון הסבר" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="kv__label">קפיצה לנושא בסרטון</p>
+      <ul class="kv__chapters">
+        <li><button type="button" data-t="0"><time>0:00</time><span>מה מקבלים במפתח</span></button></li>
+        <li><button type="button" data-t="6"><time>0:06</time><span>המשרד שתבנו</span></button></li>
+        <li><button type="button" data-t="39"><time>0:39</time><span>האזור האישי וההכנה עם בְּנָיָה</span></button></li>
+        <li><button type="button" data-t="59"><time>0:59</time><span>סוכני העזר</span></button></li>
+        <li><button type="button" data-t="68"><time>1:08</time><span>השלבים: סרטונים ותרגולים</span></button></li>
+        <li><button type="button" data-t="103"><time>1:43</time><span>כשנתקעים: יוסף בוואטסאפ</span></button></li>
+        <li><button type="button" data-t="120"><time>2:00</time><span>שני שיעורים עם מנטור/ית</span></button></li>
+        <li><button type="button" data-t="137"><time>2:17</time><span>המדריכים</span></button></li>
+      </ul>
+    </div>
     <p class="what__def">תוכנית הכשרה לבניית צוות של סוכני AI.</p>
     <p class="what__body">התוכנית לוקחת אתכם יד ביד עם חומרי למידה ותרגולים מובנים - מהצעד הראשון ועד שיש לכם משרד AI - מלא בסוכנים שעובדים בשבילכם.</p>
     <p class="what__body">זה לא עוד קורס דיגיטלי שתקנו ובחיים לא תפתחו. זו תוכנית מובנית עם שלבים ברורים ליישום.</p>
@@ -5225,5 +5252,31 @@ window.interdeal = {
 })();
 </script>
 <script src="https://r.aimprove.co.il/consent-banner.js" data-page="maftecha"></script>
+<script>
+/* פרקי סרטון ההסבר: לחיצה מקפיצה את הנגן לתחילת הנושא ומנגנת. משתמש בממשק ה-postMessage
+   של Vimeo, ולכן לא צריך לטעון את player.js. אם הדפדפן חוסם ניגון עם קול, הנגן נשאר
+   בנקודה הנכונה והצופה לוחץ על play. */
+(function () {
+  try {
+    var f = document.getElementById('kv-player');
+    var list = document.querySelector('.kv__chapters');
+    if (!f || !list) return;
+    function cmd(method, value) {
+      var m = { method: method };
+      if (value !== undefined) m.value = value;
+      f.contentWindow && f.contentWindow.postMessage(JSON.stringify(m), 'https://player.vimeo.com');
+    }
+    list.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('button[data-t]');
+      if (!b) return;
+      var on = list.querySelector('.is-on');
+      if (on) on.classList.remove('is-on');
+      b.classList.add('is-on');
+      cmd('setCurrentTime', Number(b.getAttribute('data-t')));
+      cmd('play');
+    });
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>

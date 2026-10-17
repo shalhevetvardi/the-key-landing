@@ -2202,7 +2202,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
 </div>
 
 <!-- 17-10-2026 (הערה 83): תפריט סעיפים. מופיע אחרי הפתיחה, נשאר למעלה, ומדגיש את החלק שבו נמצאים. -->
-<nav class="toc" aria-label="ניווט בדף"><div class="toc__row"><a href="#what" data-s="what">מה מקבלים</a><a href="#our-office" data-s="office">המשרד</a><a href="#road" data-s="road">המסלול</a><a href="#proof" data-s="proof">דוגמאות</a><a href="#succeed" data-s="succeed">ליווי</a><a href="#obj" data-s="obj">שאלות</a><a href="#price" data-s="price">מחיר</a></div></nav>
+<nav class="toc" aria-label="ניווט בדף"><div class="toc__row"><a href="#what" data-s="what">מה קונים כאן</a><a href="#our-office" data-s="office">המשרד</a><a href="#road" data-s="road">המסלול</a><a href="#proof" data-s="proof">דוגמאות</a><a href="#succeed" data-s="succeed">ליווי</a><a href="#obj" data-s="obj">שאלות</a><a href="#price" data-s="get">מה מקבלים</a><a href="#price-box" data-s="price">מחיר</a></div></nav>
 <section class="hero">
   <div class="wrap hero-grid">
     <div class="txt">
@@ -3079,7 +3079,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
         <li>אזור אישי שנשאר פתוח גם אחרי שסיימתם</li>
       </ul>
 
-      <div class="price__box">
+      <div class="price__box" id="price-box">
         <p class="price__num">5,900 ₪</p>
         <p class="price__pay">עד <b>12 תשלומים</b></p>
         <p class="price__anchor">כולל את חומרי התוכנית המלאים, ובמתנה: שני שיעורים אישיים עם המנטור/ית</p>
@@ -5378,13 +5378,17 @@ window.interdeal = {
 <!-- 17-10-2026 (הערה 85): בלי הכפתור הצף "⚙ פרטיות". שינוי הבחירה - בקישור "הגדרות עוגיות" בתחתית הדף. -->
 <script src="https://r.aimprove.co.il/consent-banner.js" data-page="maftecha" data-reopener="none"></script>
 <script id="key-toc">
-/* תפריט הסעיפים (17-10-2026, הערה 83): מוצג אחרי הפתיחה, ומדגיש את החלק שעל המסך. כמה חלקים שייכים לאותו פריט. */
+/* תפריט הסעיפים (17-10-2026, הערה 83): מוצג אחרי הפתיחה, ומדגיש את החלק שעל המסך. כמה חלקים שייכים לאותו פריט.
+   הערה 90 (17-10-2026): "מה בדיוק קונים כאן?" הוא "מה קונים כאן", ו"מה מקבלים" הוא הסרטון ו"מה נכנס פנימה" בראש חלק המחיר.
+   לכן חלק המחיר מתחלק לשניים: עד תיבת המחיר "מה מקבלים", ומתיבת המחיר "מחיר". הסדר ברשימה הוא סדר הדף. */
 (function () {
   try {
     var nav = document.querySelector(".toc"), hero = document.querySelector(".hero");
     if (!nav || !hero || !("IntersectionObserver" in window)) return;
     var links = [].slice.call(nav.querySelectorAll("a[data-s]"));
-    var map = { what: "what", "office-sec": "office", road: "road", proof: "proof", succeed: "succeed", stay: "succeed", safety: "succeed", obj: "obj", faq: "obj", price: "price", final: "price", door: "price" };
+    var parts = [["section.what", "what"], ["section.office-sec", "office"], ["section.road", "road"], ["section.proof", "proof"],
+      ["section.succeed", "succeed"], ["section.stay", "succeed"], ["section.safety", "succeed"], ["section.obj", "obj"],
+      ["section.price", "get"], ["#price-box", "price"], ["section.faq", "obj"], ["section.final", "price"], ["section.door", "price"]];
     new IntersectionObserver(function (es) { es.forEach(function (e) {
       var on = !e.isIntersecting; nav.classList.toggle("is-on", on); document.documentElement.classList.toggle("toc-on", on); }); }, { threshold: 0.15 }).observe(hero);
     var current = "";
@@ -5394,13 +5398,14 @@ window.interdeal = {
       var a = nav.querySelector("a.is-on"), row = nav.querySelector(".toc__row");
       if (a && row && row.scrollWidth > row.clientWidth) row.scrollTo({ left: a.offsetLeft - (row.clientWidth - a.offsetWidth) / 2, behavior: "smooth" });
     }
-    var secs = Object.keys(map).map(function (c) { return document.querySelector("section." + c); }).filter(Boolean);
-    var seen = {};
+    var els = [], keys = [];
+    parts.forEach(function (p) { var el = document.querySelector(p[0]); if (el) { els.push(el); keys.push(p[1]); } });
+    var seen = els.map(function () { return false; });
     var io2 = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { seen[e.target.className.split(" ")[0]] = e.isIntersecting; });
-      for (var i = secs.length - 1; i >= 0; i--) { var c = secs[i].className.split(" ")[0]; if (seen[c]) { setOn(map[c]); return; } }
+      es.forEach(function (e) { var i = els.indexOf(e.target); if (i >= 0) seen[i] = e.isIntersecting; });
+      for (var i = els.length - 1; i >= 0; i--) { if (seen[i]) { setOn(keys[i]); return; } }
     }, { rootMargin: "-45% 0px -50% 0px" });
-    secs.forEach(function (s) { io2.observe(s); });
+    els.forEach(function (el) { io2.observe(el); });
     // קפיצה מהתפריט: תמונות שנטענות בדרך מזיזות את היעד, ולכן מיישרים שוב אחרי שהגלילה נגמרת.
     links.forEach(function (a) { a.addEventListener("click", function (ev) {
       var t = document.querySelector(a.getAttribute("href")); if (!t) return;

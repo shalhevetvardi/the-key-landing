@@ -2173,6 +2173,15 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
 .lw__submit:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
 .lw__err{display:none;margin:14px 0 0;padding:12px 14px;border-radius:12px;background:#FDECEC;border:1px solid #F3B8B8;color:#8C1D18;font-size:14px;line-height:1.55}
 .lw__err.is-on{display:block}
+.lw__submit[hidden],.lw__confirm[hidden],.lw__hint[hidden]{display:none}
+.lw__hint{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--navy)}
+.lw__hint .mail-fix,.lw__fix{font:inherit;font-weight:700;color:var(--navy);background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
+.lw__confirm{margin:20px 0 0;padding:16px 18px;border-radius:16px;background:#FFF6D6;border:1px solid #F0DA8A}
+.lw__confirm h3{margin:0 0 6px;font-size:18px;font-weight:800;color:var(--navy)}
+.lw__confirm p{margin:0;font-size:15px;line-height:1.55;color:var(--navy)}
+.lw__confirm-mail{margin:8px 0 0!important;font-weight:800;font-size:17px!important;word-break:break-all;unicode-bidi:plaintext;text-align:start}
+.lw__confirm .lw__submit{margin-top:14px}
+.lw__fix{display:block;margin:12px auto 0;font-size:15px}
 .lw__fine{margin:14px 0 0;font-size:12.5px;color:#555;line-height:1.55}
 .lw__fine a,.lw__again a{color:var(--blue)}
 .lw__done p{margin:0 0 12px;font-size:15.5px;line-height:1.65;color:#333}
@@ -4909,6 +4918,7 @@ window.interdeal = {
           <label for="lw-email">אימייל</label>
           <input type="email" id="lw-email" autocomplete="email" inputmode="email" placeholder="you@example.com" />
           <p class="lw__e">כתובת אימייל תקינה, בבקשה.</p>
+          <p class="lw__hint" id="lw-email-hint" role="status" hidden></p>
         </div>
         <div class="lw__f" id="lw-f-phone">
           <label for="lw-phone">מספר וואטסאפ</label>
@@ -4928,7 +4938,16 @@ window.interdeal = {
           <label for="lw-consent">אני מאשר/ת לקבל מאִימפּרוּב עדכונים, הצעות ודיוור במייל ובוואטסאפ. אפשר להסיר בכל רגע.</label>
         </div>
         <p class="lw__e" style="margin-inline-start:30px">בלי האישור הזה אי אפשר לשלוח לך את ההודעה על ההשקה.</p>
-        <button class="lw__submit" type="submit">לשמור לי את ההטבה</button>
+        <button class="lw__submit" type="submit" data-lw-main>לשמור לי את ההטבה</button>
+        <!-- "זה המייל שלך?" (17-10-2026, הכרעת שלהבת): לפני השליחה מציגים את המייל שוב, בגדול,
+             כדי שטעות תיתפס כשהיא כבר לא באמצע הקלדה. -->
+        <div class="lw__confirm" id="lw-confirm" hidden>
+          <h3>זה המייל שלך?</h3>
+          <p>לכאן נשלח לך את הקישור האישי ואת ההטבה:</p>
+          <p class="lw__confirm-mail" id="lw-confirm-mail" dir="ltr"></p>
+          <button class="lw__submit" type="button" data-lw-yes>כן, זה המייל שלי</button>
+          <button class="lw__fix" type="button" data-lw-fix>לתקן את המייל</button>
+        </div>
         <p class="lw__err" id="lw-err" role="alert"></p>
         <p class="lw__fine">הפרטים משמשים לשליחת ההטבה, להודעה על ההשקה ולעדכונים מאִימפּרוּב. <a href="https://aimprove.co.il/privacy-policy/" target="_blank" rel="noopener">מדיניות הפרטיות</a></p>
       </form>
@@ -5195,6 +5214,7 @@ window.interdeal = {
     '.lw__sub': 'ההרשמה לסבב ' + roundOrd + ' נסגרה. הסבב הבא עוד לא נקבע, ומי שנרשם כאן מקבל הודעה בוואטסאפ ובמייל ראשון, כשהוא נפתח.',
     'label[for="lw-consent"]': 'אני מאשר/ת לקבל מאִימפּרוּב עדכונים, הצעות ודיוור במייל ובוואטסאפ. אפשר להסיר בכל רגע.',
     '#lw-form .lw__submit': 'תודיעו לי כשהסבב הבא נפתח',
+    '#lw-confirm p': 'לכאן נשלח לך הודעה כשהסבב הבא נפתח:',
     '.lw__done h2': 'נרשמת לסבב הבא',
     '.lw__done p:not(.lw__again)': 'כשהסבב הבא ייפתח, נשלח לך הודעה בוואטסאפ ובמייל עם הקישור.'
   };
@@ -5339,6 +5359,79 @@ window.interdeal = {
 
   var FIELD_ERROR = { 'bad-name': 'lw-f-name', 'bad-email': 'lw-f-email', 'bad-phone': 'lw-f-phone', 'bad-gender': 'lw-f-gender' };
 
+  /* אזהרה על שגיאת כתיב בסוף כתובת המייל (17-10-2026, הכרעת שלהבת אחרי הזמנה 11623).
+     אותה רשימה ואותו כלל כמו בקופה (sales-automation, docs/wp-snippets/checkout-key-access-details.php)
+     וכמו looks_like_typo_domain בצינור, שעוצר רישום של כתובת כזו: עריכה אחת לכל היותר מספק מוכר.
+     אזהרה ולא חסימה, כי דומיין עסקי שאינו ברשימה אינו טעות. */
+  var MAIL_KNOWN = ['gmail.com', 'walla.co.il', 'walla.com', 'outlook.com', 'hotmail.com', 'yahoo.com', 'icloud.com'];
+  var MAIL_TYPOS = { 'gmial.com': 'gmail.com', 'gmal.com': 'gmail.com', 'gamil.com': 'gmail.com', 'gnail.com': 'gmail.com',
+    'gmailc.om': 'gmail.com', 'hotmial.com': 'hotmail.com', 'outlok.com': 'outlook.com' };
+  function mailOneEdit(a, b) {
+    if (a === b) return true;
+    if (Math.abs(a.length - b.length) > 1) return false;
+    if (a.length > b.length) { var t = a; a = b; b = t; }
+    var i = 0, j = 0, edits = 0;
+    while (i < a.length && j < b.length) {
+      if (a[i] === b[j]) { i++; j++; continue; }
+      if (++edits > 1) return false;
+      j++;
+      if (a.length === b.length) i++;
+    }
+    return true;
+  }
+  function mailSuggest(email) {
+    email = String(email || '').trim();
+    var at = email.lastIndexOf('@');
+    if (at < 1) return '';
+    var domain = email.slice(at + 1).toLowerCase();
+    if (!domain || MAIL_KNOWN.indexOf(domain) !== -1) return '';
+    var fix = MAIL_TYPOS[domain] || '';
+    for (var k = 0; !fix && k < MAIL_KNOWN.length; k++) if (mailOneEdit(domain, MAIL_KNOWN[k])) fix = MAIL_KNOWN[k];
+    return fix ? email.slice(0, at + 1) + fix : '';
+  }
+  function mailTypoHint(input, hint, onFix) {
+    function check() {
+      var fix = mailSuggest(input.value);
+      hint.textContent = '';
+      hint.hidden = !fix;
+      if (!fix) return;
+      hint.appendChild(document.createTextNode('התכוונת ל-'));
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'mail-fix';
+      b.textContent = fix;
+      b.addEventListener('click', function () {
+        input.value = fix; hint.hidden = true; hint.textContent = '';
+        if (onFix) onFix();
+        input.focus();
+      });
+      hint.appendChild(b);
+      hint.appendChild(document.createTextNode('?'));
+    }
+    input.addEventListener('blur', check);
+    input.addEventListener('input', function () { if (!hint.hidden && !mailSuggest(input.value)) { hint.hidden = true; } });
+    return check;
+  }
+
+  var emailInput = document.getElementById('lw-email');
+  var confirmBox = document.getElementById('lw-confirm');
+  var mainSubmit = form.querySelector('[data-lw-main]');
+  var confirmedEmail = '';
+  function hideConfirm() { confirmBox.hidden = true; mainSubmit.hidden = false; }
+  mailTypoHint(emailInput, document.getElementById('lw-email-hint'), function () { confirmedEmail = ''; hideConfirm(); });
+  emailInput.addEventListener('input', function () { confirmedEmail = ''; hideConfirm(); });
+  confirmBox.querySelector('[data-lw-yes]').addEventListener('click', function () {
+    confirmedEmail = emailInput.value.trim().toLowerCase();
+    hideConfirm();
+    if (form.requestSubmit) form.requestSubmit(); else form.dispatchEvent(new Event('submit', { cancelable: true }));
+  });
+  confirmBox.querySelector('[data-lw-fix]').addEventListener('click', function () {
+    confirmedEmail = '';
+    hideConfirm();
+    emailInput.focus();
+    emailInput.select();
+  });
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     showErr('');
@@ -5360,7 +5453,15 @@ window.interdeal = {
       return;
     }
 
-    var btn = form.querySelector('.lw__submit');
+    if (confirmedEmail !== email.toLowerCase()) {
+      document.getElementById('lw-confirm-mail').textContent = email;
+      confirmBox.hidden = false;
+      mainSubmit.hidden = true;
+      confirmBox.querySelector('[data-lw-yes]').focus();
+      return;
+    }
+
+    var btn = mainSubmit;
     var label = btn.textContent;
     btn.disabled = true;
     btn.textContent = 'שומרים...';

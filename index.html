@@ -2099,6 +2099,10 @@ html.is-launched [data-pre]{display:none !important}
 /* אחרי שהסבב נסגר (אזל או עברה שעת הסגירה): הכפתורים לתשלום יורדים, ו-data-closed עולה. */
 html:not(.is-closed) [data-closed]{display:none !important}
 html.is-closed [data-post]{display:none !important}
+/* 19-10-2026 (שלהבת): הסבב התמלא ונקבעו מקומות נוספים שעוד לא נפתחו. data-extra עולה במקום "נסגרה" ובמקום התשלום. */
+html:not(.is-extra) [data-extra]{display:none !important}
+html.is-extra [data-post],html.is-extra [data-closed]{display:none !important}
+[data-extra-when]{white-space:nowrap}
 /* הקישור האישי (?k=...): שורות שמופיעות רק למי שנכנס דרכו, אחרי הפתיחה. */
 html:not(.is-personal) [data-personal-only]{display:none !important}
 /* תגית ההטבה בראש הדף, למי שנכנס מהקישור האישי. זהב כהדגשה קטנה, לא כמשטח. */
@@ -2223,6 +2227,11 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
     <div class="bar-cd" data-bar-cd="close" aria-hidden="true" hidden><span class="bar-cd__u bar-cd__u--d"><b data-bu="d">--</b><small>ימים</small></span><i class="bar-cd__sep bar-cd__sep--d">:</i><span class="bar-cd__u"><b data-bu="h">--</b><small>שעות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="m">--</b><small>דקות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="s">--</b><small>שניות</small></span></div>
     <p class="launch-bar__t" data-post-fallback>ההרשמה פתוחה, ומספר המקומות מוגבל.</p>
     <div class="bar-seats" data-seats hidden></div>
+  </div>
+  <!-- 19-10-2026 (שלהבת): הסבב התמלא, ונקבעו בדשבורד של נועם מקומות נוספים שעוד לא נפתחו. -->
+  <div class="launch-bar__in" data-extra>
+    <p class="launch-bar__t">הסבב <span data-round-ord>הראשון</span> התמלא. שלהבת פותחת עוד <span data-extra-seats>5</span> מקומות <span data-extra-when>היום ב-17:00</span>.</p>
+    <div class="bar-cd" data-bar-cd="extra" aria-hidden="true"><span class="bar-cd__u bar-cd__u--d"><b data-bu="d">--</b><small>ימים</small></span><i class="bar-cd__sep bar-cd__sep--d">:</i><span class="bar-cd__u"><b data-bu="h">--</b><small>שעות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="m">--</b><small>דקות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="s">--</b><small>שניות</small></span></div>
   </div>
   <div class="launch-bar__in" data-closed>
     <p class="launch-bar__t">ההרשמה לסבב <span data-round-ord>הראשון</span> נסגרה.</p>
@@ -3133,6 +3142,10 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
         <a class="btn price__cta" href="מסך-ההטבה.html">לראות את ההטבה ולהתחיל</a>
         <p class="price__calm" data-personal-html="אפשר לחלק עד 12 תשלומים.">לחיצה לא מחייבת - קודם רואים את ההטבה.</p>
         </div>
+        <div class="launch" data-extra>
+          <p class="launch__kicker">הסבב <span data-round-ord>הראשון</span> התמלא. שלהבת פותחת עוד <span data-extra-seats>5</span> מקומות <span data-extra-when>היום ב-17:00</span>.</p>
+          <button class="btn price__cta" type="button" data-extra-open>להירשם ולקבל קישור ב-<span data-extra-time>17:00</span></button>
+        </div>
         <div class="launch" data-closed>
           <p class="launch__kicker">ההרשמה לסבב <span data-round-ord>הראשון</span> נסגרה</p>
           <p class="launch__limit">הסבב הבא עוד לא נקבע. מי שנרשם עכשיו מקבל הודעה בוואטסאפ ובמייל ראשון, כשהוא נפתח.</p>
@@ -3259,6 +3272,10 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
     <p class="final__price" data-personal-html="ההטבה של 1,000 ₪ שמורה לך, ונכנסת לבד בתשלום. אפשר לחלק עד 12 תשלומים.">5,900 ₪, ובקישור מטה מחכה לכם הטבת הרשמה, ואז ניתן לחלק עד 12 תשלומים.</p>
     <a class="btn" href="מסך-ההטבה.html">אני רוצה להתחיל</a>
     <p class="final__calm" data-personal-html="ההטבה נשמרת לך עד שההרשמה נסגרת.">לחיצה לא מחייבת. ההטבה נשמרת לכם עד שההרשמה נסגרת.</p>
+    </div>
+    <div data-extra>
+      <p>הסבב <span data-round-ord>הראשון</span> התמלא. שלהבת פותחת עוד <span data-extra-seats>5</span> מקומות <span data-extra-when>היום ב-17:00</span>.</p>
+      <button class="btn" type="button" data-extra-open>להירשם ולקבל קישור ב-<span data-extra-time>17:00</span></button>
     </div>
     <div data-closed>
       <p>ההרשמה לסבב <span data-round-ord>הראשון</span> נסגרה. הסבב הבא עוד לא נקבע, ומי שנרשם עכשיו מקבל הודעה ראשון כשהוא נפתח.</p>
@@ -3790,7 +3807,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
         else {
           var rc = document.documentElement.classList;
           var launched = rc.contains('is-launched'), closed = rc.contains('is-closed');
-          if (t.closest('[data-launch-open], [data-next-open]')) kind = 'signup';
+          if (t.closest('[data-launch-open], [data-next-open], [data-extra-open]')) kind = 'signup';
           else if (t.closest('a.btn[href="#price"]')) {
             kind = (launched && !closed && rc.contains('is-personal')) ? 'buy' : 'start';
           }
@@ -5081,14 +5098,19 @@ window.interdeal = {
      הפתיחה. שרת שלא עונה = נשארים פתוחים: החנות עצמה לא
      מוכרת מעבר למלאי. */
   var isClosed = false;
+  /* מקומות נוספים שנקבעו ועוד לא נפתחו (19-10-2026, שלהבת): השרת מחזיר round.extra = {seats, openAt, open}.
+     כל עוד הם לא נפתחו הדף לא אומר "נסגרה", אלא מתי הם נפתחים, עם שעון, ומציע להירשם כדי לקבל קישור אישי.
+     בשעת הפתיחה הדף שואל שוב את השרת, ועובר לבד למצב "פתוח". */
+  var extraPending = false, extraAt = NaN, extraKick = false, extraLabel = '', extraWhenTxt = '', extraSeatsN = 0;
   function applyState() {
     var on = isLaunched();
     root.classList.toggle('is-launched', on);
     root.classList.toggle('is-closed', isClosed);
-    var personal = !!personalKey && on && !isClosed;
+    root.classList.toggle('is-extra', extraPending && !isClosed);
+    var personal = !!personalKey && on && !isClosed && !extraPending;
     root.classList.toggle('is-personal', personal);
     ctas.forEach(function (a) {
-      a.textContent = isClosed ? NEXT_LABEL : (on ? (personal ? PERSONAL_LABEL : a.getAttribute('data-label')) : PRE_LABEL);
+      a.textContent = isClosed ? NEXT_LABEL : extraPending ? extraLabel : (on ? (personal ? PERSONAL_LABEL : a.getAttribute('data-label')) : PRE_LABEL);
     });
     buyLinks.forEach(function (a) { a.textContent = personal ? PERSONAL_LABEL : a.getAttribute('data-label'); });
     personalTexts.forEach(function (el) {
@@ -5113,7 +5135,15 @@ window.interdeal = {
         remaining = typeof d.remaining === 'number' ? d.remaining : null;
         renderSeats();
         tick();
-        if (isLaunched() && d.open === false) setClosed();
+        var ex = d.round && d.round.extra;
+        var exAt = ex && ex.openAt ? Date.parse(ex.openAt) : NaN;
+        /* בדקות הראשונות אחרי הפתיחה החנות עוד מסונכרנת (המלאי מתעדכן כל 2 דקות), ולכן "אזל" אז אינו סגירה. */
+        var exWait = !isNaN(exAt) && (ex.open !== true || Date.now() - exAt < 10 * 60 * 1000);
+        if (isLaunched() && d.open === false && d.closed !== true && ex && exWait) setExtraPending(ex.seats, exAt);
+        else {
+          if (extraPending) { extraPending = false; applyState(); }
+          if (isLaunched() && d.open === false) setClosed();
+        }
         maybeAutoGo();
       }).catch(function () { maybeAutoGo(); });
     } catch (e) {}
@@ -5126,8 +5156,34 @@ window.interdeal = {
     var el = document.querySelector('a.btn[href="#price"], a[href^="מסך-ההטבה.html"]');
     if (el) redeemAndGo(el);
   }
+  function hhmm(ts) {
+    try {
+      var p = {};
+      new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Jerusalem', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+        .formatToParts(new Date(ts)).forEach(function (x) { p[x.type] = x.value; });
+      return p.hour + ':' + p.minute;
+    } catch (e) { return ''; }
+  }
+  function ilDate(ts) {
+    try { return new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Jerusalem' }).format(new Date(ts)); } catch (e) { return ''; }
+  }
+  function setExtraPending(n, ts) {
+    extraPending = true; extraAt = ts;
+    var t = hhmm(ts);
+    var whenTxt = (ilDate(ts) === ilDate(Date.now()) ? 'היום' : (dayText(ts) || '')) + ' ב-' + t;
+    extraLabel = 'להירשם ולקבל קישור ב-' + t;
+    extraWhenTxt = whenTxt;
+    if (typeof n === 'number' && n > 0) extraSeatsN = n;
+    if (typeof n === 'number' && n > 0) all('[data-extra-seats]').forEach(function (el) { el.textContent = n; });
+    all('[data-extra-when]').forEach(function (el) { el.textContent = whenTxt; });
+    all('[data-extra-time]').forEach(function (el) { el.textContent = t; });
+    if (!statusTimer) statusTimer = setInterval(fetchStatus, 60000);
+    applyState();
+    tick();
+  }
   function setClosed() {
     isClosed = true;
+    extraPending = false;
     if (statusTimer) { clearInterval(statusTimer); statusTimer = null; }
     applyState();
     /* ?next=1 (מהכפתור במסך ההטבה): פותחים מיד את טופס הסבב הבא. אחרי סיום
@@ -5160,6 +5216,7 @@ window.interdeal = {
   var boxes = all('[data-cd]');
   var barLaunch = all('[data-bar-cd="launch"]');
   var barClose = all('[data-bar-cd="close"]');
+  var barExtra = all('[data-bar-cd="extra"]');
   var closeLabels = all('[data-close-label]');
   var postFallback = all('[data-post-fallback]');
   var timer = null;
@@ -5179,6 +5236,10 @@ window.interdeal = {
       closeLabels.concat(barClose).forEach(function (el) { el.hidden = !hasClose; });
       postFallback.forEach(function (el) { el.hidden = hasClose; });
       if (hasClose) barClose.forEach(function (el) { paintBar(el, parts(closeAt - now)); });
+      if (extraPending && !isNaN(extraAt)) {
+        barExtra.forEach(function (el) { paintBar(el, parts(extraAt - now)); });
+        if (now >= extraAt && !extraKick) { extraKick = true; fetchStatus(); }
+      }
       if (isClosed && timer) { clearInterval(timer); timer = null; }
       return;
     }
@@ -5233,18 +5294,27 @@ window.interdeal = {
     '.lw__done p:not(.lw__again)': 'כשהסבב הבא ייפתח, נשלח לך הודעה בוואטסאפ ובמייל עם הקישור.'
   };
   var origHtml = {};
+  /* מצב "מקומות נוספים" (19-10-2026): אותו טופס הרשמה כמו בהשקה (נשמר כ-launch), עם הסבר על הפתיחה. */
+  function extraText() {
+    return {
+      '#lw-title': 'קישור אישי לפתיחה',
+      '.lw__sub': 'הסבב ' + roundOrd + ' התמלא. שלהבת פותחת עוד ' + (extraSeatsN || '') + ' מקומות ' + extraWhenTxt + '. משאירים פרטים, ובשעת הפתיחה נשלח לך קישור אישי עם ההטבה של 1,000 ₪.',
+      '.lw__done p:not(.lw__again)': 'בשעת הפתיחה, ' + extraWhenTxt + ', נשלח לך קישור אישי עם ההטבה.'
+    };
+  }
   function setMode(m) {
     mode = m;
-    Object.keys(NEXT_TEXT).forEach(function (sel) {
+    var map = m === 'next' ? NEXT_TEXT : (m === 'extra' ? extraText() : null);
+    Object.keys(NEXT_TEXT).concat(Object.keys(extraText())).forEach(function (sel) {
       var el = dlg.querySelector(sel);
       if (!el) return;
       if (!(sel in origHtml)) origHtml[sel] = el.innerHTML;
-      if (m === 'next') el.textContent = NEXT_TEXT[sel]; else el.innerHTML = origHtml[sel];
+      if (map && (sel in map)) el.textContent = map[sel]; else el.innerHTML = origHtml[sel];
     });
   }
   function storeKey() { return mode === 'next' ? NEXT_STORE_KEY : STORE_KEY; }
   function openDialog(m) {
-    setMode(m === 'next' ? 'next' : 'launch');
+    setMode(m === 'next' || m === 'extra' ? m : 'launch');
     show(registeredHere() ? 'again' : 'form');
     lastFocus = document.activeElement;
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
@@ -5272,6 +5342,11 @@ window.interdeal = {
     /* הכפתורים לאורך הדף (a.btn[href="#price"]) גוללים לחלק המחיר ולא פותחים את הטופס,
        גם לפני ההשקה ואחרי הסגירה (שלהבת, 17-10-2026: "הם צריכים לקרוא קצת"). הטופס
        נפתח רק מהכפתור שבתיבת המחיר ומזה שבסוף הדף. */
+    if (extraPending && !isClosed && t.closest('[data-extra-open]')) {
+      e.preventDefault();
+      openDialog('extra');
+      return;
+    }
     if (isClosed && t.closest('[data-next-open]')) {
       e.preventDefault();
       openDialog('next');
@@ -5483,7 +5558,7 @@ window.interdeal = {
     fetch(SIGNUP_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name, email: email, phone: phone, gender: g, consent: true, ref: ref, list: mode })
+      body: JSON.stringify({ name: name, email: email, phone: phone, gender: g, consent: true, ref: ref, list: mode === 'next' ? 'next' : 'launch' })
     }).then(function (res) {
       return res.json().catch(function () { return {}; }).then(function (data) {
         if (!res.ok || !data.ok) {

@@ -2211,7 +2211,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
 
 <!-- באנר ההשקה (16-10-2026). עד ההשקה: ספירה לאחור וכפתור שפותח את טופס ההרשמה.
      אחרי ההשקה: כפתור למסך ההטבה. ר' key-launch-js בסוף הדף. -->
-<div class="launch-bar" role="region" aria-label="ההשקה">
+<div class="launch-bar" role="region" aria-label="ההרשמה">
   <!-- הבאנר (16-10-2026, לבקשת שלהבת: "ההרשמה נפתחת עוד", ואז ישר שעון, ולידו
        "X מקומות נותרו"). ההיררכיה (עדי): הבאנר הוא רק דחיפות - שעון גדול, תווית
        קטנה, מקומות בקטן - בלי כפתור, כי הכפתור הראשי נמצא מיד מתחתיו בראש הדף. השעון סופר ל-LAUNCH_AT, ואחרי הפתיחה לשעת הסגירה שהשרת
@@ -3133,8 +3133,8 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
           <span class="cd__u"><b class="cd__n" data-u="m">--</b><span class="cd__l">דקות</span></span>
           <span class="cd__u"><b class="cd__n" data-u="s">--</b><span class="cd__l">שניות</span></span>
         </div>
-          <p class="launch__limit">מספר המקומות בהשקה מוגבל. מי שנרשם עכשיו מקבל הטבה של 1,000 ₪, ובשעת הפתיחה קישור אישי ישר לתשלום.</p>
-          <button class="btn price__cta" type="button" data-launch-open>להירשם להשקה</button>
+          <p class="launch__limit">מספר המקומות בסבב מוגבל. מי שנרשם עכשיו מקבל הטבה של 1,000 ₪, ובשעת הפתיחה קישור אישי ישר לתשלום.</p>
+          <button class="btn price__cta" type="button" data-launch-open>להירשם לסבב</button>
           <p class="price__calm">ההרשמה לא מחייבת לקנות.</p>
         </div>
         <div data-post>
@@ -3264,7 +3264,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
           <span class="cd__u"><b class="cd__n" data-u="m">--</b><span class="cd__l">דקות</span></span>
           <span class="cd__u"><b class="cd__n" data-u="s">--</b><span class="cd__l">שניות</span></span>
         </div>
-      <button class="btn" type="button" data-launch-open>להירשם להשקה</button>
+      <button class="btn" type="button" data-launch-open>להירשם לסבב</button>
       <p class="final__calm">ההרשמה לא מחייבת לקנות.</p>
     </div>
     <div data-post>
@@ -4923,7 +4923,7 @@ window.interdeal = {
   <div class="lw__body">
     <button class="lw__x" type="button" data-lw-close>סגירה</button>
     <div class="lw__form-wrap">
-      <h2 id="lw-title">הרשמה להשקה</h2>
+      <h2 id="lw-title">הרשמה לסבב</h2>
       <p class="lw__sub">ההרשמה נפתחת <span data-launch-day>במוצאי שבת</span><span data-launch-when-sep>, </span><span data-launch-when></span>, ומספר המקומות מוגבל. מי שנרשם עכשיו מקבל הטבה של 1,000 ₪, ובשעת הפתיחה נשלח לו בוואטסאפ ובמייל קישור אישי לדף, שממנו ממשיכים ישר לתשלום עם ההנחה.</p>
       <form id="lw-form" novalidate>
         <div class="lw__f" id="lw-f-name">
@@ -4954,7 +4954,7 @@ window.interdeal = {
           <input type="checkbox" id="lw-consent" />
           <label for="lw-consent">אני מאשר/ת לקבל מאִימפּרוּב עדכונים, הצעות ודיוור במייל ובוואטסאפ. אפשר להסיר בכל רגע.</label>
         </div>
-        <p class="lw__e" style="margin-inline-start:30px">בלי האישור הזה אי אפשר לשלוח לך את ההודעה על ההשקה.</p>
+        <p class="lw__e" style="margin-inline-start:30px">בלי האישור הזה אי אפשר לשלוח לך את ההודעה על פתיחת הסבב.</p>
         <button class="lw__submit" type="submit" data-lw-main>לשמור לי את ההטבה</button>
         <!-- "זה המייל שלך?" (17-10-2026, הכרעת שלהבת): לפני השליחה מציגים את המייל שוב, בגדול,
              כדי שטעות תיתפס כשהיא כבר לא באמצע הקלדה. -->
@@ -4966,7 +4966,7 @@ window.interdeal = {
           <button class="lw__fix" type="button" data-lw-fix>לתקן את המייל</button>
         </div>
         <p class="lw__err" id="lw-err" role="alert"></p>
-        <p class="lw__fine">הפרטים משמשים לשליחת ההטבה, להודעה על ההשקה ולעדכונים מאִימפּרוּב. <a href="https://aimprove.co.il/privacy-policy/" target="_blank" rel="noopener">מדיניות הפרטיות</a></p>
+        <p class="lw__fine">הפרטים משמשים לשליחת ההטבה, להודעה על פתיחת הסבב ולעדכונים מאִימפּרוּב. <a href="https://aimprove.co.il/privacy-policy/" target="_blank" rel="noopener">מדיניות הפרטיות</a></p>
       </form>
     </div>
     <div class="lw__done" hidden>
@@ -5003,7 +5003,8 @@ window.interdeal = {
   var ROUND = window.MAFTECHA_ROUND || null;
   var LAUNCH_AT  = (ROUND && ROUND.openAt) || '2026-10-17T21:00:00+03:00';
   var SIGNUP_URL = 'https://r.aimprove.co.il/api/maftecha-launch';
-  var PRE_LABEL  = 'להירשם להשקה';
+  /* 19-10-2026 (שלהבת): "להירשם לסבב" ולא "להירשם להשקה", כי מאז ההשקה כל פתיחה היא סבב. */
+  var PRE_LABEL  = 'להירשם לסבב';
   var STORE_KEY  = 'maftecha_launch_signup';
   var STATUS_URL = 'https://r.aimprove.co.il/api/maftecha-status';
   var NEXT_LABEL = 'להירשם לסבב הבא';

@@ -5125,7 +5125,7 @@ window.interdeal = {
   var remaining = null;
   var loadedBeforeLaunch = !isLaunched();
   function fetchStatus() {
-    if (isClosed) return;
+    if (isClosed) { watchClosed(); return; }
     if (previewClosed) { if (isLaunched()) setClosed(); return; }
     try {
       fetch(STATUS_URL).then(function (r) { return r.json(); }).then(function (d) {
@@ -5181,10 +5181,35 @@ window.interdeal = {
     applyState();
     tick();
   }
+  /* 19-10-2026 (שלהבת): "כל פעם שאני מעדכנת בדשבורד את המקומות הנוספים, וגם כשנפתח סבב חדש, שהבאנר יתעדכן
+     אוטומטית". דף שכבר במצב "נסגרה" ממשיך לשאול את השרת כל דקה, ונטען מחדש כשנקבעו מקומות נוספים, כשנקבע
+     סבב חדש, או כשההרשמה שוב פתוחה. לא בזמן שהטופס פתוח, כדי לא למחוק מה שהמבקר כתב: אז בבדיקה הבאה. */
+  var reloadWanted = false;
+  function maybeReload() {
+    var dl = document.getElementById('launch-dialog');
+    if (dl && dl.open) return;
+    location.reload();
+  }
+  function watchClosed() {
+    if (previewClosed) return;
+    if (reloadWanted) { maybeReload(); return; }
+    try {
+      fetch(STATUS_URL).then(function (r) { return r.json(); }).then(function (d) {
+        if (!d || !d.ok) return;
+        var rd = d.round || {};
+        var ex = rd.extra;
+        var exAt = ex && ex.openAt ? Date.parse(ex.openAt) : NaN;
+        var newRound = !!ROUND && typeof rd.n === 'number' && rd.n !== ROUND.n;
+        var extraNow = !isNaN(exAt) && ex.open !== true && d.closed !== true;
+        if (newRound || extraNow || d.open === true) { reloadWanted = true; maybeReload(); }
+      }).catch(function () {});
+    } catch (e) {}
+  }
   function setClosed() {
     isClosed = true;
     extraPending = false;
-    if (statusTimer) { clearInterval(statusTimer); statusTimer = null; }
+    /* ממשיכים לשאול גם אחרי "נסגרה" (ר' watchClosed). */
+    if (!statusTimer) statusTimer = setInterval(fetchStatus, 60000);
     applyState();
     /* ?next=1 (מהכפתור במסך ההטבה): פותחים מיד את טופס הסבב הבא. אחרי סיום
        הסקריפט, כי בטעינה הטופס עוד לא מאותחל כשזה נקרא. */
@@ -5261,7 +5286,7 @@ window.interdeal = {
   fetchStatus();
   /* לשונית שחזרה מהרקע: הדפדפן מאט טיימרים ברקע, ולכן מעדכנים מיד. */
   document.addEventListener('visibilitychange', function () {
-    if (document.visibilityState === 'visible') tick();
+    if (document.visibilityState === 'visible') { tick(); if (isClosed) watchClosed(); }
   });
 
   /* ── הטופס ── */

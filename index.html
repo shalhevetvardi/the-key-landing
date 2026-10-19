@@ -2103,6 +2103,8 @@ html.is-closed [data-post]{display:none !important}
 html:not(.is-extra) [data-extra]{display:none !important}
 html.is-extra [data-post],html.is-extra [data-closed]{display:none !important}
 [data-extra-when]{white-space:nowrap}
+/* שלהבת, 19-10-2026: "הסבב התמלא" בשורה אחת, ו"שלהבת פותחת" מתחתיה. */
+.x-l{display:block}
 /* הקישור האישי (?k=...): שורות שמופיעות רק למי שנכנס דרכו, אחרי הפתיחה. */
 html:not(.is-personal) [data-personal-only]{display:none !important}
 /* תגית ההטבה בראש הדף, למי שנכנס מהקישור האישי. זהב כהדגשה קטנה, לא כמשטח. */
@@ -2230,7 +2232,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
   </div>
   <!-- 19-10-2026 (שלהבת): הסבב התמלא, ונקבעו בדשבורד של נועם מקומות נוספים שעוד לא נפתחו. -->
   <div class="launch-bar__in" data-extra>
-    <p class="launch-bar__t">הסבב <span data-round-ord>הראשון</span> התמלא. שלהבת פותחת עוד <span data-extra-seats>5</span> מקומות <span data-extra-when>היום ב-17:00</span>.</p>
+    <p class="launch-bar__t"><span class="x-l">הסבב <span data-round-ord>הראשון</span> התמלא.</span> <span class="x-l">שלהבת פותחת עוד <span data-extra-seats>5</span> מקומות <span data-extra-when>היום ב-17:00</span>.</span></p>
     <div class="bar-cd" data-bar-cd="extra" aria-hidden="true"><span class="bar-cd__u bar-cd__u--d"><b data-bu="d">--</b><small>ימים</small></span><i class="bar-cd__sep bar-cd__sep--d">:</i><span class="bar-cd__u"><b data-bu="h">--</b><small>שעות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="m">--</b><small>דקות</small></span><i class="bar-cd__sep">:</i><span class="bar-cd__u"><b data-bu="s">--</b><small>שניות</small></span></div>
   </div>
   <div class="launch-bar__in" data-closed>
@@ -3143,7 +3145,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
         <p class="price__calm" data-personal-html="אפשר לחלק עד 12 תשלומים.">לחיצה לא מחייבת - קודם רואים את ההטבה.</p>
         </div>
         <div class="launch" data-extra>
-          <p class="launch__kicker">הסבב <span data-round-ord>הראשון</span> התמלא. שלהבת פותחת עוד <span data-extra-seats>5</span> מקומות <span data-extra-when>היום ב-17:00</span>.</p>
+          <p class="launch__kicker"><span class="x-l">הסבב <span data-round-ord>הראשון</span> התמלא.</span> <span class="x-l">שלהבת פותחת עוד <span data-extra-seats>5</span> מקומות <span data-extra-when>היום ב-17:00</span>.</span></p>
           <button class="btn price__cta" type="button" data-extra-open>להירשם ולקבל קישור ב-<span data-extra-time>17:00</span></button>
         </div>
         <div class="launch" data-closed>
@@ -3274,7 +3276,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
     <p class="final__calm" data-personal-html="ההטבה נשמרת לך עד שההרשמה נסגרת.">לחיצה לא מחייבת. ההטבה נשמרת לכם עד שההרשמה נסגרת.</p>
     </div>
     <div data-extra>
-      <p>הסבב <span data-round-ord>הראשון</span> התמלא. שלהבת פותחת עוד <span data-extra-seats>5</span> מקומות <span data-extra-when>היום ב-17:00</span>.</p>
+      <p><span class="x-l">הסבב <span data-round-ord>הראשון</span> התמלא.</span> <span class="x-l">שלהבת פותחת עוד <span data-extra-seats>5</span> מקומות <span data-extra-when>היום ב-17:00</span>.</span></p>
       <button class="btn" type="button" data-extra-open>להירשם ולקבל קישור ב-<span data-extra-time>17:00</span></button>
     </div>
     <div data-closed>

@@ -401,6 +401,14 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
     ref = (new URLSearchParams(location.search).get('r') || '')
       .replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
   } catch (e) {}
+  /* הקוד מהקישור לפוסטים של תלמיד/ת מפתח, שדף המפתח שמר במכשיר (maftecha_post_code ב-index.html).
+     נשלח בתפיסת ההטבה, ומשם נכתב על הליד רק אם עוד אין עליו קוד. */
+  var postCode = '';
+  try {
+    var pcq = (new URLSearchParams(location.search).get('pc') || '').toLowerCase();
+    if (/^[a-z][a-z0-9]{5}$/.test(pcq) && !localStorage.getItem('maftecha_post_code')) localStorage.setItem('maftecha_post_code', pcq);
+    postCode = localStorage.getItem('maftecha_post_code') || '';
+  } catch (e) {}
   if (ref) {
     var line = document.getElementById('ref-line');
     /* ⚠️ השם המלא של הממליצה אינו כאן - הוא יושב באיירטייבל ונשלף
@@ -555,7 +563,7 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
 
     var payload = {
       name: name, email: email, phone: phone, gender: gender,
-      consent: true, ref: ref || '', claimedAt: Date.now()
+      consent: true, ref: ref || '', postCode: postCode, claimedAt: Date.now()
     };
 
     submitClaim(payload).then(function (data) {

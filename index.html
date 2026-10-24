@@ -5046,6 +5046,18 @@ window.interdeal = {
     ref = (new URLSearchParams(q).get('r') || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
   } catch (e) {}
 
+  /* הקוד מהקישור לפוסטים של תלמיד/ת מפתח (?pc=, מ-r.aimprove.co.il/k/<קוד>, 24-10-2026, לבקשת שלהבת).
+     נשמר במכשיר, כדי שגם מי שחוזר לדף בלי הקישור, או עובר למסך ההטבה, יישלח איתו בהרשמה ובתפיסת
+     ההטבה. הקוד הראשון נשאר, כמו בשרת (postCodeFields ב-aimprove-redirector): הפוסט שהביא את האדם
+     ראשון הוא שמזכה את התלמיד/ה ב-250 ₪ אם יקנה. */
+  var POST_CODE_STORE = 'maftecha_post_code';
+  var postCode = '';
+  try {
+    var pcq = (new URLSearchParams(q).get('pc') || '').toLowerCase();
+    if (/^[a-z][a-z0-9]{5}$/.test(pcq) && !localStorage.getItem(POST_CODE_STORE)) localStorage.setItem(POST_CODE_STORE, pcq);
+    postCode = localStorage.getItem(POST_CODE_STORE) || '';
+  } catch (e) {}
+
   var root = document.documentElement;
   function isLaunched() { return Date.now() >= at; }
   function all(sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); }
@@ -5586,7 +5598,7 @@ window.interdeal = {
     fetch(SIGNUP_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name, email: email, phone: phone, gender: g, consent: true, ref: ref, list: mode === 'next' ? 'next' : 'launch' })
+      body: JSON.stringify({ name: name, email: email, phone: phone, gender: g, consent: true, ref: ref, postCode: postCode, list: mode === 'next' ? 'next' : 'launch' })
     }).then(function (res) {
       return res.json().catch(function () { return {}; }).then(function (data) {
         if (!res.ok || !data.ok) {

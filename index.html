@@ -3644,6 +3644,20 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
     var ENDPOINT = 'https://r.aimprove.co.il/e';
     var PAGE = 'maftecha';
 
+    /* הקוד האישי (?who=, ר' למטה) יוצא מהכתובת מיד, לפני כל דבר אחר (27-10-2026, כמו בדף הטירונות). בלי זה מי
+       ששיתף את הקישור היה מקבל את הביקור של מי שקיבל ממנו, והקוד היה יוצא לפייסבוק ולגוגל עם כתובת הדף
+       (consent-banner.js נטען אחרי הסקריפט הזה). רק who יוצא; src, k, r, pc והשאר נשארים. גם במכשיר שסומן "זו אני". */
+    var whoParam = '';
+    try {
+      var qs = new URLSearchParams(location.search);
+      if (qs.has('who')) {
+        whoParam = String(qs.get('who') || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
+        qs.delete('who');
+        var rest = qs.toString();
+        history.replaceState(history.state, '', location.pathname + (rest ? '?' + rest : '') + location.hash);
+      }
+    } catch (e) {}
+
     /* דילוג-מדידה לשלהבת ולצוות. היא נכנסת לדף הרבה - לבדוק, להראות,
        לערוך - וכל כניסה כזו נספרת כמבקרת ומטה דווקא את "כמה הגיעו עד
        המחיר". מסומן בדפדפן ולא לפי IP (כתובת מתחלפת, ושמירתה מרעה את
@@ -3691,6 +3705,17 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
       src = String(src).replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
     } catch (e) { src = ''; }
 
+    /* קוד אישי (27-10-2026): ?who= בקישור אישי ששלחנו לאדם מסוים (מ-ManyChat: mc<מספר הכרטיס>). כך מחברים את
+       הביקור לאדם: עד איפה גלל, אם ראה את המחיר, על מה לחץ. נשמר רק לביקור הזה (sessionStorage), ולא כמו src
+       לביקורים הבאים, כדי שלא יהפוך למזהה קבוע בדפדפן. נשלח עם כל אירוע. מהכתובת הוא כבר יצא, למעלה.
+       האוסף (aimprove-redirector) מקבל who מכל דף מ-25-10-2026, והדוח ב-sales-automation קורא אותו. */
+    var who = whoParam;
+    try {
+      if (who) sessionStorage.setItem('aim_who', who);
+      else who = String(sessionStorage.getItem('aim_who') || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
+    } catch (e) {}
+    window.__aimWho = who;
+
     var t0 = Date.now();
     var depthIdx = -1;
     var sent = {};
@@ -3699,6 +3724,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
       try {
         var body = { v: 1, vid: vid, e: ev, p: PAGE };
         if (src) body.src = src;
+        if (who) body.who = who;
         if (extra) for (var k in extra) { if (extra.hasOwnProperty(k)) body[k] = extra[k]; }
         var payload = JSON.stringify(body);
         /* text/plain = בקשה פשוטה, בלי preflight. sendBeacon שורד יציאה מהדף. */

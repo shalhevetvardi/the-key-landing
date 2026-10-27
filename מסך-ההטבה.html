@@ -292,7 +292,7 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
         <div class="field" id="f-phone">
           <label for="phone">טלפון</label>
           <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="050-0000000" />
-          <p class="err">מספר טלפון ישראלי תקין, בבקשה.</p>
+          <p class="err">מספר טלפון תקין, בבקשה. מחוץ לישראל - עם + וקידומת המדינה, <span style="white-space:nowrap">למשל <span dir="ltr">+1 212 555 0123</span></span></p>
         </div>
 
         <!-- לשון הפנייה (14-10-2026, לבקשת שלהבת). נשמרת בשדה "מגדר" ב-Airtable,
@@ -447,10 +447,14 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
 
   /* מספר ישראלי: 9-10 ספרות אחרי הסרת מפרידים, או +972. מכוון להיות
      סלחני - חסימת מספר תקין היא נזק גדול יותר מקליטת מספר שגוי. */
+  /* 27-10-2026: גם מספר מחוץ לישראל, עם + או 00 וקידומת המדינה (נרשמת עם מספר אמריקאי נחסמה). אותו כלל כמו
+     normalizeLeadPhone בשרת (aimprove-redirector, src/maftecha-claim.ts). בלי קידומת לא מנחשים מדינה. */
   function phoneOk(v) {
     var d = String(v).replace(/[\s\-().]/g, '');
-    if (/^\+?972\d{8,9}$/.test(d)) return true;
-    return /^0\d{8,9}$/.test(d);
+    var intl = /^(\+|00)/.test(d);
+    var n = d.replace(/^(\+|00)/, '');
+    if (/^972\d{8,9}$/.test(n) || /^0\d{8,9}$/.test(n)) return true;
+    return intl && !/^(972|0)/.test(n) && /^[1-9]\d{7,14}$/.test(n);
   }
   function emailOk(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim()); }
 

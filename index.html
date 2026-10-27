@@ -4984,7 +4984,7 @@ window.interdeal = {
         <div class="lw__f" id="lw-f-phone">
           <label for="lw-phone">מספר וואטסאפ</label>
           <input type="tel" id="lw-phone" autocomplete="tel" inputmode="tel" placeholder="050-0000000" />
-          <p class="lw__e">מספר טלפון ישראלי תקין, בבקשה. אליו תגיע ההודעה בוואטסאפ.</p>
+          <p class="lw__e">מספר וואטסאפ תקין, בבקשה. מחוץ לישראל - עם + וקידומת המדינה, <span style="white-space:nowrap">למשל <span dir="ltr">+1 212 555 0123</span></span></p>
         </div>
         <div class="lw__f" id="lw-f-gender">
           <p class="lw__q" id="lw-gender-q">באיזו לשון פנייה נוח לכם שנפנה אליכם?</p>
@@ -5527,10 +5527,14 @@ window.interdeal = {
     if (input) input.setAttribute('aria-invalid', on ? 'true' : 'false');
   }
   /* סלחני בכוונה, כמו במסך ההטבה: חסימת מספר תקין גרועה מקליטת מספר שגוי. */
+  /* 27-10-2026: גם מספר מחוץ לישראל, עם + או 00 וקידומת המדינה (נרשמת עם מספר אמריקאי נחסמה). אותו כלל כמו
+     normalizeLeadPhone בשרת (aimprove-redirector, src/maftecha-claim.ts). בלי קידומת לא מנחשים מדינה. */
   function phoneOk(v) {
     var d = String(v).replace(/[\s\-().]/g, '');
-    if (/^\+?972\d{8,9}$/.test(d)) return true;
-    return /^0\d{8,9}$/.test(d);
+    var intl = /^(\+|00)/.test(d);
+    var n = d.replace(/^(\+|00)/, '');
+    if (/^972\d{8,9}$/.test(n) || /^0\d{8,9}$/.test(n)) return true;
+    return intl && !/^(972|0)/.test(n) && /^[1-9]\d{7,14}$/.test(n);
   }
   function emailOk(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim()); }
   function gender() {

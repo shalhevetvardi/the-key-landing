@@ -236,6 +236,13 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
 .done .no-wait{margin:0 0 12px;color:#222}
 .done .no-wait strong{color:#111}
 .done .after-pay{margin:14px 0 0;font-size:14.5px}
+/* מבצע יום הבחירות, סבב 2 בלבד (27-10-2026, הכרעה 147 של שלהבת): קוד VOTE500 שמזינים בקופה
+   יחד עם קוד ההטבה. מוסתר כברירת מחדל ומוצג מהסקריפט (renderPromo). באותו מראה כמו .rule. */
+.done .promo{margin:0 0 4px;padding:12px 14px;border-radius:12px;background:#FFF8DB;border:1px solid #F3DE8A;color:#222;font-size:14.5px;line-height:1.6}
+.done .promo b{color:#111;font-weight:800;white-space:nowrap}
+.done .promo .promo-nw{white-space:nowrap}
+.done .promo .promo-lead{font-weight:700;color:#111}
+.done .promo[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -323,6 +330,7 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
           <b id="coupon-code">-</b>
           <button class="copy" type="button" id="copy-code" aria-live="polite">העתקת הקוד</button>
         </div>
+        <p class="promo" id="round-promo" hidden><span class="promo-lead">לכבוד הבחירות, בסבב הזה בלבד:</span><br />עוד <b>500 ₪</b> הנחה עם הקוד <b dir="ltr">VOTE500</b> בקופה. <span class="promo-nw"><b>4,400 ₪</b> במקום 5,900 ₪.</span></p>
         <button class="submit" type="button" id="to-pay">להמשיך לרכישה</button>
         <p class="after-pay">ההטבה בתוקף עד <span class="deadline" id="deadline">-</span>. אפשר גם לחזור בתוך החלון הזה - ההנחה תחכה.</p>
       </div>
@@ -375,11 +383,23 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
      שואלים את השרת בטעינה; שרת שלא עונה = הטופס נשאר, ו-/api/claim עצמו יסרב אם צריך.
      ?launch=closed מציג את המצב הזה לבדיקה. */
   function showClosed() { document.body.classList.add('is-closed'); window.scrollTo(0, 0); }
+  /* ── מבצע יום הבחירות (27-10-2026, הכרעות 147-148 של שלהבת) ──
+     בסבב 2 בלבד: שורת VOTE500 בין קוד ההטבה לכפתור "להמשיך לרכישה", כדי שתיקרא לפני הקופה. מוצגת רק כשהשרת אומר שהסבב הנוכחי הוא 2 ושהוא
+     לא סגור, ורק עד שעת הסגירה של הסבב (28-10-2026 ב-22:00 שעון ישראל). נבדקת שוב כשההטבה נתפסת,
+     כדי שמסך שנשאר פתוח לא יציג אותה אחרי השעה. שרת שלא עונה = השורה לא מוצגת. */
+  var PROMO_END = Date.parse('2026-10-28T20:00:00Z');
+  var promoRound = false;
+  function renderPromo() {
+    var el = document.getElementById('round-promo');
+    if (el) el.hidden = !(promoRound && Date.now() < PROMO_END && !document.body.classList.contains('is-closed'));
+  }
   if (/[?&]launch=closed(&|$)/.test(location.search)) showClosed();
   else {
     try {
       fetch(STATUS_URL).then(function (r) { return r.json(); }).then(function (d) {
         if (d && d.ok && d.open === false) showClosed();
+        promoRound = !!(d && d.ok && d.open !== false && d.round && d.round.n === 2);
+        renderPromo();
         /* הסבב הנוכחי עוד לא נפתח (סבב שנקבע אחרי סבב 1): לדף הראשי, כמו ההפניה שבראש הדף. */
         var o = d && d.ok ? Date.parse(d.openAt || '') : NaN;
         if (!isNaN(o) && Date.now() < o && !/[?&]launch=(after|closed)(&|$)/.test(location.search)) {
@@ -580,6 +600,7 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
       document.getElementById('deadline').textContent =
         end.toLocaleString('he-IL', { weekday: 'long', hour: '2-digit', minute: '2-digit' });
       document.body.classList.add('is-done');
+      renderPromo();
       window.scrollTo(0, 0);
     }).catch(function (err) {
       var code = err && err.code;

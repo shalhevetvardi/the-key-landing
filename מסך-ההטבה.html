@@ -243,9 +243,40 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
 .done .promo .promo-nw{white-space:nowrap}
 .done .promo .promo-lead{font-weight:700;color:#111}
 .done .promo[hidden]{display:none}
+
+/* ── שני מצבי הטבה (29-10-2026, הכרעת שלהבת) ──
+   "personal" (קודים אישיים) = הטופס והנוסח של לפני הקמפיין, בלי שינוי. "campaign" (ברירת מחדל) = קוד קמפיין אחד
+   לסבב, בלי טופס. המצב מגיע מ-/api/maftecha-status (mode). עד שהתשובה מגיעה מוצגת רק שורת הטעינה. */
+#personal-view,#campaign-view,#st-loading{display:none}
+body.m-loading #st-loading{display:block}
+body.m-personal #personal-view{display:block}
+body.m-campaign #campaign-view{display:block}
+body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-loading{display:none}
+#st-loading p,#c-fail p{margin:0 0 14px;color:#333;font-size:15.5px;line-height:1.65}
+#c-fail h2{margin:0 0 10px;font-weight:900;color:#111;font-size:clamp(21px,5vw,27px);line-height:1.3}
+#campaign-view .code-box{margin:0 0 16px;padding:16px 16px 14px;border:2px dashed #E0B400;border-radius:14px;background:#FFF8DB;text-align:center}
+#campaign-view .code-box .code-label{margin:0 0 6px;font-size:14px;font-weight:600;color:#444}
+#campaign-view .code-box b{display:block;margin:0 0 12px;color:#111;font-weight:900;font-size:clamp(24px,7vw,32px);letter-spacing:1px;font-family:ui-monospace,monospace;direction:ltr;user-select:all;-webkit-user-select:all;overflow-wrap:anywhere}
+#campaign-view .copy{appearance:none;border:1.5px solid var(--navy);background:#fff;color:var(--navy);font:inherit;font-weight:800;font-size:15px;padding:9px 20px;border-radius:999px;cursor:pointer}
+#campaign-view .copy:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+#campaign-view .copy.is-copied{background:var(--navy);color:#fff}
+#campaign-view .promo{margin:0 0 4px;padding:12px 14px;border-radius:12px;background:#FFF8DB;border:1px solid #F3DE8A;color:#222;font-size:14.5px;line-height:1.6}
+#campaign-view .promo b{color:#111;font-weight:800;white-space:nowrap}
+#campaign-view .promo .promo-nw{white-space:nowrap}
+#campaign-view .promo .promo-lead{font-weight:700;color:#111}
+#campaign-view .promo[hidden]{display:none}
+#campaign-view .attr{margin:18px 0 0;padding:14px;border-radius:12px;border:1px solid #E1E4EA;background:#F5F6F8}
+#campaign-view .attr label{display:block;margin:0 0 8px;font-weight:600;font-size:14.5px;line-height:1.5;color:#222}
+#campaign-view .attr input{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #B9BEC9;background:#fff;color:#111;font:inherit;font-size:16px;direction:ltr;text-align:left}
+#campaign-view .attr input::placeholder{color:#8A8F9A}
+#campaign-view .attr input:focus{outline:2px solid var(--navy);outline-offset:1px;border-color:transparent}
+#campaign-view .attr input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
+#campaign-view .attr .attr-err{margin:6px 0 0;font-weight:500;font-size:13px;color:#B3261E}
+#campaign-view .after-pay{margin:14px 0 0;font-weight:400;font-size:14.5px;line-height:1.6;color:#444}
+#campaign-view [hidden],#c-fail[hidden]{display:none !important}
 </style>
 </head>
-<body>
+<body class="m-loading">
 
 <div class="top">
   <div class="wrap">
@@ -259,6 +290,10 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
   <div class="wrap">
     <div class="card">
 
+      <div id="st-loading" role="status"><p>טוענים את ההטבה...</p></div>
+
+      <!-- מצב "קודים אישיים": הטופס והנוסח כמו שהיו, בלי שינוי. -->
+      <div id="personal-view">
       <span class="gift">🎁 ההטבה שלך</span>
 
       <!-- ⚠️ הכותרת היא מסירת מתנה, לא בקשת פרטים. ר' ההערה ב-CSS. -->
@@ -335,6 +370,40 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
         <p class="after-pay">ההטבה בתוקף עד <span class="deadline" id="deadline">-</span>. אפשר גם לחזור בתוך החלון הזה - ההנחה תחכה.</p>
       </div>
 
+      </div>
+
+      <!-- מצב "קוד קמפיין" (ברירת מחדל): קוד הנחה אחד לכל סבב, זהה לכולם. בלי טופס. הקוד מ-campaignCode ב-/api/maftecha-status.
+           בלי קוד בסבב פתוח: "ההרשמה פתוחה" וכפתור תשלום, בלי קוד ובלי הבטחת הנחה. לא ממציאים קוד. -->
+      <div id="campaign-view">
+        <div id="c-open" hidden>
+          <span class="gift" id="c-gift">🎁 ההטבה של הסבב</span>
+          <h1 id="c-title">הנחה<span data-amount></span> לכל מי שנרשם <b>בסבב הזה</b></h1>
+          <p class="lead" id="c-lead">זה אותו קוד לכולם, והוא תקף כל עוד ההרשמה לסבב פתוחה והמקומות לא נגמרו.</p>
+          <div id="c-code-part">
+            <div class="code-box">
+              <p class="code-label">קוד ההנחה של הסבב</p>
+              <b id="c-code">-</b>
+              <button class="copy" type="button" id="c-copy" aria-live="polite">העתקת הקוד</button>
+            </div>
+            <p class="rule">מעתיקים את הקוד, ובקופה מזינים אותו בשדה <b>הקופון</b>.</p>
+            <p class="promo" id="c-promo" hidden><span class="promo-lead">לכבוד הבחירות, בסבב הזה בלבד:</span><br />עוד <b>500 ₪</b> הנחה עם הקוד <b dir="ltr">VOTE500</b> בקופה. <span class="promo-nw"><b>4,400 ₪</b> במקום 5,900 ₪.</span></p>
+          </div>
+          <!-- ייחוס (29-10-2026): רק למי שהגיע מפוסט של תלמיד/ת (?pc=) או ממנטור/ית (?r=). המייל שאיתו משלמים נשלח
+               ל-/api/maftecha-attribution לפני המעבר לקופה. כשל בשליחה לא חוסם את התשלום. -->
+          <div class="attr" id="c-attr" hidden>
+            <label for="c-attr-email">המייל שאיתו משלמים, כדי שנדע מי הביא אותך</label>
+            <input type="email" id="c-attr-email" autocomplete="email" inputmode="email" placeholder="you@example.com" />
+            <p class="attr-err" id="c-attr-err" role="alert" hidden>כתובת המייל לא נראית תקינה. אפשר לתקן, או להשאיר ריק ולהמשיך.</p>
+          </div>
+          <a class="submit" id="c-pay" href="https://aimprove.co.il/?add-to-cart=11113">להמשיך לתשלום</a>
+          <p class="after-pay" id="c-after">ההנחה תקפה בסבב הזה בלבד, ומספר המקומות מוגבל.</p>
+        </div>
+        <div id="c-fail" role="status" hidden>
+          <h2>לא הצלחנו לטעון את ההטבה</h2>
+          <p>אפשר לרענן את הדף בעוד רגע.</p>
+        </div>
+      </div>
+
       <div class="closed" role="status">
         <h2>ההרשמה לסבב <span data-round-ord>הראשון</span> נסגרה</h2>
         <p>כל המקומות בסבב הזה נתפסו, או שההרשמה הסתיימה. הסבב הבא עוד לא נקבע, ומי שנרשם לרשימת ההמתנה מקבל הודעה בוואטסאפ ובמייל ראשון, כשהוא נפתח.</p>
@@ -393,25 +462,112 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
     var el = document.getElementById('round-promo');
     if (el) el.hidden = !(promoRound && Date.now() < PROMO_END && !document.body.classList.contains('is-closed'));
   }
-  if (/[?&]launch=closed(&|$)/.test(location.search)) showClosed();
-  else {
-    try {
-      fetch(STATUS_URL).then(function (r) { return r.json(); }).then(function (d) {
-        if (d && d.ok && d.open === false) showClosed();
-        promoRound = !!(d && d.ok && d.open !== false && d.round && d.round.n === 2);
-        renderPromo();
-        /* הסבב הנוכחי עוד לא נפתח (סבב שנקבע אחרי סבב 1): לדף הראשי, כמו ההפניה שבראש הדף. */
-        var o = d && d.ok ? Date.parse(d.openAt || '') : NaN;
-        if (!isNaN(o) && Date.now() < o && !/[?&]launch=(after|closed)(&|$)/.test(location.search)) {
-          location.replace('index.html' + location.search + '#price');
-          return;
-        }
-        var ORD = ['', 'הראשון', 'השני', 'השלישי', 'הרביעי', 'החמישי', 'השישי', 'השביעי', 'השמיני', 'התשיעי', 'העשירי'];
-        var ord = d && d.round && ORD[d.round.n];
-        if (ord) Array.prototype.forEach.call(document.querySelectorAll('[data-round-ord]'), function (el) { el.textContent = ord; });
-      }).catch(function () {});
-    } catch (e) {}
+  /* ── שני מצבי הטבה (29-10-2026) ──
+     mode מ-/api/maftecha-status: "personal" / "קודים אישיים" = הטופס כמו שהיה. כל ערך אחר או חסר = "campaign". */
+  function modeOf(v) { v = String(v == null ? '' : v).trim(); return (v === 'personal' || v === 'קודים אישיים') ? 'personal' : 'campaign'; }
+  /* סכום ההנחה בנוסחי הקמפיין (הכרעת שלהבת, 29-10-2026: תמיד 1,000 ₪). אותו ערך ב-CAMPAIGN_AMOUNT שבדף המפתח. */
+  var CAMPAIGN_AMOUNT = '1,000 ₪';
+  var ORD = ['', 'הראשון', 'השני', 'השלישי', 'הרביעי', 'החמישי', 'השישי', 'השביעי', 'השמיני', 'התשיעי', 'העשירי'];
+  var PREVIEW_CLOSED = /[?&]launch=closed(&|$)/.test(location.search);
+  var curKey = '';
+  var personalSigns = false;
+  try {
+    personalSigns = /[?&]k=[A-Za-z0-9_-]{16,64}(&|$)/.test(location.search);
+    if (!personalSigns) {
+      /* הטבה אישית שנתפסה וטרם פגה (24 שעות). הטבה שפגה היא שארית של סבב קודם, ואינה סימן. */
+      var cl = JSON.parse(localStorage.getItem('maftecha_claim') || 'null');
+      var exp = cl ? Date.parse(cl.expiresAt || '') : NaN;
+      personalSigns = !isNaN(exp) && exp > Date.now();
+    }
+  } catch (e) {}
+  function setView(v) {
+    var c = document.body.classList;
+    c.remove('m-loading', 'm-personal', 'm-campaign');
+    c.add(v);
   }
+  function cleanCode(v) {
+    if (typeof v !== 'string') return '';
+    v = v.trim();
+    return v && v.length <= 40 ? v : '';
+  }
+  /* מצב הסבב. נשאל בטעינה, כל דקה כשהלשונית גלויה, כשהיא חוזרת להיות גלויה, ובקמפיין גם ברגע הלחיצה על התשלום.
+     null = השרת לא ענה בזמן או ענה לא תקין. */
+  function fetchStatus(ms) {
+    return new Promise(function (resolve) {
+      var done = false;
+      function fin(v) { if (!done) { done = true; resolve(v); } }
+      var t = setTimeout(function () { fin(null); }, ms);
+      try {
+        fetch(STATUS_URL, { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+          clearTimeout(t); fin(d && d.ok ? d : null);
+        }).catch(function () { clearTimeout(t); fin(null); });
+      } catch (e) { clearTimeout(t); fin(null); }
+    });
+  }
+  function keyOf(d) {
+    if (d.open === false) return 'closed';
+    if (modeOf(d.mode !== undefined ? d.mode : (d.round ? d.round.mode : undefined)) === 'personal') return 'personal';
+    var c = cleanCode(d.campaignCode);
+    return c ? 'code:' + c : 'open';
+  }
+  function fillAmounts() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-amount]'), function (el) {
+      el.textContent = CAMPAIGN_AMOUNT ? ' של ' + CAMPAIGN_AMOUNT : '';
+    });
+  }
+  /* מציג את המצב. מחזיר true אם התצוגה השתנתה (או שהדף מופנה), כדי שהקורא ידע שלא להמשיך לקופה. */
+  function render(d, first) {
+    /* הסבב הנוכחי עוד לא נפתח (סבב שנקבע אחרי סבב 1): לדף הראשי, כמו ההפניה שבראש הדף. */
+    var o = Date.parse(d.openAt || '');
+    if (!isNaN(o) && Date.now() < o && !/[?&]launch=(after|closed)(&|$)/.test(location.search)) {
+      location.replace('index.html' + location.search + '#price');
+      return true;
+    }
+    var key = keyOf(d);
+    if (key === curKey) return false;
+    curKey = key;
+    var ord = d.round && ORD[d.round.n];
+    if (ord) Array.prototype.forEach.call(document.querySelectorAll('[data-round-ord]'), function (el) { el.textContent = ord; });
+    promoRound = !!(d.round && d.round.n === 2);
+    if (key === 'closed') { showClosed(); renderPromo(); return true; }
+    document.body.classList.remove('is-closed');
+    if (key === 'personal') { setView('m-personal'); renderPromo(); if (!first) window.scrollTo(0, 0); return !first; }
+    var code = cleanCode(d.campaignCode);
+    var has = !!code;
+    document.getElementById('c-gift').hidden = !has;
+    document.getElementById('c-code-part').hidden = !has;
+    document.getElementById('c-title').innerHTML = has ? 'הנחה<span data-amount></span> לכל מי שנרשם <b>בסבב הזה</b>' : 'ההרשמה פתוחה';
+    fillAmounts();
+    document.getElementById('c-lead').textContent = has
+      ? 'זה אותו קוד לכולם, והוא תקף כל עוד ההרשמה לסבב פתוחה והמקומות לא נגמרו.'
+      : 'אפשר להמשיך לתשלום. מספר המקומות בסבב מוגבל.';
+    document.getElementById('c-after').textContent = has
+      ? 'ההנחה תקפה בסבב הזה בלבד, ומספר המקומות מוגבל.'
+      : 'ההרשמה פתוחה עד שהסבב נסגר.';
+    if (has) {
+      document.getElementById('c-code').textContent = code;
+      var pe = document.getElementById('c-promo');
+      if (pe) pe.hidden = !(promoRound && Date.now() < PROMO_END);
+    }
+    document.getElementById('c-open').hidden = false;
+    document.getElementById('c-fail').hidden = true;
+    setView('m-campaign');
+    if (!first) window.scrollTo(0, 0);
+    return !first;
+  }
+  function refresh() {
+    if (PREVIEW_CLOSED) return;
+    fetchStatus(8000).then(function (d) {
+      if (d) render(d, !curKey);
+      else if (!curKey && !personalSigns) {
+        /* טעינה ראשונה שנכשלה: מצב ברירת המחדל (קמפיין), בלי קוד. רענון שנכשל משאיר את מה שמוצג. */
+        document.getElementById('c-open').hidden = true;
+        document.getElementById('c-fail').hidden = false;
+        setView('m-campaign');
+      }
+    });
+  }
+
   var checkoutUrl = '';
 
   /* שיוך מלינק אישי של מנטורית (?r=slug). סעיף 4: הלינק נוחת **ישר
@@ -655,8 +811,153 @@ input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
     /* checkoutUrl חוזר מוכן מהשרת (כולל הקופון) - אין כאן בניית כתובת
        עצמאית. ⛔ לא ניתן לבדוק חי: המוצר בווקומרס עדיין בטיוטה
        (productIsLive ב-Worker יחזיר 503 לפני שמגיעים לכפתור הזה בכלל). */
-    if (checkoutUrl) location.href = checkoutUrl;
+    if (checkoutUrl) location.href = withAttr(checkoutUrl);
   });
+
+  /* ── ייחוס רכישה דרך הקופה (29-10-2026, אישור שלהבת) ──
+     r= (מנטור/ית) ו-pc= (פוסט של תלמיד/ת) מהקישור נשמרים במכשיר ל-30 יום, עם חותמת זמן, וכל מעבר לקופה מוסיף
+     aim_ref / aim_pc לכתובת כשיש. r: האחרון קובע. pc: הראשון התקף קובע עד שפג התוקף (30 יום), ואז pc חדש תקף נשמר.
+     מנוקה ל-[a-z0-9_-] עד 40 תווים. maftecha_post_code תקין שכבר שמור (המצב האישי משתמש בו) מאומץ לכאן פעם אחת עם חותמת
+     זמן, ומאז חל עליו התוקף; הוא עצמו לא נמחק. */
+  var ATTR_KEY = 'maftecha_attr';
+  var ATTR_TTL = 30 * 24 * 3600 * 1000;
+  var PC_RE = /^[a-z][a-z0-9]{5}$/;
+  function cleanAttr(v) { return String(v == null ? '' : v).replace(/[^a-z0-9_-]/gi, '').slice(0, 40); }
+  function readAttrStore() {
+    var o = {};
+    try { o = JSON.parse(localStorage.getItem(ATTR_KEY) || '{}') || {}; } catch (e) { o = {}; }
+    var out = {}, now = Date.now();
+    ['r', 'pc'].forEach(function (k) {
+      var e = o[k], v = e && cleanAttr(e.v);
+      if (k === 'pc' && !PC_RE.test(v || '')) v = '';
+      if (v && typeof e.t === 'number' && now - e.t < ATTR_TTL && e.t <= now + 86400000) out[k] = { v: v, t: e.t };
+    });
+    return out;
+  }
+  function rawAttr() {
+    try { return JSON.parse(localStorage.getItem(ATTR_KEY) || '{}') || {}; } catch (e) { return {}; }
+  }
+  function storedPostCode() {
+    try { var v = (localStorage.getItem('maftecha_post_code') || '').toLowerCase(); return PC_RE.test(v) ? v : ''; } catch (e) { return ''; }
+  }
+  /* maftecha_post_code תקין שעוד לא אומץ (ואינו הערך שכבר אומץ ופג) נכנס ל-maftecha_attr עם חותמת זמן של עכשיו. */
+  function adoptPostCode() {
+    try {
+      var post = storedPostCode(), o = rawAttr();
+      var oldPc = o.pc ? cleanAttr(o.pc.v) : '';
+      if (post && post !== oldPc && !readAttrStore().pc) {
+        o.pc = { v: post, t: Date.now() };
+        localStorage.setItem(ATTR_KEY, JSON.stringify(o));
+      }
+    } catch (e) {}
+  }
+  function saveAttrFromUrl() {
+    try {
+      adoptPostCode();
+      var qs = new URLSearchParams(location.search), o = rawAttr(), ch = false;
+      var r = cleanAttr(qs.get('r')), pc = cleanAttr(qs.get('pc')).toLowerCase();
+      if (r) { o.r = { v: r, t: Date.now() }; ch = true; }
+      if (PC_RE.test(pc) && !readAttrStore().pc) { o.pc = { v: pc, t: Date.now() }; ch = true; }
+      if (ch) localStorage.setItem(ATTR_KEY, JSON.stringify(o));
+    } catch (e) {}
+  }
+  function getAttr() {
+    adoptPostCode();
+    var st = readAttrStore();
+    return { r: st.r ? st.r.v : '', pc: st.pc ? st.pc.v : '' };
+  }
+  function withAttr(url) {
+    try {
+      var u = new URL(url, location.href), a = getAttr();
+      if (a.r) u.searchParams.set('aim_ref', a.r);
+      if (a.pc) u.searchParams.set('aim_pc', a.pc);
+      return u.toString();
+    } catch (e) { return url; }
+  }
+  saveAttrFromUrl();
+
+  /* ── מצב קמפיין: ייחוס, בדיקה לפני תשלום והעתקה (29-10-2026) ── */
+  var ATTR_URL = 'https://r.aimprove.co.il/api/maftecha-attribution';
+  var CHECKOUT_BASE = 'https://aimprove.co.il/?add-to-cart=11113';
+  var cPost = '', cRef = '';
+  (function () {
+    var a = getAttr();
+    cRef = a.r; cPost = a.pc;   /* pc תקף בלבד: מגיע מ-getAttr */
+  })();
+  /* שדה המייל נשאר רשות וגיבוי: הייחוס עצמו נשלח עכשיו גם בכתובת הקופה (aim_ref / aim_pc). */
+  var cNeedAttr = !!(cPost || cRef);
+  if (cNeedAttr) document.getElementById('c-attr').hidden = false;
+  var cEmail = document.getElementById('c-attr-email');
+  var cErr = document.getElementById('c-attr-err');
+  var cPay = document.getElementById('c-pay');
+  cPay.href = withAttr(CHECKOUT_BASE);
+  cEmail.addEventListener('input', function () { cErr.hidden = true; cEmail.setAttribute('aria-invalid', 'false'); });
+  var cGoing = false;
+  /* ההעברה לקופה: אחרי בדיקת מצב הסבב (תקרה של 1.5 שניות, וכשל רשת לא חוסם). אם הסבב נסגר, אזל או שהקוד שמוצג
+     הוחלף, מציגים את המצב המעודכן ולא עוברים. אחר כך הייחוס כשיש שדה מייל (כשל בו לא חוסם, תקרה של 2.5 שניות). */
+  cPay.addEventListener('click', function (e) {
+    e.preventDefault();
+    if (cGoing) return;
+    var email = cNeedAttr ? cEmail.value.trim() : '';
+    if (email && !emailOk(email)) {
+      cErr.hidden = false;
+      cEmail.setAttribute('aria-invalid', 'true');
+      cEmail.focus();
+      return;
+    }
+    cGoing = true;
+    var href = withAttr(CHECKOUT_BASE);
+    function go() { location.href = href; }
+    function proceed() {
+      if (!email) { go(); return; }
+      var body = { email: email };
+      if (cPost) body.postCode = cPost;
+      if (cRef) body.ref = cRef;
+      var done = false;
+      function once() { if (!done) { done = true; go(); } }
+      setTimeout(once, 2500);
+      try {
+        fetch(ATTR_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), keepalive: true })
+          .then(once, once);
+      } catch (err) { once(); }
+    }
+    fetchStatus(1500).then(function (d) {
+      if (d && render(d, false)) { cGoing = false; return; }
+      proceed();
+    });
+  });
+  document.getElementById('c-copy').addEventListener('click', function () {
+    var btn = this;
+    var el = document.getElementById('c-code');
+    var code = (el.textContent || '').trim();
+    if (!code || code === '-') return;
+    function ok() {
+      btn.textContent = 'הקוד הועתק';
+      btn.classList.add('is-copied');
+      setTimeout(function () { btn.textContent = 'העתקת הקוד'; btn.classList.remove('is-copied'); }, 2000);
+    }
+    function selectIt() {
+      try {
+        var r = document.createRange(); r.selectNodeContents(el);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        if (document.execCommand && document.execCommand('copy')) ok();
+      } catch (e) {}
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(code).then(ok, selectIt);
+    } else { selectIt(); }
+  });
+
+  /* סימני מסלול אישי (29-10-2026): מפתח אישי בכתובת (?k=), או הטבה שנתפסה וטרם פגה (maftecha_claim). מפתח שנשמר במכשיר
+     (maftecha_key_token) לבדו אינו סימן, כי הוא נשאר גם אחרי המעבר לקמפיין. אז הטופס מוצג מיד, כמו ב-origin, בלי לחכות לסטטוס. סטטוס שחוזר "campaign" מעביר לתצוגת הקמפיין,
+     וסטטוס שנכשל משאיר את הטופס (ההגנה האמיתית בשרת: redeem ו-claim לא מנפיקים כשהסבב בקמפיין). בלי סימנים: טוענים ואז מציגים לפי המצב. */
+  if (personalSigns && !PREVIEW_CLOSED) setView('m-personal');
+  if (PREVIEW_CLOSED) { showClosed(); curKey = 'closed'; }
+  else {
+    refresh();
+    setInterval(function () { if (document.visibilityState === 'visible') refresh(); }, 60000);
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') refresh(); });
+  }
 })();
 </script>
 

@@ -816,7 +816,9 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
 
   /* ── ייחוס רכישה דרך הקופה (29-10-2026, אישור שלהבת) ──
      r= (מנטור/ית) ו-pc= (פוסט של תלמיד/ת) מהקישור נשמרים במכשיר ל-30 יום, עם חותמת זמן, וכל מעבר לקופה מוסיף
-     aim_ref / aim_pc לכתובת כשיש. קישור חדש עם r= או pc= דורס את הישן. מנוקה ל-[a-z0-9_-] עד 40 תווים. */
+     aim_ref / aim_pc לכתובת כשיש. r: האחרון קובע. pc: הראשון התקף קובע עד שפג התוקף (30 יום), ואז pc חדש תקף נשמר.
+     מנוקה ל-[a-z0-9_-] עד 40 תווים. maftecha_post_code תקין שכבר שמור (המצב האישי משתמש בו) מאומץ לכאן פעם אחת עם חותמת
+     זמן, ומאז חל עליו התוקף; הוא עצמו לא נמחק. */
   var ATTR_KEY = 'maftecha_attr';
   var ATTR_TTL = 30 * 24 * 3600 * 1000;
   var PC_RE = /^[a-z][a-z0-9]{5}$/;
@@ -832,23 +834,37 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
     });
     return out;
   }
-  function saveAttrFromUrl() {
-    try {
-      var qs = new URLSearchParams(location.search), st = readAttrStore(), ch = false;
-      var r = cleanAttr(qs.get('r')), pc = cleanAttr(qs.get('pc')).toLowerCase();
-      /* r: האחרון קובע. pc: הראשון התקף קובע (כמו postCodeFields ב-aimprove-redirector), עד שפג התוקף. קוד שאינו
-         [a-z][a-z0-9]{5} נזרק ואינו דורס. גם maftecha_post_code התקין שכבר שמור נחשב ראשון. */
-      if (r) { st.r = { v: r, t: Date.now() }; ch = true; }
-      if (PC_RE.test(pc) && !st.pc && !storedPostCode()) { st.pc = { v: pc, t: Date.now() }; ch = true; }
-      if (ch) localStorage.setItem(ATTR_KEY, JSON.stringify(st));
-    } catch (e) {}
+  function rawAttr() {
+    try { return JSON.parse(localStorage.getItem(ATTR_KEY) || '{}') || {}; } catch (e) { return {}; }
   }
   function storedPostCode() {
     try { var v = (localStorage.getItem('maftecha_post_code') || '').toLowerCase(); return PC_RE.test(v) ? v : ''; } catch (e) { return ''; }
   }
+  /* maftecha_post_code תקין שעוד לא אומץ (ואינו הערך שכבר אומץ ופג) נכנס ל-maftecha_attr עם חותמת זמן של עכשיו. */
+  function adoptPostCode() {
+    try {
+      var post = storedPostCode(), o = rawAttr();
+      var oldPc = o.pc ? cleanAttr(o.pc.v) : '';
+      if (post && post !== oldPc && !readAttrStore().pc) {
+        o.pc = { v: post, t: Date.now() };
+        localStorage.setItem(ATTR_KEY, JSON.stringify(o));
+      }
+    } catch (e) {}
+  }
+  function saveAttrFromUrl() {
+    try {
+      adoptPostCode();
+      var qs = new URLSearchParams(location.search), o = rawAttr(), ch = false;
+      var r = cleanAttr(qs.get('r')), pc = cleanAttr(qs.get('pc')).toLowerCase();
+      if (r) { o.r = { v: r, t: Date.now() }; ch = true; }
+      if (PC_RE.test(pc) && !readAttrStore().pc) { o.pc = { v: pc, t: Date.now() }; ch = true; }
+      if (ch) localStorage.setItem(ATTR_KEY, JSON.stringify(o));
+    } catch (e) {}
+  }
   function getAttr() {
+    adoptPostCode();
     var st = readAttrStore();
-    return { r: st.r ? st.r.v : '', pc: st.pc ? st.pc.v : storedPostCode() };
+    return { r: st.r ? st.r.v : '', pc: st.pc ? st.pc.v : '' };
   }
   function withAttr(url) {
     try {

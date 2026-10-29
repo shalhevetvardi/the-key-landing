@@ -5098,6 +5098,45 @@ window.interdeal = {
     ref = (new URLSearchParams(q).get('r') || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
   } catch (e) {}
 
+  /* ── ייחוס רכישה דרך הקופה (29-10-2026, אישור שלהבת) ──
+     r= (מנטור/ית) ו-pc= (פוסט של תלמיד/ת) מהקישור נשמרים במכשיר ל-30 יום, עם חותמת זמן, וכל מעבר לקופה מוסיף
+     aim_ref / aim_pc לכתובת כשיש. קישור חדש עם r= או pc= דורס את הישן. מנוקה ל-[a-z0-9_-] עד 40 תווים. */
+  var ATTR_KEY = 'maftecha_attr';
+  var ATTR_TTL = 30 * 24 * 3600 * 1000;
+  function cleanAttr(v) { return String(v == null ? '' : v).replace(/[^a-z0-9_-]/gi, '').slice(0, 40); }
+  function readAttrStore() {
+    var o = {};
+    try { o = JSON.parse(localStorage.getItem(ATTR_KEY) || '{}') || {}; } catch (e) { o = {}; }
+    var out = {}, now = Date.now();
+    ['r', 'pc'].forEach(function (k) {
+      var e = o[k], v = e && cleanAttr(e.v);
+      if (v && typeof e.t === 'number' && now - e.t < ATTR_TTL && e.t <= now + 86400000) out[k] = { v: v, t: e.t };
+    });
+    return out;
+  }
+  function saveAttrFromUrl() {
+    try {
+      var qs = new URLSearchParams(location.search), st = readAttrStore(), ch = false;
+      var r = cleanAttr(qs.get('r')), pc = cleanAttr(qs.get('pc')).toLowerCase();
+      if (r) { st.r = { v: r, t: Date.now() }; ch = true; }
+      if (pc) { st.pc = { v: pc, t: Date.now() }; ch = true; }
+      if (ch) localStorage.setItem(ATTR_KEY, JSON.stringify(st));
+    } catch (e) {}
+  }
+  function getAttr() {
+    var st = readAttrStore();
+    return { r: st.r ? st.r.v : '', pc: st.pc ? st.pc.v : '' };
+  }
+  function withAttr(url) {
+    try {
+      var u = new URL(url, location.href), a = getAttr();
+      if (a.r) u.searchParams.set('aim_ref', a.r);
+      if (a.pc) u.searchParams.set('aim_pc', a.pc);
+      return u.toString();
+    } catch (e) { return url; }
+  }
+  saveAttrFromUrl();
+
   /* הקוד מהקישור לפוסטים של תלמיד/ת מפתח (?pc=, מ-r.aimprove.co.il/k/<קוד>, 24-10-2026, לבקשת שלהבת).
      נשמר במכשיר, כדי שגם מי שחוזר לדף בלי הקישור, או עובר למסך ההטבה, יישלח איתו בהרשמה ובתפיסת
      ההטבה. הקוד הראשון נשאר, כמו בשרת (postCodeFields ב-aimprove-redirector): הפוסט שהביא את האדם
@@ -5545,7 +5584,7 @@ window.interdeal = {
     }).then(function (r) {
       return r.json().catch(function () { return {}; });
     }).then(function (d) {
-      if (d && d.ok && d.checkoutUrl) { location.href = d.checkoutUrl; return; }
+      if (d && d.ok && d.checkoutUrl) { location.href = withAttr(d.checkoutUrl); return; }
       reset();
       var code = d && d.error;
       if (code === 'sold-out' || code === 'closed') { setClosed(); return; }

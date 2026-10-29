@@ -811,25 +811,69 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
     /* checkoutUrl חוזר מוכן מהשרת (כולל הקופון) - אין כאן בניית כתובת
        עצמאית. ⛔ לא ניתן לבדוק חי: המוצר בווקומרס עדיין בטיוטה
        (productIsLive ב-Worker יחזיר 503 לפני שמגיעים לכפתור הזה בכלל). */
-    if (checkoutUrl) location.href = checkoutUrl;
+    if (checkoutUrl) location.href = withAttr(checkoutUrl);
   });
+
+  /* ── ייחוס רכישה דרך הקופה (29-10-2026, אישור שלהבת) ──
+     r= (מנטור/ית) ו-pc= (פוסט של תלמיד/ת) מהקישור נשמרים במכשיר ל-30 יום, עם חותמת זמן, וכל מעבר לקופה מוסיף
+     aim_ref / aim_pc לכתובת כשיש. קישור חדש עם r= או pc= דורס את הישן. מנוקה ל-[a-z0-9_-] עד 40 תווים. */
+  var ATTR_KEY = 'maftecha_attr';
+  var ATTR_TTL = 30 * 24 * 3600 * 1000;
+  function cleanAttr(v) { return String(v == null ? '' : v).replace(/[^a-z0-9_-]/gi, '').slice(0, 40); }
+  function readAttrStore() {
+    var o = {};
+    try { o = JSON.parse(localStorage.getItem(ATTR_KEY) || '{}') || {}; } catch (e) { o = {}; }
+    var out = {}, now = Date.now();
+    ['r', 'pc'].forEach(function (k) {
+      var e = o[k], v = e && cleanAttr(e.v);
+      if (v && typeof e.t === 'number' && now - e.t < ATTR_TTL && e.t <= now + 86400000) out[k] = { v: v, t: e.t };
+    });
+    return out;
+  }
+  function saveAttrFromUrl() {
+    try {
+      var qs = new URLSearchParams(location.search), st = readAttrStore(), ch = false;
+      var r = cleanAttr(qs.get('r')), pc = cleanAttr(qs.get('pc')).toLowerCase();
+      if (r) { st.r = { v: r, t: Date.now() }; ch = true; }
+      if (pc) { st.pc = { v: pc, t: Date.now() }; ch = true; }
+      if (ch) localStorage.setItem(ATTR_KEY, JSON.stringify(st));
+    } catch (e) {}
+  }
+  function getAttr() {
+    var st = readAttrStore();
+    return { r: st.r ? st.r.v : '', pc: st.pc ? st.pc.v : '' };
+  }
+  function withAttr(url) {
+    try {
+      var u = new URL(url, location.href), a = getAttr();
+      if (a.r) u.searchParams.set('aim_ref', a.r);
+      if (a.pc) u.searchParams.set('aim_pc', a.pc);
+      return u.toString();
+    } catch (e) { return url; }
+  }
+  saveAttrFromUrl();
 
   /* ── מצב קמפיין: ייחוס, בדיקה לפני תשלום והעתקה (29-10-2026) ── */
   var ATTR_URL = 'https://r.aimprove.co.il/api/maftecha-attribution';
+  var CHECKOUT_BASE = 'https://aimprove.co.il/?add-to-cart=11113';
   var cPost = '', cRef = '';
-  try {
-    var cpc = (localStorage.getItem('maftecha_post_code') || '').toLowerCase();
-    if (/^[a-z][a-z0-9]{5}$/.test(cpc)) cPost = cpc;
-  } catch (e) {}
-  try {
-    cRef = (new URLSearchParams(location.search).get('r') || sessionStorage.getItem('maftecha_ref') || '')
-      .replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
-  } catch (e) {}
+  (function () {
+    var a = getAttr();
+    cRef = a.r; cPost = a.pc;
+    if (!cPost) {
+      try {
+        var cpc = (localStorage.getItem('maftecha_post_code') || '').toLowerCase();
+        if (/^[a-z][a-z0-9]{5}$/.test(cpc)) cPost = cpc;
+      } catch (e) {}
+    }
+  })();
+  /* שדה המייל נשאר רשות וגיבוי: הייחוס עצמו נשלח עכשיו גם בכתובת הקופה (aim_ref / aim_pc). */
   var cNeedAttr = !!(cPost || cRef);
   if (cNeedAttr) document.getElementById('c-attr').hidden = false;
   var cEmail = document.getElementById('c-attr-email');
   var cErr = document.getElementById('c-attr-err');
   var cPay = document.getElementById('c-pay');
+  cPay.href = withAttr(CHECKOUT_BASE);
   cEmail.addEventListener('input', function () { cErr.hidden = true; cEmail.setAttribute('aria-invalid', 'false'); });
   var cGoing = false;
   /* ההעברה לקופה: אחרי בדיקת מצב הסבב (תקרה של 1.5 שניות, וכשל רשת לא חוסם). אם הסבב נסגר, אזל או שהקוד שמוצג
@@ -845,7 +889,7 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
       return;
     }
     cGoing = true;
-    var href = cPay.href;
+    var href = withAttr(CHECKOUT_BASE);
     function go() { location.href = href; }
     function proceed() {
       if (!email) { go(); return; }

@@ -472,8 +472,13 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
   var curKey = '';
   var personalSigns = false;
   try {
-    personalSigns = /[?&]k=[A-Za-z0-9_-]{16,64}(&|$)/.test(location.search) ||
-      !!localStorage.getItem('maftecha_key_token') || !!localStorage.getItem('maftecha_claim');
+    personalSigns = /[?&]k=[A-Za-z0-9_-]{16,64}(&|$)/.test(location.search);
+    if (!personalSigns) {
+      /* הטבה אישית שנתפסה וטרם פגה (24 שעות). הטבה שפגה היא שארית של סבב קודם, ואינה סימן. */
+      var cl = JSON.parse(localStorage.getItem('maftecha_claim') || 'null');
+      var exp = cl ? Date.parse(cl.expiresAt || '') : NaN;
+      personalSigns = !isNaN(exp) && exp > Date.now();
+    }
   } catch (e) {}
   function setView(v) {
     var c = document.body.classList;
@@ -882,8 +887,8 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
     } else { selectIt(); }
   });
 
-  /* סימני מסלול אישי (29-10-2026): מפתח אישי בכתובת (?k=) או שמור במכשיר (maftecha_key_token), או הטבה שכבר נתפסה
-     (maftecha_claim). אז הטופס מוצג מיד, כמו ב-origin, בלי לחכות לסטטוס. סטטוס שחוזר "campaign" מעביר לתצוגת הקמפיין,
+  /* סימני מסלול אישי (29-10-2026): מפתח אישי בכתובת (?k=), או הטבה שנתפסה וטרם פגה (maftecha_claim). מפתח שנשמר במכשיר
+     (maftecha_key_token) לבדו אינו סימן, כי הוא נשאר גם אחרי המעבר לקמפיין. אז הטופס מוצג מיד, כמו ב-origin, בלי לחכות לסטטוס. סטטוס שחוזר "campaign" מעביר לתצוגת הקמפיין,
      וסטטוס שנכשל משאיר את הטופס (ההגנה האמיתית בשרת: redeem ו-claim לא מנפיקים כשהסבב בקמפיין). בלי סימנים: טוענים ואז מציגים לפי המצב. */
   if (personalSigns && !PREVIEW_CLOSED) setView('m-personal');
   if (PREVIEW_CLOSED) { showClosed(); curKey = 'closed'; }

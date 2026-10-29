@@ -470,6 +470,11 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
   var ORD = ['', 'הראשון', 'השני', 'השלישי', 'הרביעי', 'החמישי', 'השישי', 'השביעי', 'השמיני', 'התשיעי', 'העשירי'];
   var PREVIEW_CLOSED = /[?&]launch=closed(&|$)/.test(location.search);
   var curKey = '';
+  var personalSigns = false;
+  try {
+    personalSigns = /[?&]k=[A-Za-z0-9_-]{16,64}(&|$)/.test(location.search) ||
+      !!localStorage.getItem('maftecha_key_token') || !!localStorage.getItem('maftecha_claim');
+  } catch (e) {}
   function setView(v) {
     var c = document.body.classList;
     c.remove('m-loading', 'm-personal', 'm-campaign');
@@ -549,7 +554,7 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
     if (PREVIEW_CLOSED) return;
     fetchStatus(8000).then(function (d) {
       if (d) render(d, !curKey);
-      else if (!curKey) {
+      else if (!curKey && !personalSigns) {
         /* טעינה ראשונה שנכשלה: מצב ברירת המחדל (קמפיין), בלי קוד. רענון שנכשל משאיר את מה שמוצג. */
         document.getElementById('c-open').hidden = true;
         document.getElementById('c-fail').hidden = false;
@@ -877,6 +882,10 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
     } else { selectIt(); }
   });
 
+  /* סימני מסלול אישי (29-10-2026): מפתח אישי בכתובת (?k=) או שמור במכשיר (maftecha_key_token), או הטבה שכבר נתפסה
+     (maftecha_claim). אז הטופס מוצג מיד, כמו ב-origin, בלי לחכות לסטטוס. סטטוס שחוזר "campaign" מעביר לתצוגת הקמפיין,
+     וסטטוס שנכשל משאיר את הטופס (ההגנה האמיתית בשרת: redeem ו-claim לא מנפיקים כשהסבב בקמפיין). בלי סימנים: טוענים ואז מציגים לפי המצב. */
+  if (personalSigns && !PREVIEW_CLOSED) setView('m-personal');
   if (PREVIEW_CLOSED) { showClosed(); curKey = 'closed'; }
   else {
     refresh();

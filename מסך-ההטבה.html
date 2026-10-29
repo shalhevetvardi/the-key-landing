@@ -819,6 +819,7 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
      aim_ref / aim_pc לכתובת כשיש. קישור חדש עם r= או pc= דורס את הישן. מנוקה ל-[a-z0-9_-] עד 40 תווים. */
   var ATTR_KEY = 'maftecha_attr';
   var ATTR_TTL = 30 * 24 * 3600 * 1000;
+  var PC_RE = /^[a-z][a-z0-9]{5}$/;
   function cleanAttr(v) { return String(v == null ? '' : v).replace(/[^a-z0-9_-]/gi, '').slice(0, 40); }
   function readAttrStore() {
     var o = {};
@@ -826,6 +827,7 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
     var out = {}, now = Date.now();
     ['r', 'pc'].forEach(function (k) {
       var e = o[k], v = e && cleanAttr(e.v);
+      if (k === 'pc' && !PC_RE.test(v || '')) v = '';
       if (v && typeof e.t === 'number' && now - e.t < ATTR_TTL && e.t <= now + 86400000) out[k] = { v: v, t: e.t };
     });
     return out;
@@ -834,14 +836,19 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
     try {
       var qs = new URLSearchParams(location.search), st = readAttrStore(), ch = false;
       var r = cleanAttr(qs.get('r')), pc = cleanAttr(qs.get('pc')).toLowerCase();
+      /* r: האחרון קובע. pc: הראשון התקף קובע (כמו postCodeFields ב-aimprove-redirector), עד שפג התוקף. קוד שאינו
+         [a-z][a-z0-9]{5} נזרק ואינו דורס. גם maftecha_post_code התקין שכבר שמור נחשב ראשון. */
       if (r) { st.r = { v: r, t: Date.now() }; ch = true; }
-      if (pc) { st.pc = { v: pc, t: Date.now() }; ch = true; }
+      if (PC_RE.test(pc) && !st.pc && !storedPostCode()) { st.pc = { v: pc, t: Date.now() }; ch = true; }
       if (ch) localStorage.setItem(ATTR_KEY, JSON.stringify(st));
     } catch (e) {}
   }
+  function storedPostCode() {
+    try { var v = (localStorage.getItem('maftecha_post_code') || '').toLowerCase(); return PC_RE.test(v) ? v : ''; } catch (e) { return ''; }
+  }
   function getAttr() {
     var st = readAttrStore();
-    return { r: st.r ? st.r.v : '', pc: st.pc ? st.pc.v : '' };
+    return { r: st.r ? st.r.v : '', pc: st.pc ? st.pc.v : storedPostCode() };
   }
   function withAttr(url) {
     try {
@@ -859,13 +866,7 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
   var cPost = '', cRef = '';
   (function () {
     var a = getAttr();
-    cRef = a.r; cPost = a.pc;
-    if (!cPost) {
-      try {
-        var cpc = (localStorage.getItem('maftecha_post_code') || '').toLowerCase();
-        if (/^[a-z][a-z0-9]{5}$/.test(cpc)) cPost = cpc;
-      } catch (e) {}
-    }
+    cRef = a.r; cPost = a.pc;   /* pc תקף בלבד: מגיע מ-getAttr */
   })();
   /* שדה המייל נשאר רשות וגיבוי: הייחוס עצמו נשלח עכשיו גם בכתובת הקופה (aim_ref / aim_pc). */
   var cNeedAttr = !!(cPost || cRef);

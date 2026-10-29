@@ -5063,11 +5063,14 @@ window.interdeal = {
   var ref = '';
   try {
     ref = (new URLSearchParams(q).get('r') || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
+    /* נשמר לביקור הזה, כדי שיגיע גם למסך ההטבה (ששולח אותו עם המייל, ר' maftecha-attribution למטה). */
+    if (ref) sessionStorage.setItem('maftecha_ref', ref);
   } catch (e) {}
 
   /* הקוד מהקישור לפוסטים של תלמיד/ת מפתח (?pc=, מ-r.aimprove.co.il/k/<קוד>, 24-10-2026, לבקשת שלהבת).
-     נשמר במכשיר, כדי שגם מי שחוזר לדף בלי הקישור, או עובר למסך ההטבה, יישלח איתו בהרשמה ובתפיסת
-     ההטבה. הקוד הראשון נשאר, כמו בשרת (postCodeFields ב-aimprove-redirector): הפוסט שהביא את האדם
+     נשמר במכשיר, כדי שגם מי שחוזר לדף בלי הקישור, או עובר למסך ההטבה, יישלח איתו בהרשמה, ובמסך ההטבה
+     (29-10-2026): שם נשאל המייל שאיתו משלמים, והקוד נשלח עמו ל-/api/maftecha-attribution לפני המעבר לקופה.
+     הקוד הראשון נשאר, כמו בשרת (postCodeFields ב-aimprove-redirector): הפוסט שהביא את האדם
      ראשון הוא שמזכה את התלמיד/ה ב-250 ₪ אם יקנה. */
   var POST_CODE_STORE = 'maftecha_post_code';
   var postCode = '';

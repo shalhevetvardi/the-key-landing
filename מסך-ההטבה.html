@@ -110,6 +110,13 @@ h1 b{color:#111;font-weight:900;white-space:nowrap;background:linear-gradient(tr
 }
 .submit:hover{transform:translateY(-1px);box-shadow:0 14px 30px -12px rgba(20,9,59,.55)}
 .submit:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+.attr{margin:18px 0 0;padding:14px;border-radius:12px;border:1px solid #E1E4EA;background:#F5F6F8}
+.attr label{display:block;margin:0 0 8px;font-weight:600;font-size:14.5px;line-height:1.5;color:#222}
+.attr input{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #B9BEC9;background:#fff;color:#111;font:inherit;font-size:16px;direction:ltr;text-align:left}
+.attr input::placeholder{color:#8A8F9A}
+.attr input:focus{outline:2px solid var(--navy);outline-offset:1px;border-color:transparent}
+.attr input[aria-invalid="true"]{border-color:#C62828;background:#FDECEC}
+.attr .attr-err{margin:6px 0 0;font-weight:500;font-size:13px;color:#B3261E}
 .after-pay{margin:14px 0 0;font-weight:400;font-size:14.5px;line-height:1.6;color:#444}
 
 .state h2{margin:0 0 10px;font-weight:900;color:#111;font-size:clamp(21px,5vw,27px);line-height:1.3}
@@ -147,27 +154,30 @@ h1 b{color:#111;font-weight:900;white-space:nowrap;background:linear-gradient(tr
         <p>טוענים את ההטבה...</p>
       </div>
 
-      <!-- הסבב פתוח ויש בו קוד הנחה. -->
+      <!-- הסבב פתוח. עם קוד הנחה: הקוד וההסבר. בלי קוד (השדה בטבלת "סבבי המפתח" ריק): ההרשמה פתוחה, בלי קוד
+           ובלי הבטחת הנחה, ועדיין כפתור לתשלום. לא ממציאים קוד. -->
       <div id="st-code" hidden>
-        <span class="gift">🎁 ההטבה של הסבב</span>
-        <h1>הנחה לכל מי שנרשם <b>בסבב הזה</b></h1>
-        <p class="lead">זה אותו קוד לכולם, והוא תקף כל עוד ההרשמה לסבב פתוחה והמקומות לא נגמרו.</p>
-        <div class="code-box">
-          <p class="code-label">קוד ההנחה של הסבב</p>
-          <b id="campaign-code">-</b>
-          <button class="copy" type="button" id="copy-code" aria-live="polite">העתקת הקוד</button>
+        <span class="gift" id="gift-tag">🎁 ההטבה של הסבב</span>
+        <h1 id="open-title">הנחה לכל מי שנרשם <b>בסבב הזה</b></h1>
+        <p class="lead" id="open-lead">זה אותו קוד לכולם, והוא תקף כל עוד ההרשמה לסבב פתוחה והמקומות לא נגמרו.</p>
+        <div id="code-part">
+          <div class="code-box">
+            <p class="code-label">קוד ההנחה של הסבב</p>
+            <b id="campaign-code">-</b>
+            <button class="copy" type="button" id="copy-code" aria-live="polite">העתקת הקוד</button>
+          </div>
+          <p class="rule">מעתיקים את הקוד, ובקופה מזינים אותו בשדה <b>הקופון</b>.</p>
+          <p class="promo" id="round-promo" hidden><span class="promo-lead">לכבוד הבחירות, בסבב הזה בלבד:</span><br />עוד <b>500 ₪</b> הנחה עם הקוד <b dir="ltr">VOTE500</b> בקופה. <span class="promo-nw"><b>4,400 ₪</b> במקום 5,900 ₪.</span></p>
         </div>
-        <p class="rule">מעתיקים את הקוד, ובקופה מזינים אותו בשדה <b>הקופון</b>.</p>
-        <p class="promo" id="round-promo" hidden><span class="promo-lead">לכבוד הבחירות, בסבב הזה בלבד:</span><br />עוד <b>500 ₪</b> הנחה עם הקוד <b dir="ltr">VOTE500</b> בקופה. <span class="promo-nw"><b>4,400 ₪</b> במקום 5,900 ₪.</span></p>
+        <!-- ייחוס (29-10-2026): רק למי שהגיע מפוסט של תלמיד/ת (?pc=) או ממנטור/ית (?r=). המייל שאיתו משלמים נשלח
+             ל-/api/maftecha-attribution לפני המעבר לקופה, כדי שהתגמול יגיע למי שהביא. כשל בשליחה לא חוסם את התשלום. -->
+        <div class="attr" id="attr" hidden>
+          <label for="attr-email">המייל שאיתו משלמים, כדי שנדע מי הביא אותך</label>
+          <input type="email" id="attr-email" autocomplete="email" inputmode="email" placeholder="you@example.com" />
+          <p class="attr-err" id="attr-err" role="alert" hidden>כתובת המייל לא נראית תקינה. אפשר לתקן, או להשאיר ריק ולהמשיך.</p>
+        </div>
         <a class="submit" id="to-pay" href="https://aimprove.co.il/?add-to-cart=11113">להמשיך לתשלום</a>
-        <p class="after-pay">ההנחה תקפה בסבב הזה בלבד, ומספר המקומות מוגבל.</p>
-      </div>
-
-      <!-- הסבב פתוח, אבל לא פורסם בו קוד הנחה. לא ממציאים קוד ולא מציגים כפתור לתשלום. -->
-      <div class="state" id="st-nocode" role="status" hidden>
-        <h2>אין כרגע הטבה פעילה</h2>
-        <p>עוד לא פורסם קוד הנחה לסבב הזה, ולכן אין כרגע מה להזין בקופה. מי שנרשם לרשימת ההמתנה מקבל הודעה בוואטסאפ ובמייל כשהסבב הבא נפתח, עם קוד ההנחה.</p>
-        <a class="submit" href="index.html?next=1#price">להירשם לרשימת ההמתנה</a>
+        <p class="after-pay" id="after-pay">ההנחה תקפה בסבב הזה בלבד, ומספר המקומות מוגבל.</p>
       </div>
 
       <!-- הסבב נסגר (אזל או עברה שעת הסגירה, 16-10-2026): אין כאן מה לתפוס. -->
@@ -193,7 +203,7 @@ h1 b{color:#111;font-weight:900;white-space:nowrap;background:linear-gradient(tr
   'use strict';
 
   var STATUS_URL = 'https://r.aimprove.co.il/api/maftecha-status';
-  var STATES = ['st-loading', 'st-code', 'st-nocode', 'st-closed', 'st-fail'];
+  var STATES = ['st-loading', 'st-code', 'st-closed', 'st-fail'];
   function show(id) {
     STATES.forEach(function (s) { document.getElementById(s).hidden = (s !== id); });
     window.scrollTo(0, 0);
@@ -231,13 +241,75 @@ h1 b{color:#111;font-weight:900;white-space:nowrap;background:linear-gradient(tr
         if (ord) Array.prototype.forEach.call(document.querySelectorAll('[data-round-ord]'), function (el) { el.textContent = ord; });
         if (d.open === false) { show('st-closed'); return; }
         var code = cleanCode(d.campaignCode);
-        if (!code) { show('st-nocode'); return; }
-        document.getElementById('campaign-code').textContent = code;
-        renderPromo(!!(d.round && d.round.n === 2));
+        if (code) {
+          document.getElementById('campaign-code').textContent = code;
+          renderPromo(!!(d.round && d.round.n === 2));
+        } else {
+          /* בלי קוד: ההרשמה פתוחה, ואין הבטחת הנחה ואין קוד. */
+          document.getElementById('gift-tag').hidden = true;
+          document.getElementById('open-title').textContent = 'ההרשמה פתוחה';
+          document.getElementById('open-lead').textContent = 'אפשר להמשיך לתשלום. מספר המקומות בסבב מוגבל.';
+          document.getElementById('code-part').hidden = true;
+          document.getElementById('after-pay').textContent = 'ההרשמה פתוחה עד שהסבב נסגר.';
+        }
         show('st-code');
       }).catch(function () { show('st-fail'); });
     } catch (e) { show('st-fail'); }
   }
+
+  /* ── ייחוס תלמידים ומנטורים (29-10-2026) ──
+     קוד מפוסט של תלמיד/ת (?pc=, נשמר במכשיר ב-maftecha_post_code על ידי דף המפתח) או מנטור/ית (?r=).
+     כשיש אחד מהם מופיע שדה מייל, והלחיצה על "להמשיך לתשלום" שולחת קודם POST אחד ל-/api/maftecha-attribution
+     עם {email, postCode?, ref?}, ורק אז עוברת לקופה. שליחה שנכשלה או נתקעה לא חוסמת את התשלום (תקרה של 2.5 שניות).
+     בלי pc ובלי r אין שדה, והכפתור הוא קישור רגיל. */
+  var ATTR_URL = 'https://r.aimprove.co.il/api/maftecha-attribution';
+  var postCode = '', ref = '';
+  try {
+    var qs = new URLSearchParams(location.search);
+    var pcq = (qs.get('pc') || '').toLowerCase();
+    if (/^[a-z][a-z0-9]{5}$/.test(pcq) && !localStorage.getItem('maftecha_post_code')) localStorage.setItem('maftecha_post_code', pcq);
+    var pcs = (localStorage.getItem('maftecha_post_code') || '').toLowerCase();
+    if (/^[a-z][a-z0-9]{5}$/.test(pcs)) postCode = pcs;
+  } catch (e) {}
+  try {
+    ref = (new URLSearchParams(location.search).get('r') || sessionStorage.getItem('maftecha_ref') || '')
+      .replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
+  } catch (e) {}
+  var attrBox = document.getElementById('attr');
+  var attrEmail = document.getElementById('attr-email');
+  var attrErr = document.getElementById('attr-err');
+  var payLink = document.getElementById('to-pay');
+  var needAttr = !!(postCode || ref);
+  if (needAttr) attrBox.hidden = false;
+  function emailOk(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim()); }
+  attrEmail.addEventListener('input', function () { attrErr.hidden = true; attrEmail.setAttribute('aria-invalid', 'false'); });
+  var going = false;
+  payLink.addEventListener('click', function (e) {
+    if (!needAttr) return;
+    e.preventDefault();
+    if (going) return;
+    var email = attrEmail.value.trim();
+    if (email && !emailOk(email)) {
+      attrErr.hidden = false;
+      attrEmail.setAttribute('aria-invalid', 'true');
+      attrEmail.focus();
+      return;
+    }
+    going = true;
+    var href = payLink.href;
+    function go() { location.href = href; }
+    if (!email) { go(); return; }
+    var body = { email: email };
+    if (postCode) body.postCode = postCode;
+    if (ref) body.ref = ref;
+    var done = false;
+    function once() { if (!done) { done = true; go(); } }
+    setTimeout(once, 2500);
+    try {
+      fetch(ATTR_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), keepalive: true })
+        .then(once, once);
+    } catch (err) { once(); }
+  });
 
   /* העתקת הקוד: clipboard API כשיש, ואחרת בחירת הטקסט כדי שאפשר יהיה
      להעתיק ביד. הכפתור חוזר לנוסח הרגיל אחרי שתי שניות. */

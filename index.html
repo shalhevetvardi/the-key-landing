@@ -2115,8 +2115,12 @@ html.is-extra [data-post],html.is-extra [data-closed]{display:none !important}
 [data-extra-when]{white-space:nowrap}
 /* שלהבת, 19-10-2026: "הסבב התמלא" בשורה אחת, ו"שלהבת פותחת" מתחתיה. */
 .x-l{display:block}
+/* הקישור האישי (?k=...): שורות שמופיעות רק למי שנכנס דרכו, אחרי הפתיחה. */
+html:not(.is-personal) [data-personal-only]{display:none !important}
 /* מבצע יום הבחירות: שורה עם hidden נשארת מוסתרת גם אם מישהו יוסיף לה display. */
 [data-round-promo][hidden]{display:none !important}
+/* תגית ההטבה בראש הדף, למי שנכנס מהקישור האישי. זהב כהדגשה קטנה, לא כמשטח. */
+.hero-perk{display:inline-block;margin:0 0 16px;padding:6px 14px;border-radius:50px;background:var(--gold);color:var(--navy);font-weight:700;font-size:14px;line-height:1.3}
 
 /* אדום (בקשת שלהבת, 16-10-2026): צבע שאין בשום מקום אחר בדף, ולכן הבאנר בולט כהתראה
    ולא נבלע בכחול של ראש הדף. לבן על #C81E35: ניגודיות 5.5:1. */
@@ -2256,6 +2260,8 @@ html.is-extra [data-post],html.is-extra [data-closed]{display:none !important}
       <div class="brand">
         <img src="assets/hamiftach-lockup-white.svg" alt="המפתח למשרד ה-AI · אִימפּרוּב" />
       </div>
+      <!-- רק למי שנכנס מהקישור האישי, אחרי הפתיחה (is-personal). ר' key-launch-js. -->
+      <p class="hero-perk" data-personal-only>ההטבה של 1,000 ₪ שמורה לך</p>
 
       <h1>משרד AI שעובד בשבילכם.<br /><span class="accent">ואתם בונים אותו</span>, בקצב שלכם.</h1>
 
@@ -3141,20 +3147,20 @@ html.is-extra [data-post],html.is-extra [data-closed]{display:none !important}
           <span class="cd__u"><b class="cd__n" data-u="m">--</b><span class="cd__l">דקות</span></span>
           <span class="cd__u"><b class="cd__n" data-u="s">--</b><span class="cd__l">שניות</span></span>
         </div>
-          <p class="launch__limit">מספר המקומות בסבב מוגבל, וההנחה בסבב תקפה לזמן מוגבל. מי שנרשם עכשיו מקבל הודעה ברגע שההרשמה נפתחת, עם קוד ההנחה.</p>
+          <p class="launch__limit">מספר המקומות בסבב מוגבל. <span data-campaign-html="מי שנרשם עכשיו מקבל הודעה ברגע שההרשמה נפתחת, עם קוד הנחה<span data-amount></span> לסבב. ההנחה תקפה לזמן מוגבל.">מי שנרשם עכשיו מקבל הטבה של 1,000 ₪, ובשעת הפתיחה קישור אישי ישר לתשלום.</span></p>
           <p class="price__promo" data-round-promo hidden><span class="promo-lead">לכבוד הבחירות, בסבב הזה בלבד:</span><br />עוד <b>500 ₪</b> הנחה עם הקוד <b dir="ltr">VOTE500</b> בקופה. <span class="promo-nw"><b>4,400 ₪</b> במקום 5,900 ₪.</span></p>
           <button class="btn price__cta" type="button" data-launch-open>להירשם לסבב</button>
           <p class="price__calm">ההרשמה לא מחייבת לקנות.</p>
         </div>
         <div data-post>
-        <p class="price__benefit">יש הנחה לכל מי שנרשם בסבב.<br />הקוד <b>מחכה לכם בפנים</b>, והוא תקף <b>עד שההרשמה נסגרת</b>.</p>
+        <p class="price__benefit" data-campaign-html="יש הנחה<span data-amount></span> לכל מי שנרשם בסבב.<br />הקוד <b>מחכה לכם בפנים</b>, והוא תקף <b>עד שההרשמה נסגרת</b>." data-personal-html="&lt;b&gt;הטבה של 1,000 ₪ שמורה לך.&lt;/b&gt; היא נכנסת לבד בתשלום, ונשמרת לך עד שההרשמה נסגרת.">רוצים הטבה של 1,000 ₪?<br />היא <b>מחכה לכם בפנים</b>, ונשמרת לכם <b>עד שההרשמה נסגרת</b>.</p>
         <p class="price__promo" data-round-promo hidden><span class="promo-lead">לכבוד הבחירות, בסבב הזה בלבד:</span><br />עוד <b>500 ₪</b> הנחה עם הקוד <b dir="ltr">VOTE500</b> בקופה. <span class="promo-nw"><b>4,400 ₪</b> במקום 5,900 ₪.</span></p>
         <a class="btn price__cta" href="מסך-ההטבה.html">לראות את ההטבה ולהתחיל</a>
-        <p class="price__calm">לחיצה לא מחייבת - קודם רואים את ההטבה.</p>
+        <p class="price__calm" data-personal-html="אפשר לחלק עד 12 תשלומים.">לחיצה לא מחייבת - קודם רואים את ההטבה.</p>
         </div>
         <div class="launch" data-extra>
           <p class="launch__kicker"><span class="x-l">הסבב <span data-round-ord>הראשון</span> התמלא.</span> <span class="x-l">שלהבת פותחת עוד <span data-extra-seats>5</span> מקומות <span data-extra-when>היום ב-17:00</span>.</span></p>
-          <button class="btn price__cta" type="button" data-extra-open>להירשם ולקבל הודעה ב-<span data-extra-time>17:00</span></button>
+          <button class="btn price__cta" type="button" data-extra-open>להירשם ולקבל <span data-campaign-html="הודעה">קישור</span> ב-<span data-extra-time>17:00</span></button>
         </div>
         <div class="launch" data-closed>
           <p class="launch__kicker">ההרשמה לסבב <span data-round-ord>הראשון</span> נסגרה</p>
@@ -3267,7 +3273,7 @@ html.is-extra [data-post],html.is-extra [data-closed]{display:none !important}
   <div class="wrap">
     <h2>מתי מתחילים?</h2>
     <div data-pre>
-      <p><span data-launch-day>במוצאי שבת</span><span data-launch-when-sep>, </span><span data-launch-when></span>. מספר המקומות מוגבל, ומי שנרשם מראש מקבל הודעה ברגע שההרשמה נפתחת, עם קוד ההנחה של הסבב.</p>
+      <p><span data-launch-day>במוצאי שבת</span><span data-launch-when-sep>, </span><span data-launch-when></span>. מספר המקומות מוגבל, <span data-campaign-html="ומי שנרשם מראש מקבל הודעה ברגע שההרשמה נפתחת, עם קוד הנחה<span data-amount></span> לסבב.">ומי שנרשם מראש מקבל הטבה של 1,000 ₪ וקישור אישי ישר לתשלום.</span></p>
       <div class="cd" data-cd role="timer" aria-hidden="true">
           <span class="cd__u cd__u--d"><b class="cd__n" data-u="d">-</b><span class="cd__l">ימים</span></span>
           <span class="cd__u"><b class="cd__n" data-u="h">--</b><span class="cd__l">שעות</span></span>
@@ -3280,14 +3286,14 @@ html.is-extra [data-post],html.is-extra [data-closed]{display:none !important}
     </div>
     <div data-post>
     <p>נרשמים, נכנסים לאזור האישי, ומתחילים מהשיעור הראשון - מיד.</p>
-    <p class="final__price">5,900 ₪, ובעמוד הבא מחכה לכם קוד הנחה לסבב, ואז ניתן לחלק עד 12 תשלומים.</p>
+    <p class="final__price" data-personal-html="ההטבה של 1,000 ₪ שמורה לך, ונכנסת לבד בתשלום. אפשר לחלק עד 12 תשלומים.">5,900 ₪, ובקישור מטה מחכה לכם הטבת הרשמה, ואז ניתן לחלק עד 12 תשלומים.</p>
     <p class="final__promo" data-round-promo hidden><span class="promo-lead">לכבוד הבחירות, בסבב הזה בלבד:</span><br />עוד <b>500 ₪</b> הנחה עם הקוד <b dir="ltr">VOTE500</b> בקופה. <span class="promo-nw"><b>4,400 ₪</b> במקום 5,900 ₪.</span></p>
     <a class="btn" href="מסך-ההטבה.html">אני רוצה להתחיל</a>
-    <p class="final__calm">לחיצה לא מחייבת. ההנחה תקפה עד שההרשמה נסגרת.</p>
+    <p class="final__calm" data-campaign-html="לחיצה לא מחייבת. ההנחה תקפה עד שההרשמה נסגרת." data-personal-html="ההטבה נשמרת לך עד שההרשמה נסגרת.">לחיצה לא מחייבת. ההטבה נשמרת לכם עד שההרשמה נסגרת.</p>
     </div>
     <div data-extra>
       <p><span class="x-l">הסבב <span data-round-ord>הראשון</span> התמלא.</span> <span class="x-l">שלהבת פותחת עוד <span data-extra-seats>5</span> מקומות <span data-extra-when>היום ב-17:00</span>.</span></p>
-      <button class="btn" type="button" data-extra-open>להירשם ולקבל הודעה ב-<span data-extra-time>17:00</span></button>
+      <button class="btn" type="button" data-extra-open>להירשם ולקבל <span data-campaign-html="הודעה">קישור</span> ב-<span data-extra-time>17:00</span></button>
     </div>
     <div data-closed>
       <p>ההרשמה לסבב <span data-round-ord>הראשון</span> נסגרה. הסבב הבא עוד לא נקבע, ומי שנרשם עכשיו מקבל הודעה ראשון כשהוא נפתח.</p>
@@ -3715,7 +3721,7 @@ html.is-extra [data-post],html.is-extra [data-closed]{display:none !important}
       src = String(src).replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
     } catch (e) { src = ''; }
 
-    /* מזהה אדם (27-10-2026): ?who= בקישור שנשלח לאדם מסוים (מ-ManyChat: mc<מספר הכרטיס>). כך מחברים את
+    /* קוד אישי (27-10-2026): ?who= בקישור אישי ששלחנו לאדם מסוים (מ-ManyChat: mc<מספר הכרטיס>). כך מחברים את
        הביקור לאדם: עד איפה גלל, אם ראה את המחיר, על מה לחץ. נשמר רק לביקור הזה (sessionStorage), ולא כמו src
        לביקורים הבאים, כדי שלא יהפוך למזהה קבוע בדפדפן. נשלח עם כל אירוע. מהכתובת הוא כבר יצא, למעלה.
        האוסף (aimprove-redirector) מקבל who מכל דף מ-25-10-2026, והדוח ב-sales-automation קורא אותו. */
@@ -3833,20 +3839,22 @@ html.is-extra [data-post],html.is-extra [data-closed]{display:none !important}
         else if (t.closest('.office__hint'))  kind = 'office';
         /* 17-10-2026: עד אז כל כפתור נספר 'start'. אבל אותו כפתור סגול עושה דברים
            שונים לפי מצב הדף, שסקריפט ההשקה (למטה) מסמן במחלקות על <html>: לפני
-           ההשקה ואחרי הסגירה הוא פותח את טופס ההרשמה,
-           ורק אחרי ההשקה הוא גולל לחלק המחיר. לכן הסוג נקבע כאן לפי
+           ההשקה ואחרי הסגירה הוא פותח את טופס ההרשמה, עם קישור אישי הוא מוביל לקופה,
+           ורק אחרי ההשקה בלי קישור אישי הוא גולל לחלק המחיר. לכן הסוג נקבע כאן לפי
            מה שהכפתור עושה ברגע הלחיצה: 'signup' = נפתח טופס ההרשמה (להשקה או לסבב
            הבא), 'buy' = מעבר למסך ההטבה או לקופה, 'start' = גלילה לחלק המחיר.
            ומאותו יום, אחר הצהריים (שלהבת: "הם צריכים לקרוא קצת"), הכפתורים לאורך הדף
            גוללים לחלק המחיר גם לפני ההשקה ואחרי הסגירה, ורק הכפתור שבתיבת המחיר ובסוף
-           הדף פותח את הטופס. לכן כפתור כזה הוא 'start'.
+           הדף פותח את הטופס. לכן כפתור כזה הוא 'buy' עם קישור אישי, ואחרת 'start'.
            'signup' ו-'buy' חייבים להיות ב-EV_KINDS ב-Worker (aimprove-redirector),
            אחרת הם נזרקים בשקט. */
         else {
           var rc = document.documentElement.classList;
           var launched = rc.contains('is-launched'), closed = rc.contains('is-closed');
           if (t.closest('[data-launch-open], [data-next-open], [data-extra-open]')) kind = 'signup';
-          else if (t.closest('a.btn[href="#price"]')) kind = 'start';
+          else if (t.closest('a.btn[href="#price"]')) {
+            kind = (launched && !closed && rc.contains('is-personal')) ? 'buy' : 'start';
+          }
           else if (t.closest('a[href^="מסך-ההטבה.html"]')) kind = 'buy';
         }
         if (!kind && t.closest('.btn'))      kind = 'start';
@@ -4960,7 +4968,7 @@ window.interdeal = {
     <button class="lw__x" type="button" data-lw-close>סגירה</button>
     <div class="lw__form-wrap">
       <h2 id="lw-title">הרשמה לסבב</h2>
-      <p class="lw__sub">ההרשמה נפתחת <span data-launch-day>במוצאי שבת</span><span data-launch-when-sep>, </span><span data-launch-when></span>, ומספר המקומות מוגבל. מי שנרשם עכשיו מקבל הודעה בוואטסאפ ובמייל ברגע שההרשמה נפתחת, עם קוד ההנחה של הסבב.</p>
+      <p class="lw__sub">ההרשמה נפתחת <span data-launch-day>במוצאי שבת</span><span data-launch-when-sep>, </span><span data-launch-when></span>, ומספר המקומות מוגבל. <span data-campaign-html="מי שנרשם עכשיו מקבל הודעה בוואטסאפ ובמייל ברגע שההרשמה נפתחת, עם קוד ההנחה<span data-amount></span> של הסבב.">מי שנרשם עכשיו מקבל הטבה של 1,000 ₪, ובשעת הפתיחה נשלח לו בוואטסאפ ובמייל קישור אישי לדף, שממנו ממשיכים ישר לתשלום עם ההנחה.</span></p>
       <form id="lw-form" novalidate>
         <div class="lw__f" id="lw-f-name">
           <label for="lw-name">איך קוראים לך?</label>
@@ -4991,23 +4999,23 @@ window.interdeal = {
           <label for="lw-consent">אני מאשר/ת לקבל מאִימפּרוּב עדכונים, הצעות ודיוור במייל ובוואטסאפ. אפשר להסיר בכל רגע.</label>
         </div>
         <p class="lw__e" style="margin-inline-start:30px">בלי האישור הזה אי אפשר לשלוח לך את ההודעה על פתיחת הסבב.</p>
-        <button class="lw__submit" type="submit" data-lw-main>תודיעו לי כשההרשמה נפתחת</button>
+        <button class="lw__submit" type="submit" data-lw-main><span data-campaign-html="תודיעו לי כשההרשמה נפתחת">לשמור לי את ההטבה</span></button>
         <!-- "זה המייל שלך?" (17-10-2026, הכרעת שלהבת): לפני השליחה מציגים את המייל שוב, בגדול,
              כדי שטעות תיתפס כשהיא כבר לא באמצע הקלדה. -->
         <div class="lw__confirm" id="lw-confirm" hidden>
           <h3>זה המייל שלך?</h3>
-          <p>לכאן נשלח לך הודעה עם קוד ההנחה:</p>
+          <p><span data-campaign-html="לכאן נשלח לך הודעה עם קוד ההנחה:">לכאן נשלח לך את הקישור האישי ואת ההטבה:</span></p>
           <p class="lw__confirm-mail" id="lw-confirm-mail" dir="ltr"></p>
           <button class="lw__submit" type="button" data-lw-yes>כן, זה המייל שלי</button>
           <button class="lw__fix" type="button" data-lw-fix>לתקן את המייל</button>
         </div>
         <p class="lw__err" id="lw-err" role="alert"></p>
-        <p class="lw__fine">הפרטים משמשים לשליחת קוד ההנחה, להודעה על פתיחת הסבב ולעדכונים מאִימפּרוּב. <a href="https://aimprove.co.il/privacy-policy/" target="_blank" rel="noopener">מדיניות הפרטיות</a></p>
+        <p class="lw__fine">הפרטים משמשים לשליחת ההטבה, להודעה על פתיחת הסבב ולעדכונים מאִימפּרוּב. <a href="https://aimprove.co.il/privacy-policy/" target="_blank" rel="noopener">מדיניות הפרטיות</a></p>
       </form>
     </div>
     <div class="lw__done" hidden>
-      <h2 tabindex="-1">נרשמת, ונעדכן אותך</h2>
-      <p>נעדכן אותך בוואטסאפ ובמייל כשההרשמה נפתחת, <span data-launch-day>במוצאי שבת</span><span data-launch-when-sep>, </span><span data-launch-when></span>, עם קוד ההנחה של הסבב.</p>
+      <h2 tabindex="-1"><span data-campaign-html="נרשמת, ונעדכן אותך">ההטבה שמורה לך</span></h2>
+      <p><span data-campaign-html="נעדכן אותך בוואטסאפ ובמייל כשההרשמה נפתחת, ">ברגע שההרשמה נפתחת, </span><span data-launch-day>במוצאי שבת</span><span data-launch-when-sep>, </span><span data-launch-when></span><span data-campaign-html=", עם קוד ההנחה של הסבב.">, נשלח לך בוואטסאפ ובמייל קישור אישי לדף. ממנו ממשיכים ישר לתשלום עם הנחה של 1,000 ₪, בלי למלא פרטים שוב.</span></p>
       <p class="lw__again" hidden>הפרטים שלך כבר שמורים אצלנו. <a href="#" data-lw-again>לרשום פרטים אחרים</a></p>
       <button class="lw__submit" type="button" data-lw-close>חזרה לדף</button>
     </div>
@@ -5037,6 +5045,16 @@ window.interdeal = {
   'use strict';
   /* שעת הפתיחה מהסבב הנוכחי (window.MAFTECHA_ROUND, ר' למעלה), והשעה כאן רק גיבוי. */
   var ROUND = window.MAFTECHA_ROUND || null;
+  /* ── שני מצבי הטבה (29-10-2026, הכרעת שלהבת) ──
+     "personal" = קודים אישיים: בדיוק ההתנהגות והנוסח של לפני הקמפיין (?k=, קישור אישי, 24 שעות).
+     "campaign" = קוד קמפיין אחד לסבב: אין ?k=, אין קישור אישי, והנוסחים שמדברים על קוד אישי מוחלפים
+     (data-campaign-html). המצב מגיע מהסבב (round.js ו-/api/maftecha-status). חסר או לא מוכר = campaign.
+     ההדלקה היא בשדה "סוג ההטבה" בטבלת סבבי המפתח, בלי לשנות את הדף. */
+  function modeOf(v) { v = String(v == null ? '' : v).trim(); return (v === 'personal' || v === 'קודים אישיים') ? 'personal' : 'campaign'; }
+  var benefitMode = modeOf(ROUND && ROUND.mode);
+  /* ⚠️ סכום ההנחה בנוסחי הקמפיין: ריק עד שיוכרע. למלא כאן (למשל '1,000 ₪') וכל הנוסחים מתעדכנים. אותו ערך גם ב-CAMPAIGN_AMOUNT
+     שבמסך-ההטבה.html. */
+  var CAMPAIGN_AMOUNT = '';
   var LAUNCH_AT  = (ROUND && ROUND.openAt) || '2026-10-17T21:00:00+03:00';
   var SIGNUP_URL = 'https://r.aimprove.co.il/api/maftecha-launch';
   /* 19-10-2026 (שלהבת): "להירשם לסבב" ולא "להירשם להשקה", כי מאז ההשקה כל פתיחה היא סבב. */
@@ -5054,23 +5072,35 @@ window.interdeal = {
   if (preview || previewClosed) at = Date.now() - 1000;
   else if (/[?&]launch=in10(&|$)/.test(q)) at = Date.now() + 10000;
 
-  /* שיוך מקישור של מנטור/ית (?r=slug), כמו במסך ההטבה, שמפנה לכאן עד ההשקה. */
-  /* 29-10-2026 (הכרעות 169, 171 של שלהבת): בקמפיין של המפתח אין קישור לכל אדם ואין קוד לכל אדם.
-     יש קוד הנחה אחד לכל סבב, והוא מוצג במסך ההטבה (campaignCode בתשובת maftecha-status).
-     מפתח שנשמר במכשיר מהמסלול הישן נמחק. */
-  try { localStorage.removeItem('maftecha_key_token'); } catch (e) {}
+  /* שיוך מקישור אישי של מנטור/ית (?r=slug), כמו במסך ההטבה, שמפנה לכאן עד ההשקה. */
+  /* ── הקישור האישי (?k=..., 16-10-2026, לבקשת שלהבת) ──
+     מי שנרשם מראש מקבל בשעת הפתיחה קישור לדף עם מפתח אישי. אחרי הפתיחה, כל כפתור
+     בדף לוקח את ההטבה על שמו (/api/maftecha-redeem, aimprove-redirector) ומעביר
+     ישר לקופה, בלי טופס. המפתח נשמר במכשיר, כדי שגם חזרה לדף בלי הקישור תמשיך
+     במצב הזה. מפתח שהשרת לא מכיר = חוזרים למצב הרגיל ולמסך ההטבה. */
+  var REDEEM_URL = 'https://r.aimprove.co.il/api/maftecha-redeem';
+  var KEY_STORE = 'maftecha_key_token';
+  var PERSONAL_LABEL = 'להמשיך לתשלום עם ההטבה';
+  var personalKey = '';
+  /* 17-10-2026 (שלהבת, ערב הפתיחה): "הקוד צריך להוביל ישר לדף התשלום עם ההנחה בפנים". מי שנכנס עם הקישור האישי
+     (?k= בכתובת, לא מפתח שנשמר במכשיר) מועבר לבד לקופה, בלי ללחוץ על כפתור: אחרי שמצב ההרשמה נבדק (סבב סגור =
+     נשארים בדף), ופעם אחת בכל ביקור (sessionStorage), כדי ש"חזרה" מהקופה תציג את הדף ולא תזרוק שוב. */
+  var fromLink = false;
+  var AUTO_GO_STORE = 'maftecha_autogo_done';
+  try {
+    var kq = new URLSearchParams(q).get('k') || '';
+    if (/^[A-Za-z0-9_-]{16,64}$/.test(kq)) { personalKey = kq; fromLink = true; localStorage.setItem(KEY_STORE, kq); }
+    else personalKey = localStorage.getItem(KEY_STORE) || '';
+  } catch (e) {}
 
   var ref = '';
   try {
     ref = (new URLSearchParams(q).get('r') || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
-    /* נשמר לביקור הזה, כדי שיגיע גם למסך ההטבה (ששולח אותו עם המייל, ר' maftecha-attribution למטה). */
-    if (ref) sessionStorage.setItem('maftecha_ref', ref);
   } catch (e) {}
 
   /* הקוד מהקישור לפוסטים של תלמיד/ת מפתח (?pc=, מ-r.aimprove.co.il/k/<קוד>, 24-10-2026, לבקשת שלהבת).
-     נשמר במכשיר, כדי שגם מי שחוזר לדף בלי הקישור, או עובר למסך ההטבה, יישלח איתו בהרשמה, ובמסך ההטבה
-     (29-10-2026): שם נשאל המייל שאיתו משלמים, והקוד נשלח עמו ל-/api/maftecha-attribution לפני המעבר לקופה.
-     הקוד הראשון נשאר, כמו בשרת (postCodeFields ב-aimprove-redirector): הפוסט שהביא את האדם
+     נשמר במכשיר, כדי שגם מי שחוזר לדף בלי הקישור, או עובר למסך ההטבה, יישלח איתו בהרשמה ובתפיסת
+     ההטבה. הקוד הראשון נשאר, כמו בשרת (postCodeFields ב-aimprove-redirector): הפוסט שהביא את האדם
      ראשון הוא שמזכה את התלמיד/ה ב-250 ₪ אם יקנה. */
   var POST_CODE_STORE = 'maftecha_post_code';
   var postCode = '';
@@ -5121,10 +5151,26 @@ window.interdeal = {
   });
 
   var ctas = all('a.btn[href="#price"]');
+  var buyLinks = all('a[href^="מסך-ההטבה.html"]');
+  buyLinks.forEach(function (a) { a.setAttribute('data-label', a.textContent); });
+  var textEls = all('[data-personal-html],[data-campaign-html]');
+  textEls.forEach(function (el) { el.setAttribute('data-orig-html', el.innerHTML); });
+  var personalNow = false;
+  /* הטקסט של כל רכיב לפי המצב: קמפיין ← data-campaign-html, אישי עם מפתח ← data-personal-html, אחרת המקור. */
+  function applyTexts() {
+    all('[data-personal-html],[data-campaign-html]').forEach(function (el) {
+      var h = el.getAttribute('data-orig-html');
+      if (h === null) { h = el.innerHTML; el.setAttribute('data-orig-html', h); }
+      if (benefitMode === 'campaign' && el.hasAttribute('data-campaign-html')) h = el.getAttribute('data-campaign-html');
+      else if (benefitMode === 'personal' && personalNow && el.hasAttribute('data-personal-html')) h = el.getAttribute('data-personal-html');
+      if (el.innerHTML !== h) el.innerHTML = h;
+    });
+    all('[data-amount]').forEach(function (el) { el.textContent = CAMPAIGN_AMOUNT ? ' של ' + CAMPAIGN_AMOUNT : ''; });
+  }
   ctas.forEach(function (a) { a.setAttribute('data-label', a.textContent); });
 
   /* ── הסבב נסגר (16-10-2026): אזל במלאי בחנות, או עברה שעת הסגירה ──
-     מי שמחליט הוא השרת (/api/maftecha-status),
+     מי שמחליט הוא השרת (/api/maftecha-status, אותה בדיקה ש-/api/claim עושה),
      ולא הדף: כך שעת הסגירה כתובה במקום אחד (MAFTECHA_CLOSE_AT ב-aimprove-redirector).
      השאלה נשאלת בטעינה (גם לפני ההשקה, בשביל מספר המקומות), ומהפתיחה שוב כל דקה
      כל עוד הדף פתוח, כי המקומות יכולים להיגמר בזמן שמישהו קורא. "נסגר" חל רק אחרי
@@ -5132,9 +5178,9 @@ window.interdeal = {
      מוכרת מעבר למלאי. */
   var isClosed = false;
   /* מקומות נוספים שנקבעו ועוד לא נפתחו (19-10-2026, שלהבת): השרת מחזיר round.extra = {seats, openAt, open}.
-     כל עוד הם לא נפתחו הדף לא אומר "נסגרה", אלא מתי הם נפתחים, עם שעון, ומציע להירשם כדי לקבל הודעה בשעת הפתיחה.
+     כל עוד הם לא נפתחו הדף לא אומר "נסגרה", אלא מתי הם נפתחים, עם שעון, ומציע להירשם כדי לקבל קישור אישי.
      בשעת הפתיחה הדף שואל שוב את השרת, ועובר לבד למצב "פתוח". */
-  var extraPending = false, extraAt = NaN, extraKick = false, extraLabel = '', extraWhenTxt = '', extraSeatsN = 0;
+  var extraPending = false, extraAt = NaN, extraKick = false, extraLabel = '', extraTimeTxt = '', extraWhenTxt = '', extraSeatsN = 0;
   /* ── מבצע יום הבחירות (27-10-2026, הכרעות 147-148 של שלהבת) ──
      בסבב 2 בלבד, מעל ההטבה של 1,000 ₪: קוד VOTE500 של 500 ₪ שמזינים בקופה (4,400 ₪ במקום 5,900 ₪).
      השורות מסומנות data-round-promo ומוסתרות כברירת מחדל. הן מוצגות גם לפני הפתיחה, כדי שמי שנכנס
@@ -5156,12 +5202,28 @@ window.interdeal = {
     root.classList.toggle('is-launched', on);
     root.classList.toggle('is-closed', isClosed);
     root.classList.toggle('is-extra', extraPending && !isClosed);
+    var personal = benefitMode === 'personal' && !!personalKey && on && !isClosed && !extraPending;
+    root.classList.toggle('is-personal', personal);
     ctas.forEach(function (a) {
-      a.textContent = isClosed ? NEXT_LABEL : extraPending ? extraLabel : (on ? a.getAttribute('data-label') : PRE_LABEL);
+      a.textContent = isClosed ? NEXT_LABEL : extraPending ? extraLabel : (on ? (personal ? PERSONAL_LABEL : a.getAttribute('data-label')) : PRE_LABEL);
     });
+    buyLinks.forEach(function (a) { a.textContent = personal ? PERSONAL_LABEL : a.getAttribute('data-label'); });
+    personalNow = personal;
+    applyTexts();
     renderPromo();
   }
   var statusTimer = null;
+  function extraWord() { return benefitMode === 'campaign' ? 'הודעה' : 'קישור'; }
+  function computeExtraLabel() { if (extraTimeTxt) extraLabel = 'להירשם ולקבל ' + extraWord() + ' ב-' + extraTimeTxt; }
+  /* המצב מהשרת (d.mode, או d.round.mode). שינוי מעדכן את כל הדף בלי רענון. */
+  function setBenefitMode(d) {
+    var m = modeOf(d && d.mode !== undefined ? d.mode : (d && d.round ? d.round.mode : undefined));
+    if (m === benefitMode) return;
+    benefitMode = m;
+    computeExtraLabel();
+    applyState();
+    if (typeof refreshDialogTexts === 'function') refreshDialogTexts();
+  }
   /* מהשרת: שעת הסגירה (closeAt) ומספר המקומות שנותרו (remaining). בלי closeAt
      הבאנר אחרי הפתיחה מציג משפט במקום שעון; בלי remaining לא מוצג מספר בכלל,
      ולא מספר משוער. */
@@ -5174,6 +5236,7 @@ window.interdeal = {
     try {
       fetch(STATUS_URL).then(function (r) { return r.json(); }).then(function (d) {
         if (!d || !d.ok) return;
+        setBenefitMode(d);
         var c = Date.parse(d.closeAt || '');
         closeAt = isNaN(c) ? NaN : c;
         remaining = typeof d.remaining === 'number' ? d.remaining : null;
@@ -5188,8 +5251,17 @@ window.interdeal = {
           if (extraPending) { extraPending = false; applyState(); }
           if (isLaunched() && d.open === false) setClosed();
         }
-      }).catch(function () {});
+        maybeAutoGo();
+      }).catch(function () { maybeAutoGo(); });
     } catch (e) {}
+  }
+  var autoGoTried = false;
+  function maybeAutoGo() {
+    if (autoGoTried || benefitMode !== 'personal' || !fromLink || !personalKey || isClosed || !isLaunched()) return;
+    autoGoTried = true;
+    try { if (sessionStorage.getItem(AUTO_GO_STORE)) return; sessionStorage.setItem(AUTO_GO_STORE, '1'); } catch (e) {}
+    var el = document.querySelector('a.btn[href="#price"], a[href^="מסך-ההטבה.html"]');
+    if (el) redeemAndGo(el);
   }
   function hhmm(ts) {
     try {
@@ -5206,7 +5278,8 @@ window.interdeal = {
     extraPending = true; extraAt = ts;
     var t = hhmm(ts);
     var whenTxt = (ilDate(ts) === ilDate(Date.now()) ? 'היום' : (dayText(ts) || '')) + ' ב-' + t;
-    extraLabel = 'להירשם ולקבל הודעה ב-' + t;
+    extraTimeTxt = t;
+    computeExtraLabel();
     extraWhenTxt = whenTxt;
     if (typeof n === 'number' && n > 0) extraSeatsN = n;
     if (typeof n === 'number' && n > 0) all('[data-extra-seats]').forEach(function (el) { el.textContent = n; });
@@ -5231,6 +5304,7 @@ window.interdeal = {
     try {
       fetch(STATUS_URL).then(function (r) { return r.json(); }).then(function (d) {
         if (!d || !d.ok) return;
+        setBenefitMode(d);
         var rd = d.round || {};
         var ex = rd.extra;
         var exAt = ex && ex.openAt ? Date.parse(ex.openAt) : NaN;
@@ -5248,11 +5322,8 @@ window.interdeal = {
     applyState();
     /* ?next=1 (מהכפתור במסך ההטבה): פותחים מיד את טופס הסבב הבא. אחרי סיום
        הסקריפט, כי בטעינה הטופס עוד לא מאותחל כשזה נקרא. */
-    if (/[?&]next=1(&|$)/.test(q)) setTimeout(openNextFromLink, 0);
+    if (/[?&]next=1(&|$)/.test(q)) setTimeout(function () { if (dlg) openDialog('next'); }, 0);
   }
-  /* ?next=1 פותח את טופס הסבב הבא גם כשהסבב פתוח אבל אין בו קוד הנחה (מסך ההטבה מפנה לכאן).
-     לא פותחים פעמיים: הפתיחה השנייה של חלון שכבר פתוח נכשלת. */
-  function openNextFromLink() { if (dlg && !dlg.open) openDialog('next'); }
 
   /* "X מקומות נותרו" (16-10-2026, לבקשת שלהבת), לפני הפתיחה ואחריה. */
   var seats = all('[data-seats]');
@@ -5348,36 +5419,39 @@ window.interdeal = {
   /* מצב "לסבב הבא": אותו טופס, עם כותרת, הסבר, נוסח הסכמה ותשובה משלו.
      הטקסטים המקוריים נשמרים, כדי שאפשר יהיה לחזור למצב ההשקה. */
   var mode = 'launch';
-  var NEXT_TEXT = {
+  function nextText() { return {
     '#lw-title': 'הרשמה לסבב הבא',
     '.lw__sub': 'ההרשמה לסבב ' + roundOrd + ' נסגרה. הסבב הבא עוד לא נקבע, ומי שנרשם כאן מקבל הודעה בוואטסאפ ובמייל ראשון, כשהוא נפתח.',
     'label[for="lw-consent"]': 'אני מאשר/ת לקבל מאִימפּרוּב עדכונים, הצעות ודיוור במייל ובוואטסאפ. אפשר להסיר בכל רגע.',
     '#lw-form .lw__submit': 'תודיעו לי כשהסבב הבא נפתח',
     '#lw-confirm p': 'לכאן נשלח לך הודעה כשהסבב הבא נפתח:',
     '.lw__done h2': 'נרשמת לסבב הבא',
-    '.lw__done p:not(.lw__again)': 'כשהסבב הבא ייפתח, נשלח לך הודעה בוואטסאפ ובמייל עם קוד ההנחה.'
-  };
+    '.lw__done p:not(.lw__again)': 'כשהסבב הבא ייפתח, נשלח לך הודעה בוואטסאפ ובמייל עם ' + (benefitMode === 'campaign' ? 'קוד ההנחה.' : 'הקישור.')
+  }; }
   var origHtml = {};
   /* מצב "מקומות נוספים" (19-10-2026): אותו טופס הרשמה כמו בהשקה (נשמר כ-launch), עם הסבר על הפתיחה. */
   function extraText() {
     return {
-      '#lw-title': 'הרשמה לפתיחה',
-      '.lw__sub': 'הסבב ' + roundOrd + ' התמלא. שלהבת פותחת עוד ' + (extraSeatsN || '') + ' מקומות ' + extraWhenTxt + '. משאירים פרטים, ובשעת הפתיחה נעדכן אותך, עם קוד ההנחה.',
-      '.lw__done p:not(.lw__again)': 'בשעת הפתיחה, ' + extraWhenTxt + ', נעדכן אותך, עם קוד ההנחה.'
+      '#lw-title': benefitMode === 'campaign' ? 'הרשמה לפתיחה' : 'קישור אישי לפתיחה',
+      '.lw__sub': 'הסבב ' + roundOrd + ' התמלא. שלהבת פותחת עוד ' + (extraSeatsN || '') + ' מקומות ' + extraWhenTxt + '. משאירים פרטים, ובשעת הפתיחה ' +
+        (benefitMode === 'campaign' ? 'נעדכן אותך, עם קוד ההנחה' + (CAMPAIGN_AMOUNT ? ' של ' + CAMPAIGN_AMOUNT : '') + '.' : 'נשלח לך קישור אישי עם ההטבה של 1,000 ₪.'),
+      '.lw__done p:not(.lw__again)': 'בשעת הפתיחה, ' + extraWhenTxt + ', ' + (benefitMode === 'campaign' ? 'נעדכן אותך, עם קוד ההנחה.' : 'נשלח לך קישור אישי עם ההטבה.')
     };
   }
   function setMode(m) {
     mode = m;
-    var map = m === 'next' ? NEXT_TEXT : (m === 'extra' ? extraText() : null);
-    Object.keys(NEXT_TEXT).concat(Object.keys(extraText())).forEach(function (sel) {
+    var map = m === 'next' ? nextText() : (m === 'extra' ? extraText() : null);
+    Object.keys(nextText()).concat(Object.keys(extraText())).forEach(function (sel) {
       var el = dlg.querySelector(sel);
       if (!el) return;
       if (!(sel in origHtml)) origHtml[sel] = el.innerHTML;
       if (map && (sel in map)) el.textContent = map[sel]; else el.innerHTML = origHtml[sel];
     });
+    applyTexts();
   }
+  /* שינוי מצב ההטבה כשהחלון כבר מוצג: מחשבים מחדש את הטקסטים של המצב הנוכחי של החלון. */
+  function refreshDialogTexts() { if (dlg) setMode(mode); }
   function storeKey() { return mode === 'next' ? NEXT_STORE_KEY : STORE_KEY; }
-  if (/[?&]next=1(&|$)/.test(q)) setTimeout(openNextFromLink, 0);
   function openDialog(m) {
     setMode(m === 'next' || m === 'extra' ? m : 'launch');
     show(registeredHere() ? 'again' : 'form');
@@ -5417,6 +5491,12 @@ window.interdeal = {
       openDialog('next');
       return;
     }
+    var buy = t.closest('a.btn[href="#price"], a[href^="מסך-ההטבה.html"]');
+    if (buy && benefitMode === 'personal' && personalKey && isLaunched() && !isClosed) {
+      e.preventDefault();
+      redeemAndGo(buy);
+      return;
+    }
     if (t.closest('[data-launch-open]') && !isLaunched()) {
       e.preventDefault();
       openDialog('launch');
@@ -5447,6 +5527,36 @@ window.interdeal = {
       if (stop || n > 13) { clearInterval(iv); return; }
       if (Math.abs(el.getBoundingClientRect().top) > 2) el.scrollIntoView();
     }, 150);
+  }
+
+  /* לחיצה במצב אישי: ההטבה נלקחת בשרת, ומשם ישר לקופה. כל תקלה מחזירה למסלול
+     הרגיל (מסך ההטבה), כדי שאף אחד לא יישאר תקוע מול כפתור שלא עובד. */
+  var redeeming = false;
+  function regularBenefit() { location.href = 'מסך-ההטבה.html' + (preview ? '?launch=after' : ''); }
+  function redeemAndGo(el) {
+    if (redeeming) return;
+    redeeming = true;
+    var label = el.textContent;
+    el.textContent = 'מעבירים לתשלום...';
+    function reset() { redeeming = false; el.textContent = label; }
+    fetch(REDEEM_URL, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: personalKey })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; });
+    }).then(function (d) {
+      if (d && d.ok && d.checkoutUrl) { location.href = d.checkoutUrl; return; }
+      reset();
+      var code = d && d.error;
+      if (code === 'sold-out' || code === 'closed') { setClosed(); return; }
+      if (code === 'not-open') return;
+      if (code === 'bad-token') {
+        personalKey = '';
+        try { localStorage.removeItem(KEY_STORE); } catch (e2) {}
+        applyState();
+      }
+      regularBenefit();
+    }).catch(function () { reset(); regularBenefit(); });
   }
 
   function bad(id, on) {

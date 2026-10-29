@@ -204,9 +204,9 @@ h1 b{color:#111;font-weight:900;white-space:nowrap;background:linear-gradient(tr
 
   var STATUS_URL = 'https://r.aimprove.co.il/api/maftecha-status';
   var STATES = ['st-loading', 'st-code', 'st-closed', 'st-fail'];
-  function show(id) {
+  function show(id, keepScroll) {
     STATES.forEach(function (s) { document.getElementById(s).hidden = (s !== id); });
-    window.scrollTo(0, 0);
+    if (!keepScroll) window.scrollTo(0, 0);
   }
 
   /* ── מבצע יום הבחירות (27-10-2026, הכרעות 147-148 של שלהבת) ──
@@ -225,36 +225,74 @@ h1 b{color:#111;font-weight:900;white-space:nowrap;background:linear-gradient(tr
     return v && v.length <= 40 ? v : '';
   }
 
-  if (/[?&]launch=closed(&|$)/.test(location.search)) show('st-closed');
+  /* מצב הסבב מהשרת. נשאל בטעינה, כל דקה כשהלשונית גלויה, כשהיא חוזרת להיות גלויה, ושוב ברגע הלחיצה על
+     "להמשיך לתשלום" (29-10-2026): לשונית שנשארה פתוחה לא ממשיכה להציג קוד וכפתור תשלום אחרי שהסבב נסגר,
+     אזל או שהקוד הוחלף. החזרה היא null כשהשרת לא ענה בזמן או ענה לא תקין. */
+  var ORD = ['', 'הראשון', 'השני', 'השלישי', 'הרביעי', 'החמישי', 'השישי', 'השביעי', 'השמיני', 'התשיעי', 'העשירי'];
+  var PREVIEW_CLOSED = /[?&]launch=closed(&|$)/.test(location.search);
+  function fetchStatus(ms) {
+    return new Promise(function (resolve) {
+      var done = false;
+      function fin(v) { if (!done) { done = true; resolve(v); } }
+      var t = setTimeout(function () { fin(null); }, ms);
+      try {
+        fetch(STATUS_URL, { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+          clearTimeout(t); fin(d && d.ok ? d : null);
+        }).catch(function () { clearTimeout(t); fin(null); });
+      } catch (e) { clearTimeout(t); fin(null); }
+    });
+  }
+  /* מפתח התצוגה: סגור / פתוח בלי קוד / פתוח עם קוד מסוים. שינוי בו = התצוגה חייבת להתעדכן. */
+  function keyOf(d) {
+    if (d.open === false) return 'closed';
+    var c = cleanCode(d.campaignCode);
+    return c ? 'code:' + c : 'open';
+  }
+  var curKey = '';
+  /* מציג את המצב. מחזיר true אם התצוגה השתנתה (או שהדף מופנה), כדי שהקורא ידע שלא להמשיך לקופה. */
+  function render(d, first) {
+    /* הסבב הנוכחי עוד לא נפתח (סבב שנקבע אחרי סבב 1): לדף הראשי, כמו ההפניה שבראש הדף. */
+    var o = Date.parse(d.openAt || '');
+    if (!isNaN(o) && Date.now() < o && !/[?&]launch=(after|closed)(&|$)/.test(location.search)) {
+      location.replace('index.html' + location.search + '#price');
+      return true;
+    }
+    var key = keyOf(d);
+    if (key === curKey) return false;
+    curKey = key;
+    var ord = d.round && ORD[d.round.n];
+    if (ord) Array.prototype.forEach.call(document.querySelectorAll('[data-round-ord]'), function (el) { el.textContent = ord; });
+    if (key === 'closed') { show('st-closed', !first); return true; }
+    var code = cleanCode(d.campaignCode);
+    var has = !!code;
+    document.getElementById('gift-tag').hidden = !has;
+    document.getElementById('code-part').hidden = !has;
+    document.getElementById('open-title').innerHTML = has ? 'הנחה לכל מי שנרשם <b>בסבב הזה</b>' : 'ההרשמה פתוחה';
+    document.getElementById('open-lead').textContent = has
+      ? 'זה אותו קוד לכולם, והוא תקף כל עוד ההרשמה לסבב פתוחה והמקומות לא נגמרו.'
+      : 'אפשר להמשיך לתשלום. מספר המקומות בסבב מוגבל.';
+    document.getElementById('after-pay').textContent = has
+      ? 'ההנחה תקפה בסבב הזה בלבד, ומספר המקומות מוגבל.'
+      : 'ההרשמה פתוחה עד שהסבב נסגר.';
+    if (has) {
+      document.getElementById('campaign-code').textContent = code;
+      renderPromo(!!(d.round && d.round.n === 2));
+    }
+    show('st-code', !first);
+    return !first;
+  }
+  function refresh() {
+    if (PREVIEW_CLOSED) return;
+    fetchStatus(8000).then(function (d) {
+      if (d) render(d, !curKey);
+      else if (!curKey) show('st-fail');   /* בטעינה הראשונה בלבד: ברענון שנכשל נשארים עם מה שמוצג */
+    });
+  }
+  if (PREVIEW_CLOSED) show('st-closed');
   else {
-    try {
-      fetch(STATUS_URL).then(function (r) { return r.json(); }).then(function (d) {
-        if (!d || !d.ok) { show('st-fail'); return; }
-        /* הסבב הנוכחי עוד לא נפתח (סבב שנקבע אחרי סבב 1): לדף הראשי, כמו ההפניה שבראש הדף. */
-        var o = Date.parse(d.openAt || '');
-        if (!isNaN(o) && Date.now() < o && !/[?&]launch=(after|closed)(&|$)/.test(location.search)) {
-          location.replace('index.html' + location.search + '#price');
-          return;
-        }
-        var ORD = ['', 'הראשון', 'השני', 'השלישי', 'הרביעי', 'החמישי', 'השישי', 'השביעי', 'השמיני', 'התשיעי', 'העשירי'];
-        var ord = d.round && ORD[d.round.n];
-        if (ord) Array.prototype.forEach.call(document.querySelectorAll('[data-round-ord]'), function (el) { el.textContent = ord; });
-        if (d.open === false) { show('st-closed'); return; }
-        var code = cleanCode(d.campaignCode);
-        if (code) {
-          document.getElementById('campaign-code').textContent = code;
-          renderPromo(!!(d.round && d.round.n === 2));
-        } else {
-          /* בלי קוד: ההרשמה פתוחה, ואין הבטחת הנחה ואין קוד. */
-          document.getElementById('gift-tag').hidden = true;
-          document.getElementById('open-title').textContent = 'ההרשמה פתוחה';
-          document.getElementById('open-lead').textContent = 'אפשר להמשיך לתשלום. מספר המקומות בסבב מוגבל.';
-          document.getElementById('code-part').hidden = true;
-          document.getElementById('after-pay').textContent = 'ההרשמה פתוחה עד שהסבב נסגר.';
-        }
-        show('st-code');
-      }).catch(function () { show('st-fail'); });
-    } catch (e) { show('st-fail'); }
+    refresh();
+    setInterval(function () { if (document.visibilityState === 'visible') refresh(); }, 60000);
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') refresh(); });
   }
 
   /* ── ייחוס תלמידים ומנטורים (29-10-2026) ──
@@ -284,11 +322,12 @@ h1 b{color:#111;font-weight:900;white-space:nowrap;background:linear-gradient(tr
   function emailOk(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim()); }
   attrEmail.addEventListener('input', function () { attrErr.hidden = true; attrEmail.setAttribute('aria-invalid', 'false'); });
   var going = false;
+  /* ההעברה לקופה: אחרי בדיקת מצב הסבב (תקרה של 1.5 שניות, וכשל רשת לא חוסם), ואם הסבב נסגר, אזל או שהקוד
+     שמוצג הוחלף, מציגים את המצב המעודכן ולא עוברים. אחר כך הייחוס, כשיש שדה מייל. */
   payLink.addEventListener('click', function (e) {
-    if (!needAttr) return;
     e.preventDefault();
     if (going) return;
-    var email = attrEmail.value.trim();
+    var email = needAttr ? attrEmail.value.trim() : '';
     if (email && !emailOk(email)) {
       attrErr.hidden = false;
       attrEmail.setAttribute('aria-invalid', 'true');
@@ -298,17 +337,23 @@ h1 b{color:#111;font-weight:900;white-space:nowrap;background:linear-gradient(tr
     going = true;
     var href = payLink.href;
     function go() { location.href = href; }
-    if (!email) { go(); return; }
-    var body = { email: email };
-    if (postCode) body.postCode = postCode;
-    if (ref) body.ref = ref;
-    var done = false;
-    function once() { if (!done) { done = true; go(); } }
-    setTimeout(once, 2500);
-    try {
-      fetch(ATTR_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), keepalive: true })
-        .then(once, once);
-    } catch (err) { once(); }
+    function proceed() {
+      if (!email) { go(); return; }
+      var body = { email: email };
+      if (postCode) body.postCode = postCode;
+      if (ref) body.ref = ref;
+      var done = false;
+      function once() { if (!done) { done = true; go(); } }
+      setTimeout(once, 2500);
+      try {
+        fetch(ATTR_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), keepalive: true })
+          .then(once, once);
+      } catch (err) { once(); }
+    }
+    fetchStatus(1500).then(function (d) {
+      if (d && render(d, false)) { going = false; return; }
+      proceed();
+    });
   });
 
   /* העתקת הקוד: clipboard API כשיש, ואחרת בחירת הטקסט כדי שאפשר יהיה

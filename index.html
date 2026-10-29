@@ -4968,7 +4968,7 @@ window.interdeal = {
     <button class="lw__x" type="button" data-lw-close>סגירה</button>
     <div class="lw__form-wrap">
       <h2 id="lw-title">הרשמה לסבב</h2>
-      <p class="lw__sub">ההרשמה נפתחת <span data-launch-day>במוצאי שבת</span><span data-launch-when-sep>, </span><span data-launch-when></span>, ומספר המקומות מוגבל. <span data-campaign-html="מי שנרשם עכשיו מקבל הודעה בוואטסאפ ובמייל ברגע שההרשמה נפתחת, עם קוד ההנחה<span data-amount></span> של הסבב.">מי שנרשם עכשיו מקבל הטבה של 1,000 ₪, ובשעת הפתיחה נשלח לו בוואטסאפ ובמייל קישור אישי לדף, שממנו ממשיכים ישר לתשלום עם ההנחה.</span></p>
+      <p class="lw__sub">ההרשמה נפתחת <span data-launch-day>במוצאי שבת</span><span data-launch-when-sep>, </span><span data-launch-when></span>, ומספר המקומות מוגבל. <span data-campaign-html="מי שנרשם עכשיו מקבל הודעה בוואטסאפ ובמייל ברגע שההרשמה נפתחת, עם קוד הנחה<span data-amount></span> לסבב.">מי שנרשם עכשיו מקבל הטבה של 1,000 ₪, ובשעת הפתיחה נשלח לו בוואטסאפ ובמייל קישור אישי לדף, שממנו ממשיכים ישר לתשלום עם ההנחה.</span></p>
       <form id="lw-form" novalidate>
         <div class="lw__f" id="lw-f-name">
           <label for="lw-name">איך קוראים לך?</label>
@@ -5052,9 +5052,9 @@ window.interdeal = {
      ההדלקה היא בשדה "סוג ההטבה" בטבלת סבבי המפתח, בלי לשנות את הדף. */
   function modeOf(v) { v = String(v == null ? '' : v).trim(); return (v === 'personal' || v === 'קודים אישיים') ? 'personal' : 'campaign'; }
   var benefitMode = modeOf(ROUND && ROUND.mode);
-  /* ⚠️ סכום ההנחה בנוסחי הקמפיין: ריק עד שיוכרע. למלא כאן (למשל '1,000 ₪') וכל הנוסחים מתעדכנים. אותו ערך גם ב-CAMPAIGN_AMOUNT
+  /* סכום ההנחה בנוסחי הקמפיין (הכרעת שלהבת, 29-10-2026: תמיד 1,000 ₪). שינוי כאן מעדכן את כל הנוסחים. אותו ערך גם ב-CAMPAIGN_AMOUNT
      שבמסך-ההטבה.html. */
-  var CAMPAIGN_AMOUNT = '';
+  var CAMPAIGN_AMOUNT = '1,000 ₪';
   var LAUNCH_AT  = (ROUND && ROUND.openAt) || '2026-10-17T21:00:00+03:00';
   var SIGNUP_URL = 'https://r.aimprove.co.il/api/maftecha-launch';
   /* 19-10-2026 (שלהבת): "להירשם לסבב" ולא "להירשם להשקה", כי מאז ההשקה כל פתיחה היא סבב. */

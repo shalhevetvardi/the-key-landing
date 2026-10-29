@@ -465,8 +465,8 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
   /* ── שני מצבי הטבה (29-10-2026) ──
      mode מ-/api/maftecha-status: "personal" / "קודים אישיים" = הטופס כמו שהיה. כל ערך אחר או חסר = "campaign". */
   function modeOf(v) { v = String(v == null ? '' : v).trim(); return (v === 'personal' || v === 'קודים אישיים') ? 'personal' : 'campaign'; }
-  /* ⚠️ סכום ההנחה בנוסחי הקמפיין: ריק עד שיוכרע. למלא כאן (למשל '1,000 ₪'), אותו ערך ב-CAMPAIGN_AMOUNT שבדף המפתח. */
-  var CAMPAIGN_AMOUNT = '';
+  /* סכום ההנחה בנוסחי הקמפיין (הכרעת שלהבת, 29-10-2026: תמיד 1,000 ₪). אותו ערך ב-CAMPAIGN_AMOUNT שבדף המפתח. */
+  var CAMPAIGN_AMOUNT = '1,000 ₪';
   var ORD = ['', 'הראשון', 'השני', 'השלישי', 'הרביעי', 'החמישי', 'השישי', 'השביעי', 'השמיני', 'התשיעי', 'העשירי'];
   var PREVIEW_CLOSED = /[?&]launch=closed(&|$)/.test(location.search);
   var curKey = '';

@@ -2119,6 +2119,14 @@ html.is-extra [data-post],html.is-extra [data-closed]{display:none !important}
 html:not(.is-personal) [data-personal-only]{display:none !important}
 /* מבצע יום הבחירות: שורה עם hidden נשארת מוסתרת גם אם מישהו יוסיף לה display. */
 [data-round-promo][hidden]{display:none !important}
+[data-promo-hide][hidden]{display:none !important}
+/* סבב 3 (06-11-2026, הכרעת שלהבת, מוקאפ ד1): פס אדום "סבב אחרון במחיר הנוכחי · 15 מקומות בלבד" בראש תיבת המחיר
+   ובראש סקשן הסיום, והמספר הגדול הוא מה שמשלמים (4,900 ₪). מוצג רק בסבב 3, עד הסגירה (ר' renderPromo). */
+.price__alarm{margin:-26px -24px 18px;padding:12px 12px;border-radius:18px 18px 0 0;background:#E0303F;color:#fff;font-weight:900;font-size:clamp(18px,4.6vw,21px);line-height:1.25;letter-spacing:-.2px}
+.price__alarm small,.final__alarm small{display:block;margin-top:3px;font-size:.72em;font-weight:700;opacity:.96}
+.price__was{margin:8px 0 0;font-weight:500;color:rgba(255,255,255,.85);font-size:14px}
+.price__was s{opacity:.72}
+.final__alarm{background:#E0303F;color:#fff;text-align:center;font-weight:900;font-size:clamp(19px,4.8vw,24px);line-height:1.25;padding:14px 16px;margin:0 0 6px}
 /* תגית ההטבה בראש הדף, למי שנכנס מהקישור האישי. זהב כהדגשה קטנה, לא כמשטח. */
 .hero-perk{display:inline-block;margin:0 0 16px;padding:6px 14px;border-radius:50px;background:var(--gold);color:var(--navy);font-weight:700;font-size:14px;line-height:1.3}
 
@@ -3133,7 +3141,9 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
       </ul>
 
       <div class="price__box" id="price-box">
-        <p class="price__num">5,900 ₪</p>
+        <div class="price__alarm" data-round-promo hidden>סבב אחרון במחיר הנוכחי<small>15 מקומות בלבד</small></div>
+        <p class="price__num"><span data-promo-hide>5,900 ₪</span><span data-round-promo hidden>4,900 ₪</span></p>
+        <p class="price__was" data-round-promo hidden><span class="promo-nw">במקום <s>5,900 ₪</s></span><br /><span class="promo-nw">עם הטבה של 1,000 ₪</span></p>
         <p class="price__pay">עד <b>12 תשלומים</b></p>
         <p class="price__anchor">כולל את חומרי התוכנית המלאים, ובמתנה: שני שיעורים אישיים עם המנטור/ית</p>
         <!-- עד ההשקה (16-10-2026): ספירה לאחור והרשמה במקום הכפתור למסך ההטבה. -->
@@ -3148,13 +3158,11 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
           <span class="cd__u"><b class="cd__n" data-u="s">--</b><span class="cd__l">שניות</span></span>
         </div>
           <p class="launch__limit">מספר המקומות בסבב מוגבל. <span data-campaign-html="מי שנרשם עכשיו מקבל הודעה ברגע שההרשמה נפתחת, עם קוד הנחה<span data-amount></span> לסבב. ההנחה תקפה לזמן מוגבל.">מי שנרשם עכשיו מקבל הטבה של 1,000 ₪, ובשעת הפתיחה קישור אישי ישר לתשלום.</span></p>
-          <p class="price__promo" data-round-promo hidden><span class="promo-lead">לכבוד הבחירות, בסבב הזה בלבד:</span><br />עוד <b>500 ₪</b> הנחה עם הקוד <b dir="ltr">VOTE500</b> בקופה. <span class="promo-nw"><b>4,400 ₪</b> במקום 5,900 ₪.</span></p>
-          <button class="btn price__cta" type="button" data-launch-open>להירשם לסבב</button>
+          <button class="btn price__cta" type="button" data-launch-open>הרשמה מקדימה</button>
           <p class="price__calm">ההרשמה לא מחייבת לקנות.</p>
         </div>
         <div data-post>
         <p class="price__benefit" data-campaign-html="יש הנחה<span data-amount></span> לכל מי שנרשם בסבב.<br />הקוד <b>מחכה לכם בפנים</b>, והוא תקף <b>עד שההרשמה נסגרת</b>." data-personal-html="&lt;b&gt;הטבה של 1,000 ₪ שמורה לך.&lt;/b&gt; היא נכנסת לבד בתשלום, ונשמרת לך עד שההרשמה נסגרת.">רוצים הטבה של 1,000 ₪?<br />היא <b>מחכה לכם בפנים</b>, ונשמרת לכם <b>עד שההרשמה נסגרת</b>.</p>
-        <p class="price__promo" data-round-promo hidden><span class="promo-lead">לכבוד הבחירות, בסבב הזה בלבד:</span><br />עוד <b>500 ₪</b> הנחה עם הקוד <b dir="ltr">VOTE500</b> בקופה. <span class="promo-nw"><b>4,400 ₪</b> במקום 5,900 ₪.</span></p>
         <a class="btn price__cta" href="מסך-ההטבה.html">לראות את ההטבה ולהתחיל</a>
         <p class="price__calm" data-personal-html="אפשר לחלק עד 12 תשלומים.">לחיצה לא מחייבת - קודם רואים את ההטבה.</p>
         </div>
@@ -3270,6 +3278,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
 <!-- סקשן 9 - CTA יחיד. מוביל להרשמה, לא ישירות לתשלום.
      אחריה: קישור-מימוש לאימפרוב סטודיו. ר' ההערה ב-CSS. -->
 <section class="final">
+  <div class="final__alarm" data-round-promo hidden>סבב אחרון במחיר הנוכחי<small>15 מקומות בלבד</small></div>
   <div class="wrap">
     <h2>מתי מתחילים?</h2>
     <div data-pre>
@@ -3280,14 +3289,13 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
           <span class="cd__u"><b class="cd__n" data-u="m">--</b><span class="cd__l">דקות</span></span>
           <span class="cd__u"><b class="cd__n" data-u="s">--</b><span class="cd__l">שניות</span></span>
         </div>
-      <p class="final__promo" data-round-promo hidden><span class="promo-lead">לכבוד הבחירות, בסבב הזה בלבד:</span><br />עוד <b>500 ₪</b> הנחה עם הקוד <b dir="ltr">VOTE500</b> בקופה. <span class="promo-nw"><b>4,400 ₪</b> במקום 5,900 ₪.</span></p>
-      <button class="btn" type="button" data-launch-open>להירשם לסבב</button>
+      <button class="btn" type="button" data-launch-open>הרשמה מקדימה</button>
       <p class="final__calm">ההרשמה לא מחייבת לקנות.</p>
     </div>
     <div data-post>
     <p>נרשמים, נכנסים לאזור האישי, ומתחילים מהשיעור הראשון - מיד.</p>
-    <p class="final__price" data-personal-html="ההטבה של 1,000 ₪ שמורה לך, ונכנסת לבד בתשלום. אפשר לחלק עד 12 תשלומים.">5,900 ₪, ובקישור מטה מחכה לכם הטבת הרשמה, ואז ניתן לחלק עד 12 תשלומים.</p>
-    <p class="final__promo" data-round-promo hidden><span class="promo-lead">לכבוד הבחירות, בסבב הזה בלבד:</span><br />עוד <b>500 ₪</b> הנחה עם הקוד <b dir="ltr">VOTE500</b> בקופה. <span class="promo-nw"><b>4,400 ₪</b> במקום 5,900 ₪.</span></p>
+    <p class="final__price" data-round-promo hidden><b>4,900 ₪</b>, במקום 5,900 ₪, עם הטבה של 1,000 ₪. אפשר לחלק עד 12 תשלומים.</p>
+    <p class="final__price" data-promo-hide data-personal-html="ההטבה של 1,000 ₪ שמורה לך, ונכנסת לבד בתשלום. אפשר לחלק עד 12 תשלומים.">5,900 ₪, ובקישור מטה מחכה לכם הטבת הרשמה, ואז ניתן לחלק עד 12 תשלומים.</p>
     <a class="btn" href="מסך-ההטבה.html">אני רוצה להתחיל</a>
     <p class="final__calm" data-campaign-html="לחיצה לא מחייבת. ההנחה תקפה עד שההרשמה נסגרת." data-personal-html="ההטבה נשמרת לך עד שההרשמה נסגרת.">לחיצה לא מחייבת. ההטבה נשמרת לכם עד שההרשמה נסגרת.</p>
     </div>
@@ -5058,7 +5066,8 @@ window.interdeal = {
   var LAUNCH_AT  = (ROUND && ROUND.openAt) || '2026-10-17T21:00:00+03:00';
   var SIGNUP_URL = 'https://r.aimprove.co.il/api/maftecha-launch';
   /* 19-10-2026 (שלהבת): "להירשם לסבב" ולא "להירשם להשקה", כי מאז ההשקה כל פתיחה היא סבב. */
-  var PRE_LABEL  = 'להירשם לסבב';
+  /* 06-11-2026 (שלהבת, סבב 3): "הרשמה מקדימה", כי לפני הפתיחה ההרשמה לא שומרת מקום. */
+  var PRE_LABEL  = 'הרשמה מקדימה';
   var STORE_KEY  = 'maftecha_launch_signup';
   var STATUS_URL = 'https://r.aimprove.co.il/api/maftecha-status';
   var NEXT_LABEL = 'להירשם לסבב הבא';
@@ -5243,14 +5252,18 @@ window.interdeal = {
      כל עוד הם לא נפתחו הדף לא אומר "נסגרה", אלא מתי הם נפתחים, עם שעון, ומציע להירשם כדי לקבל קישור אישי.
      בשעת הפתיחה הדף שואל שוב את השרת, ועובר לבד למצב "פתוח". */
   var extraPending = false, extraAt = NaN, extraKick = false, extraLabel = '', extraTimeTxt = '', extraWhenTxt = '', extraSeatsN = 0;
+  /* ── שורת הסבב (data-round-promo). סבב 3 (06-11-2026, הכרעת שלהבת): "לפני שהמחיר עולה".
+     בסבב הזה 4,900 ₪ עם ההטבה, ומהסבב הבא 5,900 ₪ (מחיר נקוב 6,900 ₪). הנוסח "מהסבב הבא המחיר עולה"
+     ולא "הסבב האחרון אי פעם", כי ייתכן שבבלאק פריידי המחיר ירד. מוצגת עד סגירת סבב 3: 11-11-2026, 18:00 שעון ישראל.
+     ההערה המקורית, על סבב 2: */
   /* ── מבצע יום הבחירות (27-10-2026, הכרעות 147-148 של שלהבת) ──
      בסבב 2 בלבד, מעל ההטבה של 1,000 ₪: קוד VOTE500 של 500 ₪ שמזינים בקופה (4,400 ₪ במקום 5,900 ₪).
      השורות מסומנות data-round-promo ומוסתרות כברירת מחדל. הן מוצגות גם לפני הפתיחה, כדי שמי שנכנס
      לפני 22:00 יראה את המבצע, ונעלמות לבד כשהסבב נסגר, כשהוא התמלא (גם כשנקבעו מקומות נוספים),
      או כשעברה שעת הסגירה של הסבב: 28-10-2026 ב-22:00 שעון ישראל. tick() בודק כל שנייה, ולכן
      השורה יורדת גם בדף שנשאר פתוח. */
-  var PROMO_ROUND = 2;
-  var PROMO_END = Date.parse('2026-10-28T20:00:00Z');
+  var PROMO_ROUND = 3;
+  var PROMO_END = Date.parse('2026-11-11T16:00:00Z');
   var promoEls = all('[data-round-promo]');
   var promoShown = null;
   function renderPromo() {
@@ -5258,6 +5271,7 @@ window.interdeal = {
     if (on === promoShown) return;
     promoShown = on;
     promoEls.forEach(function (el) { el.hidden = !on; });
+    all('[data-promo-hide]').forEach(function (el) { el.hidden = on; });
   }
   function applyState() {
     var on = isLaunched();

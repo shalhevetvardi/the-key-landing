@@ -5902,6 +5902,20 @@ window.interdeal = {
   }
   window.addEventListener('hashchange', openFromHash);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', openFromHash); else openFromHash();
+  // בדף החי התמונות נטענות אחרי הגלילה הראשונה ודוחפות את התוכן למטה (נמדד 07-11-2026: השאלה נשארה 900-1,700
+  // פיקסלים מתחת לראש המסך). לכן גוללים שוב כשהכול נטען, וכל עוד המיקום זז, עד שתי שניות. גלילה של האדם עוצרת את זה.
+  var stop = false;
+  ['wheel', 'touchstart', 'keydown'].forEach(function (ev) { window.addEventListener(ev, function () { stop = true; }, { once: true, passive: true }); });
+  function settle(left) {
+    if (stop || left <= 0) return;
+    var id = decodeURIComponent((location.hash || '').slice(1));
+    var el = id && document.getElementById(id);
+    if (!el || el.tagName !== 'DETAILS') return;
+    var top = el.getBoundingClientRect().top, margin = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+    if (Math.abs(top - margin) > 4) el.scrollIntoView({ block: 'start' });
+    setTimeout(function () { settle(left - 1); }, 250);
+  }
+  window.addEventListener('load', function () { settle(8); });
 })();
 </script>
 </body>

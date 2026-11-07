@@ -1413,6 +1413,15 @@ body{
 .faq__a{padding:0 26px 24px 52px}
 .faq__a p{margin:0 0 12px;font-weight:400;color:var(--body);font-size:clamp(15.5px,3.8vw,17px);line-height:1.65}
 .faq__a p:last-child{margin-bottom:0}
+/* שאלה "מה ההבדל בין המפתח לטירונות" (שלהבת, 07-11-2026): טבלת השוואה פשוטה, ולשאלה כתובת ישירה (#key-vs-tironut)
+   שנועם מקשר אליה. כשנכנסים מהקישור, השאלה נפתחת לבד (הסקריפט key-faq-open למטה). */
+.faq__cmp{width:100%;border-collapse:collapse;margin:6px 0 16px;font-size:clamp(14px,3.6vw,16px);line-height:1.45;color:var(--body);background:var(--white);border-radius:12px;overflow:hidden}
+.faq__cmp th,.faq__cmp td{padding:9px 10px;border-bottom:1px solid #E1E6F0;text-align:right;vertical-align:top}
+.faq__cmp thead th{background:var(--navy);color:var(--white);font-weight:700}
+.faq__cmp tbody th{font-weight:600;color:var(--navy)}
+.faq__cmp tr:last-child th,.faq__cmp tr:last-child td{border-bottom:0}
+.faq__cmp a{color:var(--blue);text-decoration:underline}
+#key-vs-tironut{scroll-margin-top:84px}
 /* 17-10-2026 (הערה 92): קישור מסוף "מה שאתם בטח שואלים" לשאלות הנוספות, ושורת נועם בסוף השאלות.
    הקישור בתוך הטקסט מקבל ← בסוף, והחץ לא יורד לשורה לבד (nowrap). הכפתור לנועם בלי חץ. */
 .obj-more{margin:28px 0 0;text-align:center;font-weight:500;color:var(--navy);font-size:clamp(16px,3.9vw,18px);line-height:1.6}
@@ -3205,6 +3214,32 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
           <div class="coverflow" data-active="0" data-videos='[{"id": "1234045834", "h": "04735e81b5", "poster": "assets/cf-1234045834.jpg", "cap": "ירדן · סוכן העל שלי"}, {"id": "1217933716", "h": "f6c857e89b", "poster": "assets/cf-1217933716.jpg", "cap": "חני · לעשות כל דבר"}]'><div class="cf-stage"></div></div>
           <div class="cf-nav"><div class="cf-dots"></div></div>
         </div>
+      </div>
+    </details>
+
+    <details id="key-vs-tironut">
+      <summary>מה ההבדל בין המפתח לטירונות סוכנים?</summary>
+      <div class="faq__a">
+        <p>בשתיהן לומדים את אותה שיטה ומגיעים לאותה תוצאה: משרד AI עם סוכנים שעובדים במקומכם.</p>
+        <p>ההכשרה בשתי התוכניות תהפוך אתכם למי שיודע לבנות פתרון AI מקצה לקצה לכל בעיה עסקית - מהר, בלי לרדוף אחרי הזנב של עצמכם.</p>
+        <p>ההבדל הוא הדרך לשם: עם שלהבת וקבוצה, או לבד, בקצב שלכם.</p>
+        <table class="faq__cmp">
+          <thead><tr><th scope="col"></th><th scope="col">טירונות סוכנים</th><th scope="col">המפתח</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">השיטה</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">מי מוביל</th><td>שלהבת, במפגשים חיים</td><td>אתם, בקצב שלכם</td></tr>
+            <tr><th scope="row">מפגשים</th><td>5 מפגשים קבוצתיים, בימים ושעות קבועים</td><td>אין. סרטונים קצרים, כל אחד על נושא אחד</td></tr>
+            <tr><th scope="row">תרגולים</th><td>✓</td><td>תרגול מובנה אחרי כל שלב</td></tr>
+            <tr><th scope="row">קבוצה</th><td>קבוצת וואטסאפ של המחזור</td><td>אין</td></tr>
+            <tr><th scope="row">סוכני עזר</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">שיעורים אישיים עם מנטור/ית</th><td>אין</td><td>2 שיעורים</td></tr>
+            <tr><th scope="row">יוסף בוואטסאפ, לשאלות על החומר</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">ספריית הסקילים של שלהבת</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row"><a href="https://gallery.aimprove.co.il/" target="_blank" rel="noopener">הגלריה</a> של התלמידים: הסקילים והתוצרים שהם שיתפו</th><td>✓</td><td>אין</td></tr>
+            <tr><th scope="row">לוח זמנים</th><td>5 שבועות</td><td>אין תאריך סיום</td></tr>
+          </tbody>
+        </table>
+        <p><strong>איך יודעים מה מתאים לי?</strong> זו שאלה עליכם, לא על התוכנית. אם אתם יודעים ללמוד לבד ולדחוף את עצמכם, המפתח מתאים לכם. אם אתם יודעים על עצמכם שאתם מתקדמים כשיש מפגש שמחכה לכם וקבוצה שעובדת לידכם, הטירונות מתאימה לכם יותר.</p>
       </div>
     </details>
 
@@ -5852,6 +5887,21 @@ window.interdeal = {
       if (history.replaceState) history.replaceState(null, "", a.getAttribute("href"));
     }); });
   } catch (e) {}
+})();
+</script>
+<script id="key-faq-open">
+/* קישור ישיר לשאלה בשאלות-תשובות (#key-vs-tironut, מנועם): פותחים אותה וגוללים אליה. בלי זה הקישור מגיע לשאלה סגורה. */
+(function () {
+  function openFromHash() {
+    var id = decodeURIComponent((location.hash || '').slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (!el || el.tagName !== 'DETAILS') return;
+    el.open = true;
+    el.scrollIntoView({ block: 'start' });
+  }
+  window.addEventListener('hashchange', openFromHash);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', openFromHash); else openFromHash();
 })();
 </script>
 </body>

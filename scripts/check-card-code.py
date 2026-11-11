@@ -24,6 +24,7 @@ srv = socketserver.TCPServer(("127.0.0.1", 0), partial(Quiet, directory=ROOT)); 
 threading.Thread(target=srv.serve_forever, daemon=True).start()
 base = f"http://127.0.0.1:{port}"
 KEY_TEXT = "לשאלות על המפתח"
+HELP_TEXT = "נתקלתי בבעיה בהרשמה למפתח"  # הקישור "נתקעת בהרשמה? אפשר לכתוב לנועם" (12-11-2026): ההודעה המוכנה שנועם מתחיל איתה מסלול אבחון
 DAY = 86400000
 fails = 0
 
@@ -49,7 +50,7 @@ def visit(pg, path, events, who):
     texts = [parse_qs(urlparse(h).query)["text"][0] for h in
              pg.eval_on_selector_all('a[href*="wa.me/972559397247"]', "els => els.map(e => e.href)")]
     tail = f"#v-{vid}" + (f" #w-{who}" if who else "")
-    ok = (len(texts) == 2 and all(t.startswith(KEY_TEXT) and t.endswith(tail) for t in texts)
+    ok = (len(texts) == 3 and all((t.startswith(KEY_TEXT) or t.startswith(HELP_TEXT)) and t.endswith(tail) for t in texts)
           and len(vid) == 16 and {e.get("who", "") for e in events} == {who} and bool(events) and "who=" not in pg.url)
     return ok, f"buttons={len(texts)} vid_len={len(vid)} events={len(events)} event_who={sorted({e.get('who', '') for e in events})}"
 

@@ -3725,7 +3725,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
       var flag = new URLSearchParams(location.search).get('aim_optout');
       if (flag === '1') localStorage.setItem('aim_optout', '1');
       else if (flag === '0') localStorage.removeItem('aim_optout');
-      if (localStorage.getItem('aim_optout') === '1') return;
+      if (localStorage.getItem('aim_optout') === '1') { localStorage.removeItem('aim_who_kept'); return; }
     } catch (e) { /* דפדפן שחוסם אחסון - ממשיכים כרגיל */ }
 
     /* הסקשנים לפי סדר הופעתם בדף. סקשן חסר מדולג.
@@ -3765,13 +3765,31 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
     } catch (e) { src = ''; }
 
     /* קוד אישי (27-10-2026): ?who= בקישור אישי ששלחנו לאדם מסוים (מ-ManyChat: mc<מספר הכרטיס>). כך מחברים את
-       הביקור לאדם: עד איפה גלל, אם ראה את המחיר, על מה לחץ. נשמר רק לביקור הזה (sessionStorage), ולא כמו src
-       לביקורים הבאים, כדי שלא יהפוך למזהה קבוע בדפדפן. נשלח עם כל אירוע. מהכתובת הוא כבר יצא, למעלה.
+       הביקור לאדם: עד איפה גלל, אם ראה את המחיר, על מה לחץ. נשמר לביקור הזה (sessionStorage), ומ-12-11-2026 גם ל-30 יום
+       לביקור חוזר (למטה). נשלח עם כל אירוע. מהכתובת הוא כבר יצא, למעלה.
        האוסף (aimprove-redirector) מקבל who מכל דף מ-25-10-2026, והדוח ב-sales-automation קורא אותו. */
+    /* ביקור חוזר (12-11-2026, הכרעת שלהבת; כמו בדף הטירונות): אחרי כניסה מקישור אישי הדפדפן זוכר את הקוד 30 יום
+       (aim_who_kept ב-localStorage), ובכניסה בלי ?who= בתקופה הזו הביקור מחובר לאותו אדם. רק כניסה מקישור מתחילה את
+       30 הימים מחדש, וקישור של אדם אחר מחליף. מדיניות הפרטיות, סעיף 2.10.3א. מכשיר "זו אני" מוחק אותו (למעלה). */
+    var WHO_KEEP_MS = 30 * 864e5;
     var who = whoParam;
     try {
-      if (who) sessionStorage.setItem('aim_who', who);
-      else who = String(sessionStorage.getItem('aim_who') || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
+      if (who) {
+        sessionStorage.setItem('aim_who', who);
+        localStorage.setItem('aim_who_kept', JSON.stringify({ w: who, t: Date.now() }));
+      } else {
+        who = String(sessionStorage.getItem('aim_who') || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
+        if (!who) {
+          var kept = JSON.parse(localStorage.getItem('aim_who_kept') || 'null');
+          var age = kept ? Date.now() - Number(kept.t) : NaN;
+          if (kept && kept.w && age >= 0 && age < WHO_KEEP_MS) {
+            who = String(kept.w).replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
+            if (who) sessionStorage.setItem('aim_who', who);
+          } else if (kept) {
+            localStorage.removeItem('aim_who_kept');
+          }
+        }
+      }
     } catch (e) {}
     window.__aimWho = who;
 

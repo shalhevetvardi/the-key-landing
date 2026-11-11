@@ -3948,6 +3948,37 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
   } catch (e) { /* לעולם לא שובר את הדף */ }
 })();
 </script>
+<script id="noam-card-code">
+/* מספר הכרטיס ומספר הביקור בהודעה לנועם (11-11-2026), כמו בדף הטירונות (tironot-landing, ab-tag).
+   מי שהגיע מקישור עם מספר הכרטיס ב-ManyChat (?who=mc<מספר>) שולח לנועם בסוף ההודעה גם #w-<הקוד>, וכך המנגנון היומי
+   ב-sales-automation מחבר את הליד לכרטיס האינסטגרם שלו (identity_link, הגשר הרביעי). עד היום הכפתורים כאן היו קבועים,
+   ולכן רק 7 לידים שלחו קוד, אף ש-599 מ-670 הכניסות עם קוד מאז 25-10 היו לדף הזה. ובנוסף #v-<מספר הביקור>, כדי שהדוח
+   יחבר את הליד לביקור שלו (עד איפה גלל, אם ראה את המחיר). המספרים יוצאים מהדף רק כשהאדם עצמו שולח את ההודעה.
+   מה שלא משתנה: "לשאלות על המפתח" נשאר בראש ההודעה (נועם מזהה לפיו שהשיחה על המפתח, product_context.js), והקודים
+   באים אחריו, כמו שנועם כבר מקבל מדף הטירונות (removed_intent.js, PREFILL_CODES). מכשיר שסומן "זו אני" לא שולח כלום. */
+(function () {
+  function tag() {
+    try {
+      try { if (localStorage.getItem('aim_optout') === '1') return; } catch (e) {}
+      var vid = '', who = '';
+      try { vid = sessionStorage.getItem('aim_vid') || ''; } catch (e) {}
+      vid = vid.replace(/[^a-f0-9]/gi, '').slice(0, 32);
+      try { who = sessionStorage.getItem('aim_who') || ''; } catch (e) {}
+      if (!who) who = String(window.__aimWho || '');
+      who = who.replace(/[^a-z0-9_-]/gi, '').slice(0, 40);
+      var links = document.querySelectorAll('a[href*="wa.me/972559397247"]');
+      for (var i = 0; i < links.length; i++) {
+        var u = new URL(links[i].href);
+        var t = u.searchParams.get('text') || '';
+        if (vid.length >= 8 && t.indexOf('#v-') === -1) t += ' #v-' + vid;
+        if (who && t.indexOf('#w-') === -1) t += ' #w-' + who;
+        if (t !== (u.searchParams.get('text') || '')) { u.searchParams.set('text', t); links[i].href = u.toString(); }
+      }
+    } catch (e) { /* לעולם לא שובר את הדף */ }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', tag); else tag();
+})();
+</script>
 
   <script>
 (function () {

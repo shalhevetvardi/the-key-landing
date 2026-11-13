@@ -1115,8 +1115,9 @@ body{
 @media (min-width:700px){ .safety__mentors{grid-template-columns:repeat(3,1fr)} }
 
 /* ---------- 8. מה כלול והמחיר ----------
-   ⚠️ המחיר המוצג הוא **הנקוב, 5,900** - לא 4,900. ההטבה של 1,000
-   נחשפת רק במסך ההטבה שאחרי הכפתור (סעיף 2 בהחלטות).
+   ⚠️ מ-13-11-2026 (הכרעת שלהבת): המחיר הנקוב הוא **6,900**, ובין סבבים הדף מציג גם את
+   המחיר עם ההטבה, **5,900 ₪ עם הטבה של 1,000 ₪** (שורת price__was עם data-promo-hide).
+   בסבב מבצע מוצג 5,900 כמספר הגדול, "במקום 6,900". ההטבה עצמה (1,000, הקוד key1000) לא השתנתה.
    ⚠️ "אין ספירה לאחור לגולשת אנונימית" - בדף מוצג **הכלל בלבד**, וזה
    `.price__benefit` (נוסף 30/08; עד אז הכלל לא היה בדף כלל, למרות
    שההערה הזו תיארה אותו כקיים). שעון אישי מתחיל רק ברגע תפיסת ההטבה
@@ -2132,7 +2133,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
 [data-round-promo][hidden]{display:none !important}
 [data-promo-hide][hidden]{display:none !important}
 /* סבב 3 (06-11-2026, הכרעת שלהבת, מוקאפ ד1): פס אדום "סבב אחרון במחיר הנוכחי · 15 מקומות בלבד" בראש תיבת המחיר
-   ובראש סקשן הסיום, והמספר הגדול הוא מה שמשלמים (4,900 ₪). מוצג רק בסבב 3, עד הסגירה (ר' renderPromo). */
+   ובראש סקשן הסיום, והמספר הגדול הוא מה שמשלמים (5,900 ₪, מ-13-11-2026). מוצג רק בסבב 3, עד הסגירה (ר' renderPromo). */
 .price__alarm{margin:-26px -24px 18px;padding:12px 12px;border-radius:18px 18px 0 0;background:#E0303F;color:#fff;font-weight:900;font-size:clamp(18px,4.6vw,21px);line-height:1.25;letter-spacing:-.2px}
 .price__alarm small,.final__alarm small{display:block;margin-top:3px;font-size:.72em;font-weight:700;opacity:.96}
 .price__was{margin:8px 0 0;font-weight:500;color:rgba(255,255,255,.85);font-size:14px}
@@ -3128,7 +3129,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
 </section>
 
 
-<!-- סקשן 8 - מה כלול והמחיר. 5,900 הוא הנקוב, בכוונה. -->
+<!-- סקשן 8 - מה כלול והמחיר. 6,900 הוא הנקוב (מ-13-11-2026), ו-5,900 הוא המחיר עם הטבה של 1,000. -->
 <section class="price" id="price">
   <div class="wrap">
     <!-- 17-10-2026 (הערה 86): סרטון ההסבר בראש חלק המחיר, מעל "מה נכנס פנימה". הפרקים בתוך הנגן של Vimeo עצמו. -->
@@ -3153,8 +3154,9 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
 
       <div class="price__box" id="price-box">
         <div class="price__alarm" data-round-promo hidden>סבב אחרון במחיר הנוכחי<small>15 מקומות בלבד</small></div>
-        <p class="price__num"><span data-promo-hide>5,900 ₪</span><span data-round-promo hidden>4,900 ₪</span></p>
-        <p class="price__was" data-round-promo hidden><span class="promo-nw">במקום <s>5,900 ₪</s></span><br /><span class="promo-nw">עם הטבה של 1,000 ₪</span></p>
+        <p class="price__num"><span data-promo-hide>6,900 ₪</span><span data-round-promo hidden>5,900 ₪</span></p>
+        <p class="price__was" data-promo-hide><span class="promo-nw"><b>5,900 ₪</b></span> <span class="promo-nw">עם הטבה של 1,000 ₪</span></p>
+        <p class="price__was" data-round-promo hidden><span class="promo-nw">במקום <s>6,900 ₪</s></span><br /><span class="promo-nw">עם הטבה של 1,000 ₪</span></p>
         <p class="price__pay">עד <b>12 תשלומים</b></p>
         <p class="price__anchor">כולל את חומרי התוכנית המלאים, ובמתנה: שני שיעורים אישיים עם המנטור/ית</p>
         <!-- עד ההשקה (16-10-2026): ספירה לאחור והרשמה במקום הכפתור למסך ההטבה. -->
@@ -3331,8 +3333,8 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
     </div>
     <div data-post>
     <p>נרשמים, נכנסים לאזור האישי, ומתחילים מהשיעור הראשון - מיד.</p>
-    <p class="final__price" data-round-promo hidden><b>4,900 ₪</b>, במקום 5,900 ₪, עם הטבה של 1,000 ₪. אפשר לחלק עד 12 תשלומים.</p>
-    <p class="final__price" data-promo-hide data-personal-html="ההטבה של 1,000 ₪ שמורה לך, ונכנסת לבד בתשלום. אפשר לחלק עד 12 תשלומים.">5,900 ₪, ובקישור מטה מחכה לכם הטבת הרשמה, ואז ניתן לחלק עד 12 תשלומים.</p>
+    <p class="final__price" data-round-promo hidden><b>5,900 ₪</b>, במקום 6,900 ₪, עם הטבה של 1,000 ₪. אפשר לחלק עד 12 תשלומים.</p>
+    <p class="final__price" data-promo-hide data-personal-html="ההטבה של 1,000 ₪ שמורה לך, ונכנסת לבד בתשלום. אפשר לחלק עד 12 תשלומים.">6,900 ₪. בקישור מטה מחכה לכם הטבת הרשמה של 1,000 ₪, ואז 5,900 ₪. אפשר לחלק עד 12 תשלומים.</p>
     <a class="btn" href="מסך-ההטבה.html">אני רוצה להתחיל</a>
     <p class="final__calm" data-campaign-html="לחיצה לא מחייבת. ההנחה תקפה עד שההרשמה נסגרת." data-personal-html="ההטבה נשמרת לך עד שההרשמה נסגרת.">לחיצה לא מחייבת. ההטבה נשמרת לכם עד שההרשמה נסגרת.</p>
     <p class="final__help">נתקעת בהרשמה? <a href="https://wa.me/972559397247?text=%D7%A0%D7%AA%D7%A7%D7%9C%D7%AA%D7%99%20%D7%91%D7%91%D7%A2%D7%99%D7%94%20%D7%91%D7%94%D7%A8%D7%A9%D7%9E%D7%94%20%D7%9C%D7%9E%D7%A4%D7%AA%D7%97" target="_blank" rel="noopener">אפשר לכתוב לנועם.</a></p>
@@ -3357,7 +3359,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
     <h2>זה לא מתאים לכולם, וזה בסדר</h2>
     <p>אם אתם יודעים על עצמכם שאתם צריכים מישהו שידחוף אתכם - תלכו על הטירונות סוכנים.</p>
     <p class="door__canon">אותו יעד. אותה שיטה. אותם כלים.<br />בטירונות, שלהבת לוקחת אתכם לשם. כאן, אתם לוקחים את עצמכם.</p>
-    <p class="door__compare">טירונות סוכנים - 10,700 ₪, עם קבוצה, מפגשים וליווי לאורך הדרך.<br />המפתח - 5,900 ₪, באותה שיטה, בקצב שלכם.</p>
+    <p class="door__compare">טירונות סוכנים - 10,700 ₪, עם קבוצה, מפגשים וליווי לאורך הדרך.<br />המפתח - 6,900 ₪, ובהטבה 5,900 ₪, באותה שיטה, בקצב שלכם.</p>
     <a href="https://agent-course.aimprove.co.il/" target="_blank" rel="noopener">לדף של טירונות סוכנים</a>
     <p class="door__switch">התחלתם במפתח והבנתם שאתם צריכים מישהו שידחוף אתכם? בתוך חודש מהיום שהתחלתם לבנות אפשר לעבור לטירונות, והסכום ששילמתם על המפתח יקוזז - משלמים רק את ההפרש.</p>
   </div>
@@ -5341,11 +5343,11 @@ window.interdeal = {
      בשעת הפתיחה הדף שואל שוב את השרת, ועובר לבד למצב "פתוח". */
   var extraPending = false, extraAt = NaN, extraKick = false, extraLabel = '', extraTimeTxt = '', extraWhenTxt = '', extraSeatsN = 0;
   /* ── שורת הסבב (data-round-promo). סבב 3 (06-11-2026, הכרעת שלהבת): "לפני שהמחיר עולה".
-     בסבב הזה 4,900 ₪ עם ההטבה, ומהסבב הבא 5,900 ₪ (מחיר נקוב 6,900 ₪). הנוסח "מהסבב הבא המחיר עולה"
+     בסבב הזה 4,900 ₪ עם ההטבה, ומהסבב הבא 5,900 ₪ (מחיר נקוב 6,900 ₪). [מ-13-11-2026 המחיר העדכני: 5,900 עם ההטבה, 6,900 נקוב.] הנוסח "מהסבב הבא המחיר עולה"
      ולא "הסבב האחרון אי פעם", כי ייתכן שבבלאק פריידי המחיר ירד. מוצגת עד סגירת סבב 3: 11-11-2026, 18:00 שעון ישראל.
      ההערה המקורית, על סבב 2: */
   /* ── מבצע יום הבחירות (27-10-2026, הכרעות 147-148 של שלהבת) ──
-     בסבב 2 בלבד, מעל ההטבה של 1,000 ₪: קוד VOTE500 של 500 ₪ שמזינים בקופה (4,400 ₪ במקום 5,900 ₪).
+     בסבב 2 בלבד, מעל ההטבה של 1,000 ₪: קוד VOTE500 של 500 ₪ שמזינים בקופה (בסבב 2, ארכיון: 4,400 ₪ במקום 5,900 ₪).
      השורות מסומנות data-round-promo ומוסתרות כברירת מחדל. הן מוצגות גם לפני הפתיחה, כדי שמי שנכנס
      לפני 22:00 יראה את המבצע, ונעלמות לבד כשהסבב נסגר, כשהוא התמלא (גם כשנקבעו מקומות נוספים),
      או כשעברה שעת הסגירה של הסבב: 28-10-2026 ב-22:00 שעון ישראל. tick() בודק כל שנייה, ולכן

@@ -3832,6 +3832,27 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
     } catch (e) {}
     window.__aimWho = who;
 
+    /* מאיזה אתר המבקר הגיע (18-11-2026): שם האתר המפנה בלבד, כמו chatgpt.com או www.google.com, בלי נתיב ובלי פרמטרים.
+       כך רואים כניסות מהצ'אטים ומחיפוש, שלא מגיעות עם ?src=. כשאין אתר מפנה והקישור נושא utm_source (ChatGPT מוסיף
+       utm_source=chatgpt.com), נרשם הערך שלו. מעבר מאתר של אִימפּרוּב לא נרשם. נשמר לביקור (sessionStorage), כדי שמעבר
+       בין דפים לא ימחק אותו. נשלח עם כל אירוע. ר' Storyteling, פרויקטים/חיפוש-SEO-GEO/. */
+    /* האחסון נקרא ונכתב בנפרד מהחישוב: דפדפן שחוסם אחסון (גלישה פרטית) עדיין שולח את המקור של הדף הזה.
+       מ-utm_source נלקח רק ערך שנראה כמו שם אתר (מילים ונקודות), כדי שמייל או "newsletter" לא ייכנסו. */
+    var ref = '';
+    try { ref = String(sessionStorage.getItem('aim_ref') || ''); } catch (e) { ref = ''; }
+    if (!ref) {
+      try {
+        var refHost = document.referrer ? new URL(document.referrer).hostname.toLowerCase() : '';
+        if (refHost === location.hostname || /(^|\.)aimprove\.co\.il$/.test(refHost)) refHost = '';
+        if (!refHost) {
+          var utm = String(new URLSearchParams(location.search).get('utm_source') || '').toLowerCase();
+          if (/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(utm)) refHost = utm;
+        }
+        ref = refHost.replace(/[^a-z0-9.-]/g, '').slice(0, 60);
+      } catch (e) { ref = ''; }
+      if (ref) { try { sessionStorage.setItem('aim_ref', ref); } catch (e) {} }
+    }
+
     var t0 = Date.now();
     var depthIdx = -1;
     var sent = {};
@@ -3841,6 +3862,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
         var body = { v: 1, vid: vid, e: ev, p: PAGE };
         if (src) body.src = src;
         if (who) body.who = who;
+        if (ref) body.ref = ref;
         if (extra) for (var k in extra) { if (extra.hasOwnProperty(k)) body[k] = extra[k]; }
         var payload = JSON.stringify(body);
         /* text/plain = בקשה פשוטה, בלי preflight. sendBeacon שורד יציאה מהדף. */

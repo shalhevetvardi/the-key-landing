@@ -5209,7 +5209,8 @@ window.interdeal = {
   var benefitMode = modeOf(ROUND && ROUND.mode);
   /* סכום ההנחה בנוסחי הקמפיין (הכרעת שלהבת, 29-10-2026: תמיד 1,000 ₪). שינוי כאן מעדכן את כל הנוסחים. אותו ערך גם ב-CAMPAIGN_AMOUNT
      שבמסך-ההטבה.html. */
-  var CAMPAIGN_AMOUNT = '1,500 ₪'; /* סבב 4 (23-11-2026): 1,500. */
+  /* סבב 4 (23-11-2026, שלהבת): 1,500 ₪ עד שההרשמה נסגרת (26-11-2026 21:00 שעון ישראל), ומאז לבד שוב 1,000 ₪. */
+  var CAMPAIGN_AMOUNT = Date.now() < Date.parse('2026-11-26T19:00:00Z') ? '1,500 ₪' : '1,000 ₪';
   var LAUNCH_AT  = (ROUND && ROUND.openAt) || '2026-10-17T21:00:00+03:00';
   var SIGNUP_URL = 'https://r.aimprove.co.il/api/maftecha-launch';
   /* 19-10-2026 (שלהבת): "להירשם לסבב" ולא "להירשם להשקה", כי מאז ההשקה כל פתיחה היא סבב. */

@@ -300,7 +300,7 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
       <span class="gift">🎁 ההטבה שלך</span>
 
       <!-- ⚠️ הכותרת היא מסירת מתנה, לא בקשת פרטים. ר' ההערה ב-CSS. -->
-      <h1>ההטבה שלך: <b>1,500 ₪</b> הנחה - נשמרת לך עד שההרשמה נסגרת.</h1>
+      <h1>ההטבה שלך: <b data-benefit-amount>1,500 ₪</b> הנחה - נשמרת לך עד שההרשמה נסגרת.</h1>
 
       <p class="lead">משאירים שלושה פרטים, וההטבה נתפסת על השם שלך. משם אפשר להמשיך לתשלום מיד, או לחזור עד שההרשמה נסגרת - ההנחה תחכה.</p>
 
@@ -471,7 +471,9 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
      mode מ-/api/maftecha-status: "personal" / "קודים אישיים" = הטופס כמו שהיה. כל ערך אחר או חסר = "campaign". */
   function modeOf(v) { v = String(v == null ? '' : v).trim(); return (v === 'personal' || v === 'קודים אישיים') ? 'personal' : 'campaign'; }
   /* סכום ההנחה בנוסחי הקמפיין (הכרעת שלהבת, 29-10-2026: תמיד 1,000 ₪). אותו ערך ב-CAMPAIGN_AMOUNT שבדף המפתח. */
-  var CAMPAIGN_AMOUNT = '1,500 ₪'; /* סבב 4 (23-11-2026): 1,500. */
+  /* סבב 4 (23-11-2026, שלהבת): 1,500 ₪ עד שההרשמה נסגרת (26-11-2026 21:00 שעון ישראל), ומאז לבד שוב 1,000 ₪. */
+  var CAMPAIGN_AMOUNT = Date.now() < Date.parse('2026-11-26T19:00:00Z') ? '1,500 ₪' : '1,000 ₪';
+  (function () { var h = document.querySelector('[data-benefit-amount]'); if (h) h.textContent = CAMPAIGN_AMOUNT; })();
   var ORD = ['', 'הראשון', 'השני', 'השלישי', 'הרביעי', 'החמישי', 'השישי', 'השביעי', 'השמיני', 'התשיעי', 'העשירי'];
   var PREVIEW_CLOSED = /[?&]launch=closed(&|$)/.test(location.search);
   var curKey = '';

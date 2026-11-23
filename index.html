@@ -2173,6 +2173,9 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
 .price__alarm small,.final__alarm small{display:block;margin-top:3px;font-size:.72em;font-weight:700;opacity:.96}
 .price__was{margin:8px 0 0;font-weight:500;color:rgba(255,255,255,.85);font-size:14px}
 .price__was s{opacity:.72}
+/* סבב 4 (שלהבת, 23-11-2026): "במקום 6,900" גדול ובולט, בלי שורת ההנחה. */
+.price__was--big{font-size:clamp(20px,5.2vw,24px);font-weight:800;color:#fff;margin-top:6px}
+.price__was--big s{opacity:.85;text-decoration-thickness:2px}
 .final__alarm{background:#E0303F;color:#fff;text-align:center;font-weight:900;font-size:clamp(19px,4.8vw,24px);line-height:1.25;padding:14px 16px;margin:-92px 0 56px} /* צמוד לראש הסקשן הצהוב (padding-top 92px), כדי שלא יהיה פס צהוב מעליו (שלהבת, 06-11-2026) */
 /* תגית ההטבה בראש הדף, למי שנכנס מהקישור האישי. זהב כהדגשה קטנה, לא כמשטח. */
 .hero-perk{display:inline-block;margin:0 0 16px;padding:6px 14px;border-radius:50px;background:var(--gold);color:var(--navy);font-weight:700;font-size:14px;line-height:1.3}
@@ -3188,10 +3191,10 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
       </ul>
 
       <div class="price__box" id="price-box">
-        <div class="price__alarm" data-round-promo hidden>מחיר בלאק פריידי<small>20 מקומות בלבד</small></div>
+        <div class="price__alarm" data-round-promo hidden>מחיר מיוחד לבלאק פריידי<small>20 מקומות בלבד</small></div>
         <p class="price__num"><span data-promo-hide>6,900 ₪</span><span data-round-promo hidden>5,400 ₪</span></p>
         <p class="price__was" data-promo-hide><span class="promo-nw"><b>5,900 ₪</b></span> <span class="promo-nw">עם הטבה של 1,000 ₪</span></p>
-        <p class="price__was" data-round-promo hidden><span class="promo-nw">במקום <s>6,900 ₪</s></span><br /><span class="promo-nw">עם הנחה של 1,500 ₪</span></p>
+        <p class="price__was price__was--big" data-round-promo hidden><span class="promo-nw">במקום <s>6,900 ₪</s></span></p>
         <p class="price__pay">עד <b>12 תשלומים</b></p>
         <p class="price__anchor">כולל את חומרי התוכנית המלאים, ובמתנה: שני שיעורים אישיים עם המנטור/ית</p>
         <!-- עד ההשקה (16-10-2026): ספירה לאחור והרשמה במקום הכפתור למסך ההטבה. -->
@@ -3352,7 +3355,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
 <!-- סקשן 9 - CTA יחיד. מוביל להרשמה, לא ישירות לתשלום.
      אחריה: קישור-מימוש לאימפרוב סטודיו. ר' ההערה ב-CSS. -->
 <section class="final">
-  <div class="final__alarm" data-round-promo hidden>מחיר בלאק פריידי<small>20 מקומות בלבד</small></div>
+  <div class="final__alarm" data-round-promo hidden>מחיר מיוחד לבלאק פריידי<small>20 מקומות בלבד</small></div>
   <div class="wrap">
     <h2>מתי מתחילים?</h2>
     <div data-pre>
@@ -3368,7 +3371,7 @@ html:not(.is-personal) [data-personal-only]{display:none !important}
     </div>
     <div data-post>
     <p>נרשמים, נכנסים לאזור האישי, ומתחילים מהשיעור הראשון - מיד.</p>
-    <p class="final__price" data-round-promo hidden><b>5,400 ₪</b>, במקום 6,900 ₪, עם הנחה של 1,500 ₪. אפשר לחלק עד 12 תשלומים.</p>
+    <p class="final__price" data-round-promo hidden><b>5,400 ₪</b> במקום 6,900 ₪. אפשר לחלק עד 12 תשלומים.</p>
     <p class="final__price" data-promo-hide data-personal-html="ההטבה של 1,000 ₪ שמורה לך, ונכנסת לבד בתשלום. אפשר לחלק עד 12 תשלומים.">6,900 ₪. בקישור מטה מחכה לכם הטבת הרשמה של 1,000 ₪, ואז 5,900 ₪. אפשר לחלק עד 12 תשלומים.</p>
     <a class="btn" href="מסך-ההטבה.html">אני רוצה להתחיל</a>
     <p class="final__calm" data-campaign-html="לחיצה לא מחייבת. ההנחה תקפה עד שההרשמה נסגרת." data-personal-html="ההטבה נשמרת לך עד שההרשמה נסגרת.">לחיצה לא מחייבת. ההטבה נשמרת לכם עד שההרשמה נסגרת.</p>

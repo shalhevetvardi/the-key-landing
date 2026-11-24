@@ -169,6 +169,9 @@ body.is-closed .closed{display:block}
 .closed h2{margin:0 0 10px;font-weight:900;color:#111;font-size:clamp(21px,5vw,27px);line-height:1.3}
 .closed p{margin:0 0 14px;color:#333;font-size:15.5px;line-height:1.65}
 a.submit{display:block;text-align:center;text-decoration:none}
+.submit-alt{margin-top:12px;background:transparent;color:var(--navy);border:2px solid var(--navy);box-shadow:none}
+.submit-alt:hover{box-shadow:none}
+.so-note{margin:8px 0 0;font-size:14px;line-height:1.6;color:#444;text-align:center}
 .done h2{margin:0 0 10px;font-weight:900;color:var(--gold);font-size:clamp(21px,5vw,27px);line-height:1.3}
 .done p{margin:0 0 14px;font-weight:400;color:rgba(255,255,255,.85);font-size:15.5px;line-height:1.65}
 .done .deadline{font-weight:800;color:#fff}
@@ -399,6 +402,10 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
             <p class="attr-err" id="c-attr-err" role="alert" hidden>כתובת המייל לא נראית תקינה. אפשר לתקן, או להשאיר ריק ולהמשיך.</p>
           </div>
           <a class="submit" id="c-pay" href="https://aimprove.co.il/?add-to-cart=11113">להמשיך לתשלום</a>
+          <!-- הוראת קבע באשראי (24-11-2026, לבקשת שלהבת): מוצר נפרד ומוסתר בחנות (12759), כי התוסף של Grow מגדיר הוראת
+               קבע על מוצר. המחיר כבר כולל את ההנחה של הסבב, ולכן בלי קוד. הסכום כאן משתנה עם מחיר הסבב (סקיל maftecha-round). -->
+          <a class="submit submit-alt" id="c-pay-so" href="https://aimprove.co.il/?add-to-cart=12759">הוראת קבע</a>
+          <p class="so-note" id="c-so-note">בהוראת קבע באשראי: <b>1,350 ₪ בחודש</b> למשך 4 חודשים. ההנחה של הסבב כבר כלולה, ולא צריך קוד.</p>
           <p class="after-pay" id="c-after">ההנחה תקפה בסבב הזה בלבד, ומספר המקומות מוגבל.</p>
         </div>
         <div id="c-fail" role="status" hidden>
@@ -886,6 +893,7 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
   /* ── מצב קמפיין: ייחוס, בדיקה לפני תשלום והעתקה (29-10-2026) ── */
   var ATTR_URL = 'https://r.aimprove.co.il/api/maftecha-attribution';
   var CHECKOUT_BASE = 'https://aimprove.co.il/?add-to-cart=11113';
+  var CHECKOUT_BASE_SO = 'https://aimprove.co.il/?add-to-cart=12759';   /* הוראת קבע */
   var cPost = '', cRef = '';
   (function () {
     var a = getAttr();
@@ -897,12 +905,14 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
   var cEmail = document.getElementById('c-attr-email');
   var cErr = document.getElementById('c-attr-err');
   var cPay = document.getElementById('c-pay');
+  var cPaySo = document.getElementById('c-pay-so');
   cPay.href = withAttr(CHECKOUT_BASE);
+  cPaySo.href = withAttr(CHECKOUT_BASE_SO);
   cEmail.addEventListener('input', function () { cErr.hidden = true; cEmail.setAttribute('aria-invalid', 'false'); });
   var cGoing = false;
   /* ההעברה לקופה: אחרי בדיקת מצב הסבב (תקרה של 1.5 שניות, וכשל רשת לא חוסם). אם הסבב נסגר, אזל או שהקוד שמוצג
      הוחלף, מציגים את המצב המעודכן ולא עוברים. אחר כך הייחוס כשיש שדה מייל (כשל בו לא חוסם, תקרה של 2.5 שניות). */
-  cPay.addEventListener('click', function (e) {
+  function onPay(base) { return function (e) {
     e.preventDefault();
     if (cGoing) return;
     var email = cNeedAttr ? cEmail.value.trim() : '';
@@ -913,7 +923,7 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
       return;
     }
     cGoing = true;
-    var href = withAttr(CHECKOUT_BASE);
+    var href = withAttr(base);
     function go() { location.href = href; }
     function proceed() {
       if (!email) { go(); return; }
@@ -932,7 +942,9 @@ body.is-closed #personal-view,body.is-closed #campaign-view,body.is-closed #st-l
       if (d && render(d, false)) { cGoing = false; return; }
       proceed();
     });
-  });
+  }; }
+  cPay.addEventListener('click', onPay(CHECKOUT_BASE));
+  cPaySo.addEventListener('click', onPay(CHECKOUT_BASE_SO));
   document.getElementById('c-copy').addEventListener('click', function () {
     var btn = this;
     var el = document.getElementById('c-code');
